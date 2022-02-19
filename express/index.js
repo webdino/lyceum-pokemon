@@ -25,9 +25,8 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+/** トレーナーの一覧の取得 */
 app.get("/trainers", async (req, res) => {
-  // TODO: trainersバケットのオブジェクト一覧を取得してファイル名を返す
-  // https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html#s3-example-creating-buckets-list-buckets
   try {
     const objects = await s3Client.send(
       new ListObjectsCommand({ Bucket: BUCKET_NAME })
@@ -38,9 +37,8 @@ app.get("/trainers", async (req, res) => {
   }
 });
 
+/** トレーナーの取得 */
 app.get("/trainer/:trainerName", async (req, res) => {
-  // TODO: s3://trainers/{trainerName}.jsonを取得して返す
-  // https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html#s3-example-creating-buckets-get-object
   try {
     const object = await s3Client.send(
       new GetObjectCommand({
@@ -55,9 +53,8 @@ app.get("/trainer/:trainerName", async (req, res) => {
   }
 });
 
+/** トレーナーの追加更新 */
 app.post("/trainer", async (req, res) => {
-  // TODO: s3://trainers/{trainerName}.jsonを追加
-  // https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html#s3-example-creating-buckets-upload-file
   try {
     const result = await s3Client.send(
       new PutObjectCommand({
@@ -72,8 +69,8 @@ app.post("/trainer", async (req, res) => {
   }
 });
 
+/** トレーナーの削除 */
 app.delete("/trainer/:trainerName", async (req, res) => {
-  // TODO: s3://trainers/{trainerName}.jsonを削除
   try {
     const result = await s3Client.send(
       new DeleteObjectCommand({
@@ -87,8 +84,8 @@ app.delete("/trainer/:trainerName", async (req, res) => {
   }
 });
 
+/** ポケモンの追加 */
 app.put("/trainer/:trainerName/pokemon/:pokemonOrder", async (req, res) => {
-  // TODO: s3://trainers/{trainerName}.jsonにpokeapiのデータを追加
   try {
     const object = await s3Client.send(
       new GetObjectCommand({
@@ -125,8 +122,8 @@ app.put("/trainer/:trainerName/pokemon/:pokemonOrder", async (req, res) => {
   }
 });
 
+/** ポケモンの削除 */
 app.delete("/trainer/:trainerName/pokemon/:pokemonId", async (req, res) => {
-  // TODO: s3://trainers/{trainerName}.jsonから{pokemonId}のデータを検索して削除
   try {
     const object = await s3Client.send(
       new GetObjectCommand({
