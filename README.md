@@ -7,6 +7,41 @@
 - AWS 認証情報のアクセスキー ID とシークレットアクセスキーを生成してください
 - AWS S3 バケットを作成してください
 
+## 実行環境
+
+### ローカル
+
+- 本リポジトリをクローンして実行してください
+
+### StackBlitz
+
+- https://stackblitz.com/github/webdino/lyceum-pokemon からフォークしてください
+- 以下のような内容で [AWS S3 バケットに CORS を設定](https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v2/developer-guide/cors.html#configuring-cors-s3-bucket)してください
+
+```json
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "HEAD",
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "https://<StackBlitz の Slug>.w.staticblitz.com"
+        ],
+        "ExposeHeaders": [
+            "ETag",
+            "x-amz-meta-custom-header"
+        ]
+    }
+]
+```
+
 ## 使い方
 
 - `yarn install`: npm パッケージのインストール
