@@ -48,10 +48,28 @@ app.get("/trainer/:trainerName", async (req, res, next) => {
   }
 });
 
-/** トレーナーの追加更新 */
+/** トレーナーの追加 */
 app.post("/trainer", async (req, res, next) => {
   try {
+    if (!"name" in req.body) return res.sendStatus(400);
+    const trainers = await findTrainers();
+    if (trainers.some(({ Key }) => Key === `${req.body.name}.json`))
+      return res.sendStatus(409);
     const result = await upsertTrainer(req.body.name, req.body);
+    res.status(result["$metadata"].httpStatusCode).send(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/** トレーナーの更新 */
+app.post("/trainer/:trainerName", async (req, res, next) => {
+  try {
+    const { trainerName } = req.params;
+    const trainers = await findTrainers();
+    if (!trainers.some(({ Key }) => Key === `${trainerName}.json`))
+      return res.sendStatus(404);
+    const result = await upsertTrainer(trainerName, req.body);
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {
     next(err);
