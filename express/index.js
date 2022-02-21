@@ -17,51 +17,51 @@ app.get("/", (req, res) => {
 });
 
 /** トレーナーの一覧の取得 */
-app.get("/trainers", async (req, res) => {
+app.get("/trainers", async (req, res, next) => {
   try {
     const trainers = await findTrainers();
     res.send(trainers);
   } catch (err) {
-    res.status(500).send(err);
+    next(err);
   }
 });
 
 /** トレーナーの取得 */
-app.get("/trainer/:trainerName", async (req, res) => {
+app.get("/trainer/:trainerName", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
     const trainer = await findTrainer(trainerName);
     res.send(trainer);
   } catch (err) {
-    res.status(500).send(err);
+    next(err);
   }
 });
 
 /** トレーナーの追加更新 */
-app.post("/trainer", async (req, res) => {
+app.post("/trainer", async (req, res, next) => {
   try {
     const result = await upsertTrainer(req.body.name, req.body);
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {
-    res.status(500).send(err);
+    next(err);
   }
 });
 
 /** トレーナーの削除 */
-app.delete("/trainer/:trainerName", async (req, res) => {
+app.delete("/trainer/:trainerName", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
     const result = await deleteTrainer(trainerName);
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {
-    res.status(500).send(err);
+    next(err);
   }
 });
 
 /** ポケモンの追加 */
 app.put(
   "/trainer/:trainerName/pokemon/:pokemonOrder",
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const { trainerName, pokemonOrder } = req.params;
       const trainer = await findTrainer(trainerName);
@@ -81,7 +81,7 @@ app.put(
       const result = await upsertTrainer(trainerName, trainer);
       res.status(result["$metadata"].httpStatusCode).send(result);
     } catch (err) {
-    res.status(500).send(err);
+      next(err);
     }
   }
 );
@@ -89,7 +89,7 @@ app.put(
 /** ポケモンの削除 */
 app.delete(
   "/trainer/:trainerName/pokemon/:pokemonId",
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const { trainerName, pokemonId } = req.params;
       const trainer = await findTrainer(trainerName);
@@ -100,7 +100,7 @@ app.delete(
       const result = await upsertTrainer(trainerName, trainer);
       res.status(result["$metadata"].httpStatusCode).send(result);
     } catch (err) {
-      res.status(500).send(err);
+      next(err);
     }
   }
 );
