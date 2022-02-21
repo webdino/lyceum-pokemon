@@ -30,3 +30,7 @@
 | `/trainer/:trainer`                       | トレーナー GET: 取得, POST: 更新, DELETE: 削除 | `trainer`: トレーナー名            |
 | `/trainer/:trainer/pokemon/:pokemonOrder` | ポケモン PUT: 追加                             | `pokemonOrder`: ポケモン図鑑番号   |
 | `/trainer/:trainer/pokemon/:pokemonId`    | ポケモン DELETE: 削除                          | `pokemonId` : 手持ちポケモン識別子 |
+
+## ER図
+
+![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/knokmki612-patch-1/docs/pokemon.drawio.png)
