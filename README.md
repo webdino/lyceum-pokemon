@@ -12,10 +12,12 @@
 ### ローカル
 
 - 本リポジトリをクローンして実行してください
+- 環境変数は https://ja.vitejs.dev/guide/env-and-mode.html#env-files にしたがって `.env` などに設定してください
 
 ### StackBlitz
 
 - https://stackblitz.com/github/webdino/lyceum-pokemon からフォークしてください
+- 環境変数は https://developer.stackblitz.com/docs/platform/project-config/ にしたがって `.stackblitzrc` に設定してください
 - 以下のような内容で [AWS S3 バケットに CORS を設定](https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v2/developer-guide/cors.html#configuring-cors-s3-bucket)してください
 
 ```json
