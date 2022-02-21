@@ -19,3 +19,14 @@
 | `AWS_SECRET_ACCESS_KEY` | AWS 認証情報のシークレットアクセスキー                   | なし               |
 | `REGION`                | AWS のリージョン                                         | `"ap-northeast-1"` |
 | `BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`               |
+
+## API エンドポイント
+
+| エンドポイント                            | 説明                                           | パラメーター                       |
+| :---------------------------------------- | :--------------------------------------------- | :--------------------------------- |
+| `/pokeapi`                                | https://pokeapi.co/api/v2/ へのプロキシー      | なし                               |
+| `/trainers`                               | トレーナーの一覧 GET: 取得                     | なし                               |
+| `/trainer`                                | トレーナー POST: 追加                          | なし                               |
+| `/trainer/:trainer`                       | トレーナー GET: 取得, POST: 更新, DELETE: 削除 | `trainer`: トレーナー名            |
+| `/trainer/:trainer/pokemon/:pokemonOrder` | ポケモン PUT: 追加                             | `pokemonOrder`: ポケモン図鑑番号   |
+| `/trainer/:trainer/pokemon/:pokemonId`    | ポケモン DELETE: 削除                          | `pokemonId` : 手持ちポケモン識別子 |
