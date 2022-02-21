@@ -2,13 +2,18 @@
 
 ポケモン API を使った Nuxt+Express アプリ/サーバの開発演習
 
+## 準備
+
+- AWS 認証情報のアクセスキー ID とシークレットアクセスキーを生成してください
+- AWS S3 バケットを作成してください
+
 ## 使い方
 
 - `yarn install`: npm パッケージのインストール
 - `yarn dev`: 開発サーバーの起動
 - `yarn build`: アプリケーションのプロダクションビルド
 - `yarn start`: プロダクションビルドを使ったローカルサーバーの起動
-- `yarn lint`: コードリンティング
+- `yarn lint`: コードリント
 - `yarn format`: コード整形
 
 ## 環境変数
@@ -31,6 +36,6 @@
 | `/trainer/:trainer/pokemon/:pokemonOrder` | ポケモン PUT: 追加                             | `pokemonOrder`: ポケモン図鑑番号   |
 | `/trainer/:trainer/pokemon/:pokemonId`    | ポケモン DELETE: 削除                          | `pokemonId` : 手持ちポケモン識別子 |
 
-## ER図
+## ER 図
 
 ![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/main/docs/pokemon.drawio.png)
