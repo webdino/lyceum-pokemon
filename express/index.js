@@ -23,12 +23,12 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send("Hello World");
 });
 
 /** トレーナーの一覧の取得 */
-app.get("/trainers", async (req, res, next) => {
+app.get("/trainers", async (_req, res, next) => {
   try {
     const trainers = await findTrainers();
     res.send(trainers);
@@ -51,7 +51,7 @@ app.get("/trainer/:trainerName", async (req, res, next) => {
 /** トレーナーの追加 */
 app.post("/trainer", async (req, res, next) => {
   try {
-    if (!"name" in req.body) return res.sendStatus(400);
+    if (!("name" in req.body)) return res.sendStatus(400);
     const trainers = await findTrainers();
     if (trainers.some(({ Key }) => Key === `${req.body.name}.json`))
       return res.sendStatus(409);
