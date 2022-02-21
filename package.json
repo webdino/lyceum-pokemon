@@ -8,10 +8,12 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.51.0",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-vue": "^8.4.1",
     "express": "^4.17.2",
+    "http-proxy-middleware": "^2.0.3",
     "nuxt3": "latest",
     "prettier": "^2.5.1"
   }
