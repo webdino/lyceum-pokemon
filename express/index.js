@@ -1,4 +1,5 @@
 import express from "express";
+import { createProxyMiddleware } from "http-proxy-middleware";
 import {
   findTrainers,
   findTrainer,
@@ -11,6 +12,16 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  "/pokeapi",
+  createProxyMiddleware({
+    target: "https://pokeapi.co",
+    changeOrigin: true,
+    pathRewrite: {
+      "^/express/pokeapi": "/api/v2",
+    },
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
