@@ -22,25 +22,12 @@
 
 ```json
 [
-    {
-        "AllowedHeaders": [
-            "*"
-        ],
-        "AllowedMethods": [
-            "HEAD",
-            "GET",
-            "PUT",
-            "POST",
-            "DELETE"
-        ],
-        "AllowedOrigins": [
-            "https://<StackBlitz の Slug>.w.staticblitz.com"
-        ],
-        "ExposeHeaders": [
-            "ETag",
-            "x-amz-meta-custom-header"
-        ]
-    }
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["HEAD", "GET", "PUT", "POST", "DELETE"],
+    "AllowedOrigins": ["https://<StackBlitz の Slug>.w.staticblitz.com"],
+    "ExposeHeaders": ["ETag", "x-amz-meta-custom-header"]
+  }
 ]
 ```
 
