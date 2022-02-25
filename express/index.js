@@ -27,11 +27,12 @@ app.get("/", (_req, res) => {
   res.send("Hello World");
 });
 
-/** トレーナーの一覧の取得 */
+/** トレーナー名の一覧の取得 */
 app.get("/trainers", async (_req, res, next) => {
   try {
     const trainers = await findTrainers();
-    res.send(trainers);
+    const trainerNames = trainers.map(({ Key }) => Key.replace(/\.json$/, ""));
+    res.send(trainerNames);
   } catch (err) {
     next(err);
   }
