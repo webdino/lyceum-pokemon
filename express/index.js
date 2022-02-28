@@ -90,12 +90,12 @@ app.delete("/trainer/:trainerName", async (req, res, next) => {
 
 /** ポケモンの追加 */
 app.put(
-  "/trainer/:trainerName/pokemon/:pokemonOrder",
+  "/trainer/:trainerName/pokemon/:pokemonName",
   async (req, res, next) => {
     try {
-      const { trainerName, pokemonOrder } = req.params;
+      const { trainerName, pokemonName } = req.params;
       const trainer = await findTrainer(trainerName);
-      const pokemon = await findPokemon(pokemonOrder);
+      const pokemon = await findPokemon(pokemonName);
       const {
         order,
         name,
