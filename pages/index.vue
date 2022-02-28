@@ -12,7 +12,7 @@ export default {
 <template>
   <ul>
     <li v-if="trainers.length > 0">
-      <NuxtLink to="/continue">つづきからはじめる</NuxtLink>
+      <NuxtLink to="/trainer">つづきからはじめる</NuxtLink>
     </li>
     <li v-else>つづきからはじめる</li>
     <li>
