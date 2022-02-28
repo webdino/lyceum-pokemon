@@ -90,19 +90,19 @@ app.delete("/trainer/:trainerName", async (req, res, next) => {
 
 /** ポケモンの追加 */
 app.put(
-  "/trainer/:trainerName/pokemon/:pokemonOrder",
+  "/trainer/:trainerName/pokemon/:pokemonName",
   async (req, res, next) => {
     try {
-      const { trainerName, pokemonOrder } = req.params;
+      const { trainerName, pokemonName } = req.params;
       const trainer = await findTrainer(trainerName);
-      const pokemon = await findPokemon(pokemonOrder);
+      const pokemon = await findPokemon(pokemonName);
       const {
         order,
         name,
         sprites: { front_default },
       } = pokemon;
       trainer.pokemons.push({
-        id: trainer.pokemons.length + 1,
+        id: trainer.pokemons[trainer.pokemons.length]?.id ?? 0 + 1,
         nickname: "",
         order,
         name,
@@ -126,7 +126,7 @@ app.delete(
       const index = trainer.pokemons.findIndex(
         (pokemon) => pokemon.id === pokemonId
       );
-      trainer.pokemons.splice(index, 1);
+      trainer.pokemons.splice(index - 1, 1);
       const result = await upsertTrainer(trainerName, trainer);
       res.status(result["$metadata"].httpStatusCode).send(result);
     } catch (err) {
