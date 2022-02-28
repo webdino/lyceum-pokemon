@@ -126,7 +126,7 @@ app.delete(
       const index = trainer.pokemons.findIndex(
         (pokemon) => pokemon.id === pokemonId
       );
-      trainer.pokemons.splice(index, 1);
+      trainer.pokemons.splice(index - 1, 1);
       const result = await upsertTrainer(trainerName, trainer);
       res.status(result["$metadata"].httpStatusCode).send(result);
     } catch (err) {
