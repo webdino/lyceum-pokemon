@@ -15,5 +15,6 @@ export default {
     <ul>
       <li v-for="pokemon in trainer.pokemons" :id="pokemon.id">{{pokemon.name}}</li>
     </ul>
+    <NuxtLink :to="`/trainer/${trainer.name}/catch`">ポケモンをつかまえる</NuxtLink>
   </div>
 </template>
