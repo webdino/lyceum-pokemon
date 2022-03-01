@@ -28,7 +28,7 @@ export default {
     <p>トレーナー: {{trainer.name}}</p>
     <h3>てもちポケモン</h3>
     <ul>
-      <li v-for="pokemon in trainer.pokemons" :id="pokemon.id">
+      <li v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />
         {{pokemon.name}}
         <button @click="onRelease(pokemon.id)">ポケモンをはかせにおくる</button>
