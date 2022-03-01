@@ -3,10 +3,11 @@ export default {
   async setup() {
     const route = useRoute()
     const router = useRouter()
+    const { VITE_SERVER_ORIGIN } = import.meta.env
     const page = ref(0)
     const limit = ref(20)
     const offset = computed(() => page.value * limit.value)
-    const {data: pokemons, refresh} = await useAsyncData('/pokeapi/pokemon', () => $fetch('http://localhost:3000/express/pokeapi/pokemon', {params: {offset: offset.value, limit: limit.value}}))
+    const {data: pokemons, refresh} = await useAsyncData('/pokeapi/pokemon', () => $fetch(`${VITE_SERVER_ORIGIN}/express/pokeapi/pokemon`, {params: {offset: offset.value, limit: limit.value}}))
     const hasPrev = computed(() => page.value > 0)
     const maxPage = computed(() => Math.floor(pokemons.value.count / limit.value))
     const hasNext = computed(() => page.value < maxPage.value)
@@ -19,7 +20,7 @@ export default {
       await refresh()
     }
     const onCatch = async (pokemon) => {
-      const response = await fetch(`http://localhost:3000/express/trainer/${route.params.name}/pokemon/${pokemon.name}`, {
+      const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}/pokemon/${pokemon.name}`, {
         method: "PUT"
       })
       if (!response.ok) return

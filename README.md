@@ -48,6 +48,7 @@
 | `AWS_SECRET_ACCESS_KEY` | AWS 認証情報のシークレットアクセスキー                   | なし               |
 | `REGION`                | AWS のリージョン                                         | `"ap-northeast-1"` |
 | `BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`               |
+| `VITE_SERVER_ORIGIN`    | 用意したサーバー側 の API リクエストに用いるオリジン     | なし               |
 
 ## API エンドポイント
 
