@@ -102,7 +102,7 @@ app.put(
         sprites: { front_default },
       } = pokemon;
       trainer.pokemons.push({
-        id: trainer.pokemons[trainer.pokemons.length]?.id ?? 0 + 1,
+        id: (trainer.pokemons[trainer.pokemons.length - 1]?.id ?? 0) + 1,
         nickname: "",
         order,
         name,
