@@ -41,7 +41,8 @@ app.get("/trainers", async (_req, res, next) => {
 /** トレーナーの追加 */
 app.post("/trainer", async (req, res, next) => {
   try {
-    if (!("name" in req.body)) return res.sendStatus(400);
+    if (!("name" in req.body && req.body.name.length > 0))
+      return res.sendStatus(400);
     const trainers = await findTrainers();
     if (trainers.some(({ Key }) => Key === `${req.body.name}.json`))
       return res.sendStatus(409);
