@@ -26,11 +26,33 @@ export default {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
-    <label>
-      なまえ
-      <input v-model="trainerName" />
-    </label>
-    <button type="button" @click="onSubmit">はじめる</button>
-  </form>
+  <div>
+    <h1>あたらしくはじめる</h1>
+    <p>では はじめに きみの なまえを おしえて もらおう！</p>
+    <form @submit.prevent="onSubmit">
+      <div class="item">
+        <label for="name">なまえ</label>
+        <input id="name" v-model="trainerName" />
+      </div>
+      <button type="button" @click="onSubmit">けってい</button>
+    </form>
+  </div>
 </template>
+
+<style scoped>
+form {
+  border-radius: 0.5rem;
+  border: solid 4px #555;
+  padding: 1.5rem 3rem;
+}
+
+form > :not(:last-child) {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.item > label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+</style>

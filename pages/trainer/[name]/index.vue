@@ -26,9 +26,10 @@ export default {
 
 <template>
   <div>
+    <h1>メニュー</h1>
     <p>トレーナー: {{trainer.name}}</p>
     <button @click="onDelete">マサラタウンにかえる</button>
-    <h3>てもちポケモン</h3>
+    <h2>てもちポケモン</h2>
     <GamifyList>
       <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />

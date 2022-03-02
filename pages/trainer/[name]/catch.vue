@@ -33,6 +33,7 @@ export default {
 
 <template>
   <div>
+    <h1>ポケモンをつかまえる</h1>
     <p>{{pokemons.count}}しゅるいのポケモン</p>
     <p>{{page + 1}} / {{maxPage + 1}} ページ</p>
     <GamifyList>
