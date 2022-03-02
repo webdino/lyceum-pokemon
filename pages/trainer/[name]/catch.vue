@@ -34,13 +34,19 @@ export default {
 <template>
   <div>
     <p>{{pokemons.count}}しゅるいのポケモン</p>
-    <ul>
-      <li v-for="pokemon in pokemons.results" :key="pokemon.url">
-        <button @click="onCatch(pokemon)">{{pokemon.name}}</button>
-      </li>
-    </ul>
     <p>{{page + 1}} / {{maxPage + 1}} ページ</p>
-    <button @click="onPrev" :disabled="!hasPrev">まえへ</button>
-    <button @click="onNext" :disabled="!hasNext">つぎへ</button>
+    <GamifyList>
+      <GamifyItem v-for="pokemon in pokemons.results" :key="pokemon.url">
+        <button @click="onCatch(pokemon)">{{pokemon.name}}</button>
+      </GamifyItem>
+    </GamifyList>
+    <GamifyList>
+      <GamifyItem>
+        <button @click="onPrev" :disabled="!hasPrev">まえへ</button>
+      </GamifyItem>
+      <GamifyItem>
+        <button @click="onNext" :disabled="!hasNext">つぎへ</button>
+      </GamifyItem>
+    </GamifyList>
   </div>
 </template>

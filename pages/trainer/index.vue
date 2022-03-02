@@ -8,9 +8,9 @@ export default {
 </script>
 
 <template>
-  <ul>
-    <li v-for="trainer in trainers" :key="trainer">
+  <GamifyList>
+    <GamifyItem v-for="trainer in trainers" :key="trainer">
       <NuxtLink :to="`/trainer/${trainer}`">{{trainer}}</NuxtLink>
-    </li>
-  </ul>
+    </GamifyItem>
+  </GamifyList>
 </template>
