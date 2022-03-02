@@ -20,7 +20,7 @@ export const findTrainers = async () => {
   const objects = await s3Client.send(
     new ListObjectsCommand({ Bucket: BUCKET_NAME })
   );
-  return objects.Contents;
+  return objects.Contents ?? [];
 };
 
 /** トレーナーの取得 */
