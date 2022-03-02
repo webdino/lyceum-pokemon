@@ -18,6 +18,7 @@ export default {
       })
       if (!response.ok) return
       await refresh()
+      onCloseRelease()
     }
     const {dialog: deleteDialog, onOpen: onOpenDelete, onClose: onCloseDelete} = useDialog()
     const {dialog: releaseDialog, onOpen: onOpenRelease, onClose: onCloseRelease} = useDialog()
@@ -31,23 +32,23 @@ export default {
     <h1>メニュー</h1>
     <h2>トレーナー</h2>
     <p>{{trainer.name}}</p>
-    <button @click="onOpenDelete">マサラタウンにかえる</button>
+    <button @click="onOpenDelete(true)">マサラタウンにかえる</button>
     <h2>てもちポケモン</h2>
     <GamifyList>
       <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />
         <span>{{pokemon.name}}</span>
-        <button @click="onOpenRelease">ポケモンをはかせにおくる</button>
+        <button @click="onOpenRelease(pokemon)">はかせにおくる</button>
       </GamifyItem>
       <GamifyItem>
         <NuxtLink :to="`/trainer/${trainer.name}/catch`">ポケモンをつかまえる</NuxtLink>
       </GamifyItem>
     </GamifyList>
     <GamifyDialog
+      v-if="deleteDialog"
       id="confirm-delete"
       title="かくにん"
       description="ほんとうに　マサラタウンに　かえるんだな！　この そうさは　とりけせないぞ！"
-      :dialog="deleteDialog"
       @close="onCloseDelete"
     >
       <GamifyList :border="false" direction="horizon">
@@ -60,10 +61,10 @@ export default {
       </GamifyList>
     </GamifyDialog>
     <GamifyDialog
+      v-if="releaseDialog"
       id="confirm-release"
       title="かくにん"
-      description="ほんとうに　ポケモンを　はかせに　おくるんだな！　この そうさは　とりけせないぞ！"
-      :dialog="releaseDialog"
+      :description="`ほんとうに　${releaseDialog.name}　を　はかせに　おくるんだな！　この　そうさは　とりけせないぞ！`"
       @close="onCloseRelease"
     >
       <GamifyList :border="false" direction="horizon">
@@ -71,7 +72,7 @@ export default {
           <button @click="onCloseRelease">いいえ</button>
         </GamifyItem>
         <GamifyItem>
-          <button @click="onRelease(pokemon.id)">はい</button>
+          <button @click="onRelease(releaseDialog.id)">はい</button>
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>

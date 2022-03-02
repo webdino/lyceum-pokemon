@@ -1,10 +1,10 @@
 export default () => {
-  const dialog = ref(false);
-  const onOpen = () => {
-    dialog.value = true;
+  const dialog = ref(null);
+  const onOpen = (value) => {
+    dialog.value = value;
   };
   const onClose = () => {
-    dialog.value = false;
+    dialog.value = null;
   };
   return {
     dialog,

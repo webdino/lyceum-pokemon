@@ -26,14 +26,8 @@ export default {
       if (!response.ok) return
       router.push(`/trainer/${route.params.name}`)
     }
-    const pickedPokemon = ref(null)
-    const onOpen = (pokemon) => {
-      pickedPokemon.value = pokemon
-    }
-    const onClose = () => {
-      pickedPokemon.value = null
-    }
-    return {page, maxPage, pokemons, hasPrev, hasNext, onPrev, onNext, onCatch, pickedPokemon, onOpen, onClose}
+    const {dialog, onOpen, onClose} = useDialog()
+    return {page, maxPage, pokemons, hasPrev, hasNext, onPrev, onNext, onCatch, dialog, onOpen, onClose}
   }
 }
 </script>
@@ -45,15 +39,15 @@ export default {
     <p>{{page + 1}} / {{maxPage + 1}} ページ</p>
     <GamifyList>
       <GamifyItem v-for="pokemon in pokemons.results" :key="pokemon.url">
-        <button @click="onOpen(pokemon)">{{pokemon.name}}</button>
+        <span>{{pokemon.name}}</span>
+        <button @click="onOpen(pokemon)">つかまえる</button>
       </GamifyItem>
     </GamifyList>
     <GamifyDialog
-      v-if="pickedPokemon"
+      v-if="dialog"
       id="confirm-catch"
       title="かくにん"
-      :description="`ほう！　${pickedPokemon.name}　にするんじゃな？`"
-      :dialog="pickedPokemon"
+      :description="`ほう！　${dialog.name}　にするんじゃな？`"
       @close="onClose"
     >
       <GamifyList :border="false" direction="horizon">
@@ -61,7 +55,7 @@ export default {
           <button @click="onClose">いいえ</button>
         </GamifyItem>
         <GamifyItem>
-          <button @click="onCatch(pickedPokemon)">はい</button>
+          <button @click="onCatch(dialog)">はい</button>
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>
