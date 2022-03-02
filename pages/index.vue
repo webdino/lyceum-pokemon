@@ -10,13 +10,16 @@ export default {
 </script>
 
 <template>
-  <ul>
-    <li v-if="trainers.length > 0">
-      <NuxtLink to="/trainer">つづきからはじめる</NuxtLink>
-    </li>
-    <li v-else>つづきからはじめる</li>
-    <li>
-      <NuxtLink to="/new">あたらしくはじめる</NuxtLink>
-    </li>
-  </ul>
+  <div>
+    <h1>ポケットモンスター</h1>
+    <GamifyList>
+      <GamifyItem v-if="trainers.length > 0">
+        <NuxtLink to="/trainer">つづきからはじめる</NuxtLink>
+      </GamifyItem>
+      <GamifyItem v-else>つづきからはじめる</GamifyItem>
+      <GamifyItem>
+        <NuxtLink to="/new">あたらしくはじめる</NuxtLink>
+      </GamifyItem>
+    </GamifyList>
+  </div>
 </template>

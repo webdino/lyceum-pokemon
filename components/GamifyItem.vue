@@ -1,0 +1,34 @@
+<script>
+export default {
+  setup() {
+    const active = ref(false)
+    return {active}
+  }
+}
+</script>
+<template>
+  <li class="gamify-item">
+    <span class="selector" aria-hidden>▶</span>
+    <slot />
+  </li>
+</template>
+
+<style scoped>
+.gamify-item {
+  display: flex;
+  align-items: center;
+}
+
+.gamify-item > .selector {
+  visibility: hidden;
+}
+
+.gamify-item:hover > .selector,
+.gamify-item:focus-within > .selector {
+  visibility: visible;
+}
+
+.gamify-item > :deep(:not(:last-child)) {
+  margin-right: 0.5rem;
+}
+</style>
