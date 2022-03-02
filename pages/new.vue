@@ -36,15 +36,15 @@ export default {
     <form @submit.prevent>
       <div class="item">
         <label for="name">なまえ</label>
-        <input id="name" @keydown.enter="onOpen" v-model="trainerName" />
+        <input id="name" @keydown.enter="onOpen(true)" v-model="trainerName" />
       </div>
-      <button type="button" @click="onOpen">けってい</button>
+      <button type="button" @click="onOpen(true)">けってい</button>
     </form>
     <GamifyDialog
+      v-if="dialog"
       id="confirm-submit"
       title="かくにん"
       :description="`ふむ・・・　きみは　${trainerName}　と　いうんだな！`"
-      :dialog="dialog"
       @close="onClose"
     >
       <GamifyList :border="false" direction="horizon">

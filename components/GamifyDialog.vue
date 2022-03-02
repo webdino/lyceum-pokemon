@@ -13,10 +13,6 @@ export default {
       required: true,
       type: String
     },
-    dialog: {
-      default: false,
-      type: Boolean,
-    },
   },
   setup(_props, context) {
     const onClose = () => {
@@ -27,7 +23,7 @@ export default {
 }
 </script>
 <template>
-  <div class="gamify-dialog" :class="{active: dialog}">
+  <div class="gamify-dialog">
     <div class="overlay" @click="onClose" />
     <div
       class="dialog"
@@ -44,10 +40,6 @@ export default {
 </template>
 
 <style scoped>
-.gamify-dialog:not(.active) {
-  display: none;
-}
-
 .gamify-dialog > .overlay {
   background-color: rgba(255, 255, 255, 0.5);
   position: fixed;
