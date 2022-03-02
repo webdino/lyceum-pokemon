@@ -10,7 +10,7 @@ export default {
         method: "DELETE"
       })
       if (!response.ok) return
-      router.push("/trainer")
+      router.push("/")
     }
     const onRelease = async (pokemonId) => {
       const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}/pokemon/${pokemonId}`, {
