@@ -27,7 +27,8 @@ export default {
 <template>
   <div>
     <h1>メニュー</h1>
-    <p>トレーナー: {{trainer.name}}</p>
+    <h2>トレーナー</h2>
+    <p>{{trainer.name}}</p>
     <button @click="onDelete">マサラタウンにかえる</button>
     <h2>てもちポケモン</h2>
     <GamifyList>
