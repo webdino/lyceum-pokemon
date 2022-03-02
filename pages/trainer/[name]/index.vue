@@ -3,7 +3,7 @@ export default {
   async setup() {
     const route = useRoute()
     const router = useRouter()
-    const { VITE_SERVER_ORIGIN } = import.meta.env
+    const {VITE_SERVER_ORIGIN} = import.meta.env
     const {data: trainer, refresh} = await useAsyncData(`/trainer/${route.params.name}`, () => $fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`))
     const onDelete = async () => {
       const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`, {
