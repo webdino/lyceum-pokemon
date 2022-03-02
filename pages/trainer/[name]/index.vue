@@ -67,7 +67,7 @@ export default {
       v-if="deleteDialog"
       id="confirm-delete"
       title="かくにん"
-      description="ほんとうに　マサラタウンに　かえるんだな！　この そうさは　とりけせないぞ！"
+      description="ほんとうに　マサラタウンに　かえるんだな！　この　そうさは　とりけせないぞ！"
       @close="onCloseDelete"
     >
       <GamifyList :border="false" direction="horizon">
