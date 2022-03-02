@@ -16,7 +16,9 @@ export default {
       <GamifyItem v-if="trainers.length > 0">
         <NuxtLink to="/trainer">つづきからはじめる</NuxtLink>
       </GamifyItem>
-      <GamifyItem v-else>つづきからはじめる</GamifyItem>
+      <GamifyItem v-else>
+        <span>つづきからはじめる</span>
+      </GamifyItem>
       <GamifyItem>
         <NuxtLink to="/new">あたらしくはじめる</NuxtLink>
       </GamifyItem>
