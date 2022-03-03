@@ -1,12 +1,12 @@
 <script>
 export default {
   async setup() {
-    const {data: trainers} = await useTrainers()
+    const { data: trainers } = await useTrainers();
     return {
       trainers,
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <template>

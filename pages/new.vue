@@ -1,32 +1,32 @@
 <script>
 export default {
   setup() {
-    const router = useRouter()
-    const trainerName = ref("")
-    const {VITE_SERVER_ORIGIN} = import.meta.env
+    const router = useRouter();
+    const trainerName = ref("");
+    const { VITE_SERVER_ORIGIN } = import.meta.env;
     const onSubmit = async () => {
       const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: trainerName.value
-        })
-      })
-      if (!response.ok) return
-      router.push(`/trainer/${trainerName.value}`)
-    }
-    const {dialog, onOpen, onClose} = useDialog()
+          name: trainerName.value,
+        }),
+      });
+      if (!response.ok) return;
+      router.push(`/trainer/${trainerName.value}`);
+    };
+    const { dialog, onOpen, onClose } = useDialog();
     return {
       trainerName,
       onSubmit,
       dialog,
       onOpen,
-      onClose
-    }
-  }
-}
+      onClose,
+    };
+  },
+};
 </script>
 
 <template>

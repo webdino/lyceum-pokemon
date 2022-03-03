@@ -1,66 +1,109 @@
 <script>
 export default {
   async setup() {
-    const route = useRoute()
-    const router = useRouter()
-    const {VITE_SERVER_ORIGIN} = import.meta.env
-    const {data: trainer, refresh} = await useAsyncData(`/trainer/${route.params.name}`, () => $fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`))
+    const route = useRoute();
+    const router = useRouter();
+    const { VITE_SERVER_ORIGIN } = import.meta.env;
+    const { data: trainer, refresh } = await useAsyncData(
+      `/trainer/${route.params.name}`,
+      () => $fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`)
+    );
     const onDelete = async () => {
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`, {
-        method: "DELETE"
-      })
-      if (!response.ok) return
-      router.push("/")
-    }
+      const response = await fetch(
+        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) return;
+      router.push("/");
+    };
     const nickname = ref("");
     const onRename = async (pokemon) => {
       const newTrainer = trainer.value;
-      const index = newTrainer.pokemons.findIndex(({id}) => id === pokemon.id)
+      const index = newTrainer.pokemons.findIndex(
+        ({ id }) => id === pokemon.id
+      );
       newTrainer.pokemons[index].nickname = nickname.value;
-      nickname.value = ""
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newTrainer)
-      })
-      if (!response.ok) return
-      await refresh()
-      onCloseRename()
-    }
+      nickname.value = "";
+      const response = await fetch(
+        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newTrainer),
+        }
+      );
+      if (!response.ok) return;
+      await refresh();
+      onCloseRename();
+    };
     const onRelease = async (pokemonId) => {
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}/pokemon/${pokemonId}`, {
-        method: "DELETE"
-      })
-      if (!response.ok) return
-      await refresh()
-      onCloseRelease()
-    }
-    const {dialog: deleteDialog, onOpen: onOpenDelete, onClose: onCloseDelete} = useDialog()
-    const {dialog: nicknameDialog, onOpen: onOpenRename, onClose: onCloseRename} = useDialog()
-    const {dialog: releaseDialog, onOpen: onOpenRelease, onClose: onCloseRelease} = useDialog()
-    return {trainer, nickname, onDelete, onRename, onRelease, deleteDialog, onOpenDelete, onCloseDelete, nicknameDialog, onOpenRename, onCloseRename, releaseDialog, onOpenRelease, onCloseRelease}
-  }
-}
+      const response = await fetch(
+        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}/pokemon/${pokemonId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) return;
+      await refresh();
+      onCloseRelease();
+    };
+    const {
+      dialog: deleteDialog,
+      onOpen: onOpenDelete,
+      onClose: onCloseDelete,
+    } = useDialog();
+    const {
+      dialog: nicknameDialog,
+      onOpen: onOpenRename,
+      onClose: onCloseRename,
+    } = useDialog();
+    const {
+      dialog: releaseDialog,
+      onOpen: onOpenRelease,
+      onClose: onCloseRelease,
+    } = useDialog();
+    return {
+      trainer,
+      nickname,
+      onDelete,
+      onRename,
+      onRelease,
+      deleteDialog,
+      onOpenDelete,
+      onCloseDelete,
+      nicknameDialog,
+      onOpenRename,
+      onCloseRename,
+      releaseDialog,
+      onOpenRelease,
+      onCloseRelease,
+    };
+  },
+};
 </script>
 
 <template>
   <div>
     <h1>メニュー</h1>
     <h2>トレーナー</h2>
-    <p>{{trainer.name}}</p>
+    <p>{{ trainer.name }}</p>
     <button @click="onOpenDelete(true)">マサラタウンにかえる</button>
     <h2>てもちポケモン</h2>
     <GamifyList>
       <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />
-        <span>{{pokemon.nickname || pokemon.name}}</span>
+        <span>{{ pokemon.nickname || pokemon.name }}</span>
         <button @click="onOpenRename(pokemon)">ニックネームをつける</button>
         <button @click="onOpenRelease(pokemon)">はかせにおくる</button>
       </GamifyItem>
       <GamifyItem>
-        <NuxtLink :to="`/trainer/${trainer.name}/catch`">ポケモンをつかまえる</NuxtLink>
+        <NuxtLink :to="`/trainer/${trainer.name}/catch`"
+          >ポケモンをつかまえる</NuxtLink
+        >
       </GamifyItem>
     </GamifyList>
     <GamifyDialog
@@ -88,7 +131,11 @@ export default {
     >
       <div class="item">
         <label for="name">ニックネーム</label>
-        <input id="name" @keydown.enter="onRename(nicknameDialog)" v-model="nickname" />
+        <input
+          id="name"
+          @keydown.enter="onRename(nicknameDialog)"
+          v-model="nickname"
+        />
       </div>
       <GamifyList :border="false" direction="horizon">
         <GamifyItem>
@@ -103,7 +150,9 @@ export default {
       v-if="releaseDialog"
       id="confirm-release"
       title="かくにん"
-      :description="`ほんとうに　${releaseDialog.nickname || releaseDialog.name}　を　はかせに　おくるんだな！　この　そうさは　とりけせないぞ！`"
+      :description="`ほんとうに　${
+        releaseDialog.nickname || releaseDialog.name
+      }　を　はかせに　おくるんだな！　この　そうさは　とりけせないぞ！`"
       @close="onCloseRelease"
     >
       <GamifyList :border="false" direction="horizon">

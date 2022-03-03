@@ -3,24 +3,24 @@ export default {
   props: {
     id: {
       required: true,
-      type: String
+      type: String,
     },
     title: {
       required: true,
-      type: String
+      type: String,
     },
     description: {
       required: true,
-      type: String
+      type: String,
     },
   },
   setup(_props, context) {
     const onClose = () => {
-      context.emit("close")
-    }
-    return {onClose}
-  }
-}
+      context.emit("close");
+    };
+    return { onClose };
+  },
+};
 </script>
 <template>
   <div class="gamify-dialog">
@@ -32,8 +32,8 @@ export default {
       :aria-labelledby="`${id}-title`"
       aria-describedby="`${id}-description`"
     >
-      <h2>{{title}}</h2>
-      <p>{{description}}</p>
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>
       <slot />
     </div>
   </div>
