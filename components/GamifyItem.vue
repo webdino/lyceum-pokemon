@@ -17,6 +17,7 @@ export default {
 .gamify-item {
   display: flex;
   align-items: center;
+  margin-bottom: 2px;
 }
 
 .gamify-item > .selector {

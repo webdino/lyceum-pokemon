@@ -3,15 +3,15 @@ export default {
   async setup() {
     const route = useRoute();
     const router = useRouter();
-    const { VITE_SERVER_ORIGIN } = import.meta.env;
+    const {VITE_SERVER_ORIGIN} = import.meta.env;
     const page = ref(0);
     const limit = ref(20);
     const offset = computed(() => page.value * limit.value);
-    const { data: pokemons, refresh } = await useAsyncData(
+    const {data: pokemons, refresh} = await useAsyncData(
       "/pokeapi/pokemon",
       () =>
         $fetch(`${VITE_SERVER_ORIGIN}/express/pokeapi/pokemon`, {
-          params: { offset: offset.value, limit: limit.value },
+          params: {offset: offset.value, limit: limit.value},
         })
     );
     const hasPrev = computed(() => page.value > 0);
@@ -37,7 +37,7 @@ export default {
       if (!response.ok) return;
       router.push(`/trainer/${route.params.name}`);
     };
-    const { dialog, onOpen, onClose } = useDialog();
+    const {dialog, onOpen, onClose} = useDialog();
     return {
       page,
       maxPage,
@@ -58,11 +58,11 @@ export default {
 <template>
   <div>
     <h1>ポケモンをつかまえる</h1>
-    <p>{{ pokemons.count }} しゅるいのポケモン</p>
-    <p>{{ page + 1 }} / {{ maxPage + 1 }} ページ</p>
+    <p>{{pokemons.count}} しゅるいのポケモン</p>
+    <p>{{page + 1}} / {{maxPage + 1}} ページ</p>
     <GamifyList>
       <GamifyItem v-for="pokemon in pokemons.results" :key="pokemon.url">
-        <span>{{ pokemon.name }}</span>
+        <span class="pokemon-name">{{pokemon.name}}</span>
         <button @click="onOpen(pokemon)">つかまえる</button>
       </GamifyItem>
     </GamifyList>
