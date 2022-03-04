@@ -55,7 +55,7 @@ export default {
   border-radius: 0.5rem;
   border: solid 4px #555;
   padding: 1.5rem 3rem;
-  position: absolute;
+  position: fixed;
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
