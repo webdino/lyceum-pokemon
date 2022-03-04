@@ -1,5 +1,5 @@
 <template>
-  <button @click="buttonClicked()">
+  <button class="gamify-button" @click="buttonClicked()">
     <slot />
   </button>
 </template>
@@ -8,7 +8,7 @@
 export default {
   setup(props, { emit }) {
     const buttonClicked = () => {
-      emit("click-button");
+      emit("click");
     };
     return {
       buttonClicked,
@@ -16,3 +16,27 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* ボタンの見せ方 */
+.gamify-button {
+  border-radius: 0.5rem;
+  border: solid 4px #555;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  display: inline-block;
+  background-color: #fff;
+  color: #555;
+  text-decoration: none;
+}
+
+.gamify-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 1px 1px 0 #555;
+}
+
+.gamify-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+</style>

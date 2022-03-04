@@ -1,6 +1,6 @@
 <template>
-  <NuxtLink :to="to" class="gamify-button">
-    <div class="gamify-button__content">
+  <NuxtLink :to="to" class="catch-button">
+    <div class="catch-button__content">
       <img class="pokemon-ball" src="/pokemon_ball.svg" alt="ポケモンボール" />
       <slot />
     </div>
@@ -18,25 +18,38 @@ export default {
 </script>
 
 <style scoped>
-.gamify-button {
+.catch-button {
   position: relative;
-  display: inline-block;
   line-height: 1;
+  border-radius: 0.5rem;
+  border: solid 4px #555;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  display: inline-block;
+  background-color: #fff;
+  color: #555;
+  text-decoration: none;
 }
-.gamify-button:hover {
+.catch-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 1px 1px 0 #555;
   color: #fff;
 }
-.gamify-button .pokemon-ball {
+.catch-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+.catch-button .pokemon-ball {
   width: 36px;
   height: 36px;
 }
 
-.gamify-button:hover .pokemon-ball {
+.catch-button:hover .pokemon-ball {
   animation: bounce;
   animation-duration: 0.8s;
 }
 
-.gamify-button::before {
+.catch-button::before {
   content: "";
   display: block;
   width: 100%;
@@ -48,10 +61,10 @@ export default {
   bottom: 0;
   border-radius: 0.2rem;
 }
-.gamify-button:hover::before {
+.catch-button:hover::before {
   height: 100%;
 }
-.gamify-button__content {
+.catch-button__content {
   position: relative;
   z-index: 2;
   display: inline-flex;

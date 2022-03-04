@@ -32,4 +32,9 @@ export default {
 .gamify-item > :deep(:not(:last-child)) {
   margin-right: 0.5rem;
 }
+
+.gamify-item :deep(.pokemon-name) {
+  width: 10em;
+  display: inline-block;
+}
 </style>
