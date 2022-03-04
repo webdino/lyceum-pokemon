@@ -18,7 +18,6 @@ export default {
 </script>
 
 <style scoped>
-/* ボタンの見せ方 */
 .gamify-button {
   border-radius: 0.5rem;
   border: solid 4px #555;
