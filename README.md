@@ -45,3 +45,36 @@
 ## ER 図
 
 ![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/main/docs/pokemon.drawio.png)
+
+## S3 バケットに作成するオブジェクトのサンプル
+
+トレーナー名が `レッド` の場合
+
+- `レッド.json`: S3 オブジェクトキー（ファイル名）
+- 次のコードブロック: S3 オブジェクト値（ファイル内容）
+
+```json:レッド.json
+{
+  "name": "レッド",
+  "pokemons": [
+    {
+      "id": 1,
+      "nickname": "",
+      "order": 35,
+      "name": "pikachu",
+      "sprites": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+      }
+    },
+    {
+      "id": 2,
+      "nickname": "",
+      "order": 220,
+      "name": "espeon",
+      "sprites": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png"
+      }
+    }
+  ]
+}
+```
