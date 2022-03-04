@@ -3,18 +3,18 @@ export default {
   props: {
     border: {
       default: true,
-      type: Boolean
+      type: Boolean,
     },
     direction: {
       default: "vertical",
-      type: String
-    }
-  }
-}
+      type: String,
+    },
+  },
+};
 </script>
 
 <template>
-  <ul class="gamify-list" :class="{border, horizon: direction === 'horizon'}">
+  <ul class="gamify-list" :class="{ border, horizon: direction === 'horizon' }">
     <slot />
   </ul>
 </template>

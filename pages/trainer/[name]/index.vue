@@ -1,66 +1,114 @@
 <script>
+import GamifyButton from "~~/components/GamifyButton.vue";
 export default {
   async setup() {
-    const route = useRoute()
-    const router = useRouter()
-    const {VITE_SERVER_ORIGIN} = import.meta.env
-    const {data: trainer, refresh} = await useAsyncData(`/trainer/${route.params.name}`, () => $fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`))
+    const route = useRoute();
+    const router = useRouter();
+    const { VITE_SERVER_ORIGIN } = import.meta.env;
+    const { data: trainer, refresh } = await useAsyncData(
+      `/trainer/${route.params.name}`,
+      () => $fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`)
+    );
     const onDelete = async () => {
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`, {
-        method: "DELETE"
-      })
-      if (!response.ok) return
-      router.push("/")
-    }
+      const response = await fetch(
+        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) return;
+      router.push("/");
+    };
     const nickname = ref("");
     const onRename = async (pokemon) => {
       const newTrainer = trainer.value;
-      const index = newTrainer.pokemons.findIndex(({id}) => id === pokemon.id)
+      const index = newTrainer.pokemons.findIndex(
+        ({ id }) => id === pokemon.id
+      );
       newTrainer.pokemons[index].nickname = nickname.value;
-      nickname.value = ""
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newTrainer)
-      })
-      if (!response.ok) return
-      await refresh()
-      onCloseRename()
-    }
+      nickname.value = "";
+      const response = await fetch(
+        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newTrainer),
+        }
+      );
+      if (!response.ok) return;
+      await refresh();
+      onCloseRename();
+    };
     const onRelease = async (pokemonId) => {
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}/pokemon/${pokemonId}`, {
-        method: "DELETE"
-      })
-      if (!response.ok) return
-      await refresh()
-      onCloseRelease()
-    }
-    const {dialog: deleteDialog, onOpen: onOpenDelete, onClose: onCloseDelete} = useDialog()
-    const {dialog: nicknameDialog, onOpen: onOpenRename, onClose: onCloseRename} = useDialog()
-    const {dialog: releaseDialog, onOpen: onOpenRelease, onClose: onCloseRelease} = useDialog()
-    return {trainer, nickname, onDelete, onRename, onRelease, deleteDialog, onOpenDelete, onCloseDelete, nicknameDialog, onOpenRename, onCloseRename, releaseDialog, onOpenRelease, onCloseRelease}
-  }
-}
+      const response = await fetch(
+        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}/pokemon/${pokemonId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) return;
+      await refresh();
+      onCloseRelease();
+    };
+    const {
+      dialog: deleteDialog,
+      onOpen: onOpenDelete,
+      onClose: onCloseDelete,
+    } = useDialog();
+    const {
+      dialog: nicknameDialog,
+      onOpen: onOpenRename,
+      onClose: onCloseRename,
+    } = useDialog();
+    const {
+      dialog: releaseDialog,
+      onOpen: onOpenRelease,
+      onClose: onCloseRelease,
+    } = useDialog();
+    return {
+      trainer,
+      nickname,
+      onDelete,
+      onRename,
+      onRelease,
+      deleteDialog,
+      onOpenDelete,
+      onCloseDelete,
+      nicknameDialog,
+      onOpenRename,
+      onCloseRename,
+      releaseDialog,
+      onOpenRelease,
+      onCloseRelease,
+    };
+  },
+  components: { GamifyButton },
+};
 </script>
 
 <template>
   <div>
     <h1>メニュー</h1>
-    <h2>トレーナー</h2>
-    <p>{{trainer.name}}</p>
-    <button @click="onOpenDelete(true)">マサラタウンにかえる</button>
+    <h2>トレーナー: {{ trainer.name }}</h2>
+    <GamifyButton @click="onOpenDelete(true)"
+      >マサラタウンにかえる</GamifyButton
+    >
     <h2>てもちポケモン</h2>
+    <CatchButton :to="`/trainer/${trainer.name}/catch`"
+      >ポケモンをつかまえる</CatchButton
+    >
     <GamifyList>
       <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />
-        <span>{{pokemon.nickname || pokemon.name}}</span>
-        <button @click="onOpenRename(pokemon)">ニックネームをつける</button>
-        <button @click="onOpenRelease(pokemon)">はかせにおくる</button>
-      </GamifyItem>
-      <GamifyItem>
-        <NuxtLink :to="`/trainer/${trainer.name}/catch`">ポケモンをつかまえる</NuxtLink>
+        <span class="pokemon-name">{{ pokemon.nickname || pokemon.name }}</span>
+        <GamifyButton @click="onOpenRename(pokemon)"
+          >ニックネームをつける</GamifyButton
+        >
+        <GamifyButton @click="onOpenRelease(pokemon)"
+          >はかせにおくる</GamifyButton
+        >
       </GamifyItem>
     </GamifyList>
     <GamifyDialog
@@ -72,10 +120,10 @@ export default {
     >
       <GamifyList :border="false" direction="horizon">
         <GamifyItem>
-          <button @click="onCloseDelete">いいえ</button>
+          <GamifyButton @click="onCloseDelete">いいえ</GamifyButton>
         </GamifyItem>
         <GamifyItem>
-          <button @click="onDelete">はい</button>
+          <GamifyButton @click="onDelete">はい</GamifyButton>
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>
@@ -88,14 +136,20 @@ export default {
     >
       <div class="item">
         <label for="name">ニックネーム</label>
-        <input id="name" @keydown.enter="onRename(nicknameDialog)" v-model="nickname" />
+        <input
+          id="name"
+          @keydown.enter="onRename(nicknameDialog)"
+          v-model="nickname"
+        />
       </div>
       <GamifyList :border="false" direction="horizon">
         <GamifyItem>
-          <button @click="onCloseRename">キャンセル</button>
+          <GamifyButton @click="onCloseRename">キャンセル</GamifyButton>
         </GamifyItem>
         <GamifyItem>
-          <button @click="onRename(nicknameDialog)">けってい</button>
+          <GamifyButton @click="onRename(nicknameDialog)"
+            >けってい</GamifyButton
+          >
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>
@@ -103,15 +157,17 @@ export default {
       v-if="releaseDialog"
       id="confirm-release"
       title="かくにん"
-      :description="`ほんとうに　${releaseDialog.nickname || releaseDialog.name}　を　はかせに　おくるんだな！　この　そうさは　とりけせないぞ！`"
+      :description="`ほんとうに　${
+        releaseDialog.nickname || releaseDialog.name
+      }　を　はかせに　おくるんだな！　この　そうさは　とりけせないぞ！`"
       @close="onCloseRelease"
     >
       <GamifyList :border="false" direction="horizon">
         <GamifyItem>
-          <button @click="onCloseRelease">いいえ</button>
+          <GamifyButton @click="onCloseRelease">いいえ</GamifyButton>
         </GamifyItem>
         <GamifyItem>
-          <button @click="onRelease(releaseDialog.id)">はい</button>
+          <GamifyButton @click="onRelease(releaseDialog.id)">はい</GamifyButton>
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>
@@ -122,5 +178,11 @@ export default {
 .item > label {
   display: block;
   margin-bottom: 0.25rem;
+}
+
+.gamify-item:hover img {
+  animation: bounce;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
 }
 </style>

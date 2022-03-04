@@ -1,10 +1,10 @@
 <script>
 export default {
   async setup() {
-    const {data: trainers} = await useTrainers();
-    return {trainers}
-  }
-}
+    const { data: trainers } = await useTrainers();
+    return { trainers };
+  },
+};
 </script>
 
 <template>
@@ -12,7 +12,7 @@ export default {
     <h1>つづきからはじめる</h1>
     <GamifyList>
       <GamifyItem v-for="trainer in trainers" :key="trainer">
-        <NuxtLink :to="`/trainer/${trainer}`">{{trainer}}</NuxtLink>
+        <NuxtLink :to="`/trainer/${trainer}`">{{ trainer }}</NuxtLink>
       </GamifyItem>
     </GamifyList>
   </div>

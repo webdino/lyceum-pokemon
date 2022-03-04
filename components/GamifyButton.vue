@@ -1,0 +1,41 @@
+<template>
+  <button class="gamify-button" @click="buttonClicked()">
+    <slot />
+  </button>
+</template>
+
+<script>
+export default {
+  setup(props, { emit }) {
+    const buttonClicked = () => {
+      emit("click");
+    };
+    return {
+      buttonClicked,
+    };
+  },
+};
+</script>
+
+<style scoped>
+.gamify-button {
+  border-radius: 0.5rem;
+  border: solid 4px #555;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  display: inline-block;
+  background-color: #fff;
+  color: #555;
+  text-decoration: none;
+}
+
+.gamify-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 1px 1px 0 #555;
+}
+
+.gamify-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+</style>

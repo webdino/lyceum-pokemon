@@ -1,10 +1,10 @@
 <script>
 export default {
   setup() {
-    const active = ref(false)
-    return {active}
-  }
-}
+    const active = ref(false);
+    return { active };
+  },
+};
 </script>
 <template>
   <li class="gamify-item">
@@ -17,6 +17,7 @@ export default {
 .gamify-item {
   display: flex;
   align-items: center;
+  margin-bottom: 2px;
 }
 
 .gamify-item > .selector {
@@ -30,5 +31,10 @@ export default {
 
 .gamify-item > :deep(:not(:last-child)) {
   margin-right: 0.5rem;
+}
+
+.gamify-item :deep(.pokemon-name) {
+  width: 10em;
+  display: inline-block;
 }
 </style>
