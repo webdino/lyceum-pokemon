@@ -9,36 +9,17 @@
 
 ## 実行環境
 
-### ローカル
-
 - 本リポジトリをクローンして実行してください
 - 環境変数は https://ja.vitejs.dev/guide/env-and-mode.html#env-files にしたがって `.env` などに設定してください
 
-### StackBlitz
-
-- https://stackblitz.com/github/webdino/lyceum-pokemon からフォークしてください
-- 環境変数は https://developer.stackblitz.com/docs/platform/project-config/ にしたがって `.stackblitzrc` に設定してください
-- 以下のような内容で [AWS S3 バケットに CORS を設定](https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v2/developer-guide/cors.html#configuring-cors-s3-bucket)してください
-
-```json
-[
-  {
-    "AllowedHeaders": ["*"],
-    "AllowedMethods": ["HEAD", "GET", "PUT", "POST", "DELETE"],
-    "AllowedOrigins": ["https://<StackBlitz の Slug>.w.staticblitz.com"],
-    "ExposeHeaders": ["ETag", "x-amz-meta-custom-header"]
-  }
-]
-```
-
 ## 使い方
 
-- `yarn install`: npm パッケージのインストール
-- `yarn dev`: 開発サーバーの起動
-- `yarn build`: アプリケーションのプロダクションビルド
-- `yarn start`: プロダクションビルドを使ったローカルサーバーの起動
-- `yarn lint`: コードリント
-- `yarn format`: コード整形
+- `npm install`: npm パッケージのインストール
+- `npm run dev`: 開発サーバーの起動
+- `npm run build`: アプリケーションのプロダクションビルド
+- `npm start`: プロダクションビルドを使ったローカルサーバーの起動
+- `npm run lint`: コードリント
+- `npm run format`: コード整形
 
 ## 環境変数
 
@@ -64,3 +45,36 @@
 ## ER 図
 
 ![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/main/docs/pokemon.drawio.png)
+
+## S3 バケットに作成するオブジェクトのサンプル
+
+トレーナー名が `レッド` の場合
+
+- `レッド.json`: S3 オブジェクトキー（ファイル名）
+- 次のコードブロック: S3 オブジェクト値（ファイル内容）
+
+```json:レッド.json
+{
+  "name": "レッド",
+  "pokemons": [
+    {
+      "id": 1,
+      "nickname": "",
+      "order": 35,
+      "name": "pikachu",
+      "sprites": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+      }
+    },
+    {
+      "id": 2,
+      "nickname": "",
+      "order": 220,
+      "name": "espeon",
+      "sprites": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png"
+      }
+    }
+  ]
+}
+```
