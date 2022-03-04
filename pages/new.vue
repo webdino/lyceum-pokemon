@@ -38,7 +38,7 @@ export default {
         <label for="name">なまえ</label>
         <input id="name" @keydown.enter="onOpen(true)" v-model="trainerName" />
       </div>
-      <button type="button" @click="onOpen(true)">けってい</button>
+      <GamifyButton type="button" @click="onOpen(true)">けってい</GamifyButton>
     </form>
     <GamifyDialog
       v-if="dialog"
@@ -49,10 +49,10 @@ export default {
     >
       <GamifyList :border="false" direction="horizon">
         <GamifyItem>
-          <button @click="onClose">いいえ</button>
+          <GamifyButton @click="onClose">いいえ</GamifyButton>
         </GamifyItem>
         <GamifyItem>
-          <button @click="onSubmit">はい</button>
+          <GamifyButton @click="onSubmit">はい</GamifyButton>
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>
