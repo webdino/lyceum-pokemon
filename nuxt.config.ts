@@ -7,5 +7,5 @@ export default defineNuxtConfig({
    * https://v3.nuxtjs.org/docs/directory-structure/nuxt.config#servermiddleware
    */
   serverMiddleware: [{ path: "/express", handler: "~/express/index.js" }],
-  css: ["animate.css", "@/assets/css/app.css"],
+  css: ["animate.css"],
 });
