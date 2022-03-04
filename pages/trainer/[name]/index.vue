@@ -180,7 +180,7 @@ export default {
   margin-bottom: 0.25rem;
 }
 
-.gamify-item:hover :deep(img) {
+.gamify-item:hover img {
   animation: bounce;
   animation-duration: 0.8s;
   animation-iteration-count: infinite;
