@@ -14,12 +14,12 @@
 
 ## 使い方
 
-- `yarn install`: npm パッケージのインストール
-- `yarn dev`: 開発サーバーの起動
-- `yarn build`: アプリケーションのプロダクションビルド
-- `yarn start`: プロダクションビルドを使ったローカルサーバーの起動
-- `yarn lint`: コードリント
-- `yarn format`: コード整形
+- `npm install`: npm パッケージのインストール
+- `npm run dev`: 開発サーバーの起動
+- `npm run build`: アプリケーションのプロダクションビルド
+- `npm start`: プロダクションビルドを使ったローカルサーバーの起動
+- `npm run lint`: コードリント
+- `npm run format`: コード整形
 
 ## 環境変数
 
