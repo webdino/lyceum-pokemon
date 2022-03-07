@@ -29,13 +29,18 @@ export default {
   text-decoration: none;
 }
 
-.gamify-button:hover {
+.gamify-button:not(:disabled):hover {
   transform: translate(-1px, -1px);
   box-shadow: 1px 1px 0 #555;
 }
 
-.gamify-button:active {
+.gamify-button:not(:disabled):active {
   transform: translate(1px, 1px);
   box-shadow: none;
+}
+
+.gamify-button:disabled {
+  border-color: #aaa;
+  cursor: default;
 }
 </style>
