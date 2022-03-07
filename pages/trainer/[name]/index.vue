@@ -91,8 +91,11 @@ export default {
 
 <template>
   <div>
-    <h1>メニュー</h1>
-    <h2>トレーナー: {{ trainer.name }}</h2>
+    <h1>トレーナー情報</h1>
+    <div class="trainer-info">
+      <img src="/avatar.png" />
+      <span>{{ trainer.name }}</span>
+    </div>
     <GamifyButton @click="onOpenDelete(true)"
       >マサラタウンにかえる</GamifyButton
     >
@@ -185,5 +188,17 @@ export default {
   animation: bounce;
   animation-duration: 0.8s;
   animation-iteration-count: infinite;
+}
+
+.trainer-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.trainer-info > img {
+  width: 3rem;
+  height: 3rem;
 }
 </style>
