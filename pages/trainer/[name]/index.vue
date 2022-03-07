@@ -91,7 +91,7 @@ export default {
 
 <template>
   <div>
-    <h1>メニュー</h1>
+    <h1>トレーナー情報</h1>
     <h2>トレーナー: {{ trainer.name }}</h2>
     <GamifyButton @click="onOpenDelete(true)"
       >マサラタウンにかえる</GamifyButton
