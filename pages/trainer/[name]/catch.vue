@@ -1,9 +1,10 @@
 <script>
+import { VITE_SERVER_ORIGIN } from "~/utils/env";
+
 export default {
   async setup() {
     const route = useRoute();
     const router = useRouter();
-    const { VITE_SERVER_ORIGIN } = import.meta.env;
     const page = ref(0);
     const limit = ref(20);
     const offset = computed(() => page.value * limit.value);
