@@ -6,6 +6,6 @@ export default defineNuxtConfig({
    * NOTE: Express を Nuxt のサーバミドルウェアとして導入
    * https://v3.nuxtjs.org/docs/directory-structure/nuxt.config#servermiddleware
    */
-  serverMiddleware: [{ path: "/express", handler: "~/express/index.js" }],
+  serverMiddleware: [{ path: "/api", handler: "~/express/index.js" }],
   css: ["animate.css"],
 });
