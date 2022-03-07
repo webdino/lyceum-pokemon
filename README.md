@@ -33,14 +33,14 @@
 
 ## API エンドポイント
 
-| エンドポイント                            | 説明                                           | パラメーター                       |
-| :---------------------------------------- | :--------------------------------------------- | :--------------------------------- |
-| `/pokeapi`                                | https://pokeapi.co/api/v2/ へのプロキシー      | なし                               |
-| `/trainers`                               | トレーナーの一覧 GET: 取得                     | なし                               |
-| `/trainer`                                | トレーナー POST: 追加                          | なし                               |
-| `/trainer/:trainer`                       | トレーナー GET: 取得, POST: 更新, DELETE: 削除 | `trainer`: トレーナー名            |
-| `/trainer/:trainer/pokemon/:pokemonOrder` | ポケモン PUT: 追加                             | `pokemonOrder`: ポケモン図鑑番号   |
-| `/trainer/:trainer/pokemon/:pokemonId`    | ポケモン DELETE: 削除                          | `pokemonId` : 手持ちポケモン識別子 |
+| エンドポイント                                | 説明                                           | パラメーター                       |
+| :-------------------------------------------- | :--------------------------------------------- | :--------------------------------- |
+| `/api/pokeapi`                                | https://pokeapi.co/api/v2/ へのプロキシー      | なし                               |
+| `/api/trainers`                               | トレーナーの一覧 GET: 取得                     | なし                               |
+| `/api/trainer`                                | トレーナー POST: 追加                          | なし                               |
+| `/api/trainer/:trainer`                       | トレーナー GET: 取得, POST: 更新, DELETE: 削除 | `trainer`: トレーナー名            |
+| `/api/trainer/:trainer/pokemon/:pokemonOrder` | ポケモン PUT: 追加                             | `pokemonOrder`: ポケモン図鑑番号   |
+| `/api/trainer/:trainer/pokemon/:pokemonId`    | ポケモン DELETE: 削除                          | `pokemonId` : 手持ちポケモン識別子 |
 
 ## ER 図
 
