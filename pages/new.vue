@@ -1,9 +1,10 @@
 <script>
+import { VITE_SERVER_ORIGIN } from "~/utils/env";
+
 export default {
   setup() {
     const router = useRouter();
     const trainerName = ref("");
-    const { VITE_SERVER_ORIGIN } = import.meta.env;
     const onSubmit = async () => {
       const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer`, {
         method: "POST",
