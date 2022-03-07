@@ -1,5 +1,5 @@
 <script>
-import GamifyButton from "~~/components/GamifyButton.vue";
+import GamifyButton from "~/components/GamifyButton.vue";
 import { VITE_SERVER_ORIGIN } from "~/utils/env";
 
 export default {
