@@ -6,7 +6,7 @@ export default {
     const router = useRouter();
     const trainerName = ref("");
     const onSubmit = async () => {
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/express/trainer`, {
+      const response = await fetch(`${VITE_SERVER_ORIGIN}/api/trainer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

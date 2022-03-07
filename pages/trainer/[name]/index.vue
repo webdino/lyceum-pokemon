@@ -8,11 +8,11 @@ export default {
     const router = useRouter();
     const { data: trainer, refresh } = await useAsyncData(
       `/trainer/${route.params.name}`,
-      () => $fetch(`${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`)
+      () => $fetch(`${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}`)
     );
     const onDelete = async () => {
       const response = await fetch(
-        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`,
+        `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}`,
         {
           method: "DELETE",
         }
@@ -29,7 +29,7 @@ export default {
       newTrainer.pokemons[index].nickname = nickname.value;
       nickname.value = "";
       const response = await fetch(
-        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}`,
+        `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}`,
         {
           method: "POST",
           headers: {
@@ -44,7 +44,7 @@ export default {
     };
     const onRelease = async (pokemonId) => {
       const response = await fetch(
-        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}/pokemon/${pokemonId}`,
+        `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
         {
           method: "DELETE",
         }

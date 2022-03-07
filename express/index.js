@@ -18,7 +18,7 @@ app.use(
     target: "https://pokeapi.co",
     changeOrigin: true,
     pathRewrite: {
-      "^/express/pokeapi": "/api/v2",
+      "^/api/pokeapi": "/api/v2",
     },
   })
 );

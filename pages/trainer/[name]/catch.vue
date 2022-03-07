@@ -11,7 +11,7 @@ export default {
     const { data: pokemons, refresh } = await useAsyncData(
       "/pokeapi/pokemon",
       () =>
-        $fetch(`${VITE_SERVER_ORIGIN}/express/pokeapi/pokemon`, {
+        $fetch(`${VITE_SERVER_ORIGIN}/api/pokeapi/pokemon`, {
           params: { offset: offset.value, limit: limit.value },
         })
     );
@@ -30,7 +30,7 @@ export default {
     };
     const onCatch = async (pokemon) => {
       const response = await fetch(
-        `${VITE_SERVER_ORIGIN}/express/trainer/${route.params.name}/pokemon/${pokemon.name}`,
+        `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
         {
           method: "PUT",
         }
