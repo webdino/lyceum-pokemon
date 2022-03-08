@@ -47,7 +47,7 @@ https://pokeapi.co/api/v2/ へのプロキシー
 
 #### レスポンス
 
-https://pokeapi.co/api/v2/ に準じる
+https://pokeapi.co/docs/v2 に準じる
 
 ### GET `/api/trainers`
 
@@ -73,13 +73,28 @@ https://pokeapi.co/api/v2/ に準じる
 
 なし
 
+#### リクエストボディ
+
+- `name`: トレーナー名（必須）
+- `pokemons`: 手持ちポケモン（任意）
+
+```json
+{ "name": "satoshi" }
+```
+
 #### レスポンス
 
 ##### 200
 
-```json
-{"$metadata":{"httpStatusCode":200,"extendedRequestId":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX","attempts":1,"totalRetryDelay":0},"ETag":"\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""}
-```
+[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/putobjectcommandoutput.html)
+
+##### 400
+
+空（リクエストボディに必要なプロパティが含まれていない場合に返される）
+
+##### 409
+
+空（すでにトレーナーが存在する場合に返される）
 
 ### GET `/api/trainer/:trainerName`
 
@@ -89,6 +104,14 @@ https://pokeapi.co/api/v2/ に準じる
 
 - `trainerName`: トレーナー名
 
+#### レスポンス
+
+##### 200
+
+```json
+{"name":"satoshi","pokemons":[]}
+```
+
 ### POST `/api/trainer/:trainerName`
 
 トレーナーの更新
@@ -97,6 +120,24 @@ https://pokeapi.co/api/v2/ に準じる
 
 - `trainerName`: トレーナー名
 
+#### リクエストボディ
+
+- `name`: トレーナー名（必須）
+- `pokemons`: 手持ちポケモン（任意）
+
+```json
+{ "name": "satoshi" }
+```
+#### レスポンス
+
+##### 200
+
+[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/putobjectcommandoutput.html)
+
+##### 404
+
+空（トレーナーが存在しない場合に返される）
+
 ### DELETE `/api/trainer/:trainerName`
 
 トレーナーの削除
@@ -104,6 +145,12 @@ https://pokeapi.co/api/v2/ に準じる
 #### パラメーター
 
 - `trainerName`: トレーナー名
+
+#### レスポンス
+
+##### 204
+
+[DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/deleteobjectcommandoutput.html)
 
 ### PUT `/api/trainer/:trainerName/pokemon/:pokemonName`
 
@@ -114,6 +161,12 @@ https://pokeapi.co/api/v2/ に準じる
 - `trainerName`: トレーナー名
 - `pokemonName`: ポケモン名
 
+#### レスポンス
+
+##### 200
+
+[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/putobjectcommandoutput.html)
+
 ### DELETE `/api/trainer/:trainerName/pokemon/:pokemonId`
 
 ポケモンの削除
@@ -122,6 +175,12 @@ https://pokeapi.co/api/v2/ に準じる
 
 - `trainerName`: トレーナー名
 - `pokemonId`: 手持ちポケモン識別子
+
+#### レスポンス
+
+##### 200
+
+[DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/deleteobjectcommandoutput.html)
 
 ## S3 バケットに作成するオブジェクトのサンプル
 
