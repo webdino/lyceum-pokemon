@@ -31,6 +31,10 @@
 | `BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`                      |
 | `VITE_SERVER_ORIGIN`    | 用意したサーバー側 の API リクエストに用いるオリジン     | `"http://localhost:3000"` |
 
+## ER 図
+
+![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/main/docs/pokemon.drawio.png)
+
 ## API エンドポイント
 
 ### `/api/pokeapi`
@@ -94,10 +98,6 @@ https://pokeapi.co/api/v2/ へのプロキシー
 
 - `trainerName`: トレーナー名
 - `pokemonId`: 手持ちポケモン識別子
-
-## ER 図
-
-![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/main/docs/pokemon.drawio.png)
 
 ## S3 バケットに作成するオブジェクトのサンプル
 
