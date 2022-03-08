@@ -9,6 +9,7 @@ export default {
     const safeTrainerName = computed(() =>
       trimAvoidCharacters(trainerName.value)
     );
+    const valid = computed(() => safeTrainerName.value.length > 0);
     const onSubmit = async () => {
       const response = await fetch(`${VITE_SERVER_ORIGIN}/api/trainer`, {
         method: "POST",
@@ -26,6 +27,7 @@ export default {
     return {
       trainerName,
       safeTrainerName,
+      valid,
       onSubmit,
       dialog,
       onOpen,
@@ -47,15 +49,12 @@ export default {
         >
         <input
           id="name"
-          @keydown.enter="onOpen(true)"
+          @keydown.enter="valid && onOpen(true)"
           v-model="trainerName"
           aria-describedby="name-description"
         />
       </div>
-      <GamifyButton
-        type="button"
-        @click="onOpen(true)"
-        :disabled="safeTrainerName.length === 0"
+      <GamifyButton type="button" @click="onOpen(true)" :disabled="!valid"
         >けってい</GamifyButton
       >
     </form>
