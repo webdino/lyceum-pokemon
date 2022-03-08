@@ -1,6 +1,7 @@
 <script>
 import GamifyButton from "~/components/GamifyButton.vue";
 import { VITE_SERVER_ORIGIN } from "~/utils/env";
+import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
 
 export default {
   async setup() {
@@ -26,7 +27,7 @@ export default {
       const index = newTrainer.pokemons.findIndex(
         ({ id }) => id === pokemon.id
       );
-      newTrainer.pokemons[index].nickname = nickname.value;
+      newTrainer.pokemons[index].nickname = trimAvoidCharacters(nickname.value);
       nickname.value = "";
       const response = await fetch(
         `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}`,
