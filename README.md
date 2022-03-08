@@ -47,6 +47,39 @@
 | ポケモンの追加       | オブジェクトの追加または更新 |
 | ポケモンの削除       | オブジェクトの追加または更新 |
 
+## S3 バケットに作成するオブジェクトのサンプル
+
+トレーナー名が `レッド` の場合
+
+- `レッド.json`: S3 オブジェクトキー（ファイル名）
+- 次のコードブロック: S3 オブジェクト値（ファイル内容）
+
+```json:レッド.json
+{
+  "name": "レッド",
+  "pokemons": [
+    {
+      "id": 1,
+      "nickname": "",
+      "order": 35,
+      "name": "pikachu",
+      "sprites": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+      }
+    },
+    {
+      "id": 2,
+      "nickname": "",
+      "order": 220,
+      "name": "espeon",
+      "sprites": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png"
+      }
+    }
+  ]
+}
+```
+
 ## API エンドポイント
 
 ### `/api/pokeapi`
@@ -194,36 +227,3 @@ https://pokeapi.co/docs/v2 に準じる
 ##### 200
 
 [DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/deleteobjectcommandoutput.html)
-
-## S3 バケットに作成するオブジェクトのサンプル
-
-トレーナー名が `レッド` の場合
-
-- `レッド.json`: S3 オブジェクトキー（ファイル名）
-- 次のコードブロック: S3 オブジェクト値（ファイル内容）
-
-```json:レッド.json
-{
-  "name": "レッド",
-  "pokemons": [
-    {
-      "id": 1,
-      "nickname": "",
-      "order": 35,
-      "name": "pikachu",
-      "sprites": {
-        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
-      }
-    },
-    {
-      "id": 2,
-      "nickname": "",
-      "order": 220,
-      "name": "espeon",
-      "sprites": {
-        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png"
-      }
-    }
-  ]
-}
-```
