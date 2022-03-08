@@ -49,11 +49,9 @@ https://pokeapi.co/api/v2/ へのプロキシー
 
 https://pokeapi.co/api/v2/ に準じる
 
-### `/api/trainers`
+### GET `/api/trainers`
 
-トレーナーの一覧
-
-- GET: 取得
+トレーナーの一覧の取得
 
 #### パラメーター
 
@@ -67,11 +65,9 @@ https://pokeapi.co/api/v2/ に準じる
 ["コジロウ","サトシ","ムサシ","レッド"]
 ```
 
-### `/api/trainer`
+### POST `/api/trainer`
 
-新規トレーナー
-
-- POST: 追加
+トレーナーの追加
 
 #### パラメーター
 
@@ -85,34 +81,42 @@ https://pokeapi.co/api/v2/ に準じる
 {"$metadata":{"httpStatusCode":200,"extendedRequestId":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX","attempts":1,"totalRetryDelay":0},"ETag":"\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""}
 ```
 
-### `/api/trainer/:trainerName`
+### GET `/api/trainer/:trainerName`
 
-既存トレーナー
-
-- GET: 取得
-- POST: 更新
-- DELETE: 削除
+トレーナーの取得
 
 #### パラメーター
 
 - `trainerName`: トレーナー名
 
-### `/api/trainer/:trainerName/pokemon/:pokemonName`
+### POST `/api/trainer/:trainerName`
 
-新規ポケモン
+トレーナーの更新
 
-- PUT: 追加
+#### パラメーター
+
+- `trainerName`: トレーナー名
+
+### DELETE `/api/trainer/:trainerName`
+
+トレーナーの削除
+
+#### パラメーター
+
+- `trainerName`: トレーナー名
+
+### PUT `/api/trainer/:trainerName/pokemon/:pokemonName`
+
+新規ポケモンの追加
 
 #### パラメーター
 
 - `trainerName`: トレーナー名
 - `pokemonName`: ポケモン名
 
-### `/api/trainer/:trainerName/pokemon/:pokemonId`
+### DELETE `/api/trainer/:trainerName/pokemon/:pokemonId`
 
-既存ポケモン
-
-- DELETE: 削除
+ポケモンの削除
 
 #### パラメーター
 
