@@ -1,18 +1,13 @@
 <template>
-  <button class="gamify-button" @click="buttonClicked()">
+  <button class="gamify-button">
     <slot />
   </button>
 </template>
 
 <script>
 export default {
-  setup(props, { emit }) {
-    const buttonClicked = () => {
-      emit("click");
-    };
-    return {
-      buttonClicked,
-    };
+  setup() {
+    return {};
   },
 };
 </script>
