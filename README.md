@@ -74,7 +74,7 @@ https://pokeapi.co/docs/v2 に準じる
 ##### 200
 
 ```json
-["コジロウ","サトシ","ムサシ","レッド"]
+["コジロウ", "サトシ", "ムサシ", "レッド"]
 ```
 
 ### POST `/api/trainer`
@@ -121,7 +121,7 @@ https://pokeapi.co/docs/v2 に準じる
 ##### 200
 
 ```json
-{"name":"satoshi","pokemons":[]}
+{ "name": "satoshi", "pokemons": [] }
 ```
 
 ### POST `/api/trainer/:trainerName`
@@ -140,6 +140,7 @@ https://pokeapi.co/docs/v2 に準じる
 ```json
 { "name": "satoshi" }
 ```
+
 #### レスポンス
 
 ##### 200
