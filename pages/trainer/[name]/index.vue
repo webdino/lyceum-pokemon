@@ -22,7 +22,7 @@ export default {
       router.push("/");
     };
     const nickname = ref("");
-    const onRename = async (pokemon) => {
+    const onNickname = async (pokemon) => {
       const newTrainer = trainer.value;
       const index = newTrainer.pokemons.findIndex(
         ({ id }) => id === pokemon.id
@@ -41,7 +41,7 @@ export default {
       );
       if (!response.ok) return;
       await refresh();
-      onCloseRename();
+      onCloseNickname();
     };
     const onRelease = async (pokemonId) => {
       const response = await fetch(
@@ -61,8 +61,8 @@ export default {
     } = useDialog();
     const {
       dialog: nicknameDialog,
-      onOpen: onOpenRename,
-      onClose: onCloseRename,
+      onOpen: onOpenNickname,
+      onClose: onCloseNickname,
     } = useDialog();
     const {
       dialog: releaseDialog,
@@ -73,14 +73,14 @@ export default {
       trainer,
       nickname,
       onDelete,
-      onRename,
+      onNickname,
       onRelease,
       deleteDialog,
       onOpenDelete,
       onCloseDelete,
       nicknameDialog,
-      onOpenRename,
-      onCloseRename,
+      onOpenNickname,
+      onCloseNickname,
       releaseDialog,
       onOpenRelease,
       onCloseRelease,
@@ -108,7 +108,7 @@ export default {
       <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />
         <span class="pokemon-name">{{ pokemon.nickname || pokemon.name }}</span>
-        <GamifyButton @click="onOpenRename(pokemon)"
+        <GamifyButton @click="onOpenNickname(pokemon)"
           >ニックネームをつける</GamifyButton
         >
         <GamifyButton @click="onOpenRelease(pokemon)"
@@ -137,22 +137,22 @@ export default {
       id="confirm-nickname"
       title="ニックネーム"
       :description="`${nicknameDialog.name}　の　ニックネームは？`"
-      @close="onCloseRename"
+      @close="onCloseNickname"
     >
       <div class="item">
         <label for="name">ニックネーム</label>
         <input
           id="name"
-          @keydown.enter="onRename(nicknameDialog)"
+          @keydown.enter="onNickname(nicknameDialog)"
           v-model="nickname"
         />
       </div>
       <GamifyList :border="false" direction="horizon">
         <GamifyItem>
-          <GamifyButton @click="onCloseRename">キャンセル</GamifyButton>
+          <GamifyButton @click="onCloseNickname">キャンセル</GamifyButton>
         </GamifyItem>
         <GamifyItem>
-          <GamifyButton @click="onRename(nicknameDialog)"
+          <GamifyButton @click="onNickname(nicknameDialog)"
             >けってい</GamifyButton
           >
         </GamifyItem>
