@@ -52,7 +52,12 @@ export default {
           aria-describedby="name-description"
         />
       </div>
-      <GamifyButton type="button" @click="onOpen(true)">けってい</GamifyButton>
+      <GamifyButton
+        type="button"
+        @click="onOpen(true)"
+        :disabled="safeTrainerName.length === 0"
+        >けってい</GamifyButton
+      >
     </form>
     <GamifyDialog
       v-if="dialog"
