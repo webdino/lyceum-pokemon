@@ -1,10 +1,7 @@
 <script>
 export default {
   async setup() {
-    const { data: trainers } = await useTrainers();
-    return {
-      trainers,
-    };
+    return {};
   },
 };
 </script>
@@ -13,11 +10,8 @@ export default {
   <div>
     <h1>ポケットモンスター</h1>
     <GamifyList>
-      <GamifyItem v-if="trainers.length > 0">
+      <GamifyItem>
         <NuxtLink to="/trainer">つづきからはじめる</NuxtLink>
-      </GamifyItem>
-      <GamifyItem v-else>
-        <span>つづきからはじめる</span>
       </GamifyItem>
       <GamifyItem>
         <NuxtLink to="/new">あたらしくはじめる</NuxtLink>
