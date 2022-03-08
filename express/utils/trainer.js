@@ -2,7 +2,6 @@ import {
   ListObjectsCommand,
   GetObjectCommand,
   PutObjectCommand,
-  DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import s3Client from "./s3Client";
 import { BUCKET_NAME } from "./env";
@@ -48,12 +47,4 @@ export const upsertTrainer = async (name, trainer) => {
 };
 
 /** トレーナーの削除 */
-export const deleteTrainer = async (name) => {
-  const result = await s3Client.send(
-    new DeleteObjectCommand({
-      Bucket: BUCKET_NAME,
-      Key: `${name}.json`,
-    })
-  );
-  return result;
-};
+// TODO: トレーナーを削除する S3 クライアント処理の実装
