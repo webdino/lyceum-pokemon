@@ -17,11 +17,11 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: trainerName.value,
+          name: safeTrainerName.value,
         }),
       });
       if (!response.ok) return;
-      router.push(`/trainer/${trainerName.value}`);
+      router.push(`/trainer/${safeTrainerName.value}`);
     };
     const { dialog, onOpen, onClose } = useDialog();
     return {
