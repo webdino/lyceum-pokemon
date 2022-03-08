@@ -45,6 +45,10 @@ https://pokeapi.co/api/v2/ へのプロキシー
 
 なし
 
+#### レスポンス
+
+https://pokeapi.co/api/v2/ に準じる
+
 ### `/api/trainers`
 
 トレーナーの一覧
@@ -55,6 +59,14 @@ https://pokeapi.co/api/v2/ へのプロキシー
 
 なし
 
+#### レスポンス
+
+##### 200
+
+```json
+["コジロウ","サトシ","ムサシ","レッド"]
+```
+
 ### `/api/trainer`
 
 新規トレーナー
@@ -64,6 +76,14 @@ https://pokeapi.co/api/v2/ へのプロキシー
 #### パラメーター
 
 なし
+
+#### レスポンス
+
+##### 200
+
+```json
+{"$metadata":{"httpStatusCode":200,"extendedRequestId":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX","attempts":1,"totalRetryDelay":0},"ETag":"\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""}
+```
 
 ### `/api/trainer/:trainerName`
 
