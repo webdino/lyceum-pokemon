@@ -35,6 +35,51 @@
 
 ![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/main/docs/pokemon.drawio.png)
 
+## サーバー API と AWS S3 の対応関係
+
+| サーバー API         | AWS S3                       |
+| :------------------- | :--------------------------- |
+| トレーナー一覧の取得 | オブジェクト一覧の取得       |
+| トレーナーの追加     | オブジェクトの追加または更新 |
+| トレーナーの取得     | オブジェクトの取得           |
+| トレーナーの更新     | オブジェクトの追加または更新 |
+| トレーナーの削除     | オブジェクトの削除           |
+| ポケモンの追加       | オブジェクトの追加または更新 |
+| ポケモンの削除       | オブジェクトの追加または更新 |
+
+## S3 バケットに作成するオブジェクトのサンプル
+
+トレーナー名が `レッド` の場合
+
+- `レッド.json`: S3 オブジェクトキー（ファイル名）
+- 次のコードブロック: S3 オブジェクト値（ファイル内容）
+
+```json:レッド.json
+{
+  "name": "レッド",
+  "pokemons": [
+    {
+      "id": 1,
+      "nickname": "",
+      "order": 35,
+      "name": "pikachu",
+      "sprites": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+      }
+    },
+    {
+      "id": 2,
+      "nickname": "",
+      "order": 220,
+      "name": "espeon",
+      "sprites": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png"
+      }
+    }
+  ]
+}
+```
+
 ## API エンドポイント
 
 ### `/api/pokeapi`
@@ -62,7 +107,7 @@ https://pokeapi.co/docs/v2 に準じる
 ##### 200
 
 ```json
-["コジロウ","サトシ","ムサシ","レッド"]
+["コジロウ", "サトシ", "ムサシ", "レッド"]
 ```
 
 ### POST `/api/trainer`
@@ -109,7 +154,7 @@ https://pokeapi.co/docs/v2 に準じる
 ##### 200
 
 ```json
-{"name":"satoshi","pokemons":[]}
+{ "name": "satoshi", "pokemons": [] }
 ```
 
 ### POST `/api/trainer/:trainerName`
@@ -128,6 +173,7 @@ https://pokeapi.co/docs/v2 に準じる
 ```json
 { "name": "satoshi" }
 ```
+
 #### レスポンス
 
 ##### 200
@@ -154,7 +200,7 @@ https://pokeapi.co/docs/v2 に準じる
 
 ### PUT `/api/trainer/:trainerName/pokemon/:pokemonName`
 
-新規ポケモンの追加
+ポケモンの追加
 
 #### パラメーター
 
@@ -181,36 +227,3 @@ https://pokeapi.co/docs/v2 に準じる
 ##### 200
 
 [DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/deleteobjectcommandoutput.html)
-
-## S3 バケットに作成するオブジェクトのサンプル
-
-トレーナー名が `レッド` の場合
-
-- `レッド.json`: S3 オブジェクトキー（ファイル名）
-- 次のコードブロック: S3 オブジェクト値（ファイル内容）
-
-```json:レッド.json
-{
-  "name": "レッド",
-  "pokemons": [
-    {
-      "id": 1,
-      "nickname": "",
-      "order": 35,
-      "name": "pikachu",
-      "sprites": {
-        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
-      }
-    },
-    {
-      "id": 2,
-      "nickname": "",
-      "order": 220,
-      "name": "espeon",
-      "sprites": {
-        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png"
-      }
-    }
-  ]
-}
-```
