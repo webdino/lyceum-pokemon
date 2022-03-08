@@ -1,10 +1,14 @@
 <script>
 import { VITE_SERVER_ORIGIN } from "~/utils/env";
+import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
 
 export default {
   setup() {
     const router = useRouter();
     const trainerName = ref("");
+    const safeTrainerName = computed(() =>
+      trimAvoidCharacters(trainerName.value)
+    );
     const onSubmit = async () => {
       const response = await fetch(`${VITE_SERVER_ORIGIN}/api/trainer`, {
         method: "POST",
@@ -21,6 +25,7 @@ export default {
     const { dialog, onOpen, onClose } = useDialog();
     return {
       trainerName,
+      safeTrainerName,
       onSubmit,
       dialog,
       onOpen,
@@ -37,7 +42,15 @@ export default {
     <form @submit.prevent>
       <div class="item">
         <label for="name">なまえ</label>
-        <input id="name" @keydown.enter="onOpen(true)" v-model="trainerName" />
+        <span id="name-description"
+          >とくていの　もじは　とりのぞかれるぞ！</span
+        >
+        <input
+          id="name"
+          @keydown.enter="onOpen(true)"
+          v-model="trainerName"
+          aria-describedby="name-description"
+        />
       </div>
       <GamifyButton type="button" @click="onOpen(true)">けってい</GamifyButton>
     </form>
@@ -45,7 +58,7 @@ export default {
       v-if="dialog"
       id="confirm-submit"
       title="かくにん"
-      :description="`ふむ・・・　きみは　${trainerName}　と　いうんだな！`"
+      :description="`ふむ・・・　きみは　${safeTrainerName}　と　いうんだな！`"
       @close="onClose"
     >
       <GamifyList :border="false" direction="horizon">
@@ -72,8 +85,12 @@ form > :not(:last-child) {
   margin-bottom: 1rem;
 }
 
-.item > label {
+.item > label,
+.item > span {
   display: block;
   margin-bottom: 0.25rem;
+}
+.item > span {
+  font-size: 0.875rem;
 }
 </style>
