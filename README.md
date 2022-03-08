@@ -167,7 +167,7 @@ https://pokeapi.co/docs/v2 に準じる
 
 ### PUT `/api/trainer/:trainerName/pokemon/:pokemonName`
 
-新規ポケモンの追加
+ポケモンの追加
 
 #### パラメーター
 
