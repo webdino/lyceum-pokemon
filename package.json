@@ -7,6 +7,7 @@
     "eslint-plugin-vue": "^8.4.1",
     "express": "^4.17.2",
     "http-proxy-middleware": "^2.0.3",
+    "npm-check-updates": "^16.0.5",
     "nuxt3": "latest",
     "prettier": "^2.5.1"
   },
@@ -17,6 +18,7 @@
     "dev": "nuxi dev",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "update": "npm-check-updates --deep --upgrade && npm dedupe"
   }
 }
