@@ -2,6 +2,10 @@
 
 ポケモン API を使った Nuxt+Express アプリ/サーバの開発演習
 
+## つまったら
+
+[ヒント集](docs/hints.md)を参照してください。それでも解消しなければ助けを求めましょう。
+
 ## 準備
 
 - AWS 認証情報のアクセスキー ID とシークレットアクセスキーを生成してください
@@ -9,15 +13,27 @@
 
 ## 実行環境
 
-- 本リポジトリをクローンして実行してください
-- 環境変数は https://ja.vitejs.dev/guide/env-and-mode.html#env-files にしたがって `.env` などに設定してください
+- Node 14 以降 (Node 16 以降を推奨)
+- 本リポジトリをクローンし、次の使い方に従って実行してください
+- 環境変数は実行環境 (OS など) の実行環境や https://ja.vitejs.dev/guide/env-and-mode.html#env-files に従って `.env` に設定してください
 
-## 使い方
+## クイックスタート
+
+以下のコマンドを実行すると、開発サーバーが起動して開発中のアプリケーションをブラウザで確認することができます。
+
+```shell
+npm install # npm パッケージのインストール（初回のみ必須）
+npm run dev # 開発サーバーの起動
+```
+
+## npm スクリプト
+
+次の npm スクリプトを用意しています (`package.json` の記述と `npm run` の出力を参照)。
 
 - `npm install`: npm パッケージのインストール
 - `npm run dev`: 開発サーバーの起動
-- `npm run build`: アプリケーションのプロダクションビルド
-- `npm start`: プロダクションビルドを使ったローカルサーバーの起動
+- `npm run build`: アプリケーションのプロダクションビルドを .output ディレクトリに生成する
+- `npm start`: プロダクションビルドを使ったローカルサーバーの起動 (事前にビルドしておくこと)
 - `npm run lint`: コードリント
 - `npm run format`: コード整形
 
@@ -31,6 +47,10 @@
 | `BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`                      |
 | `VITE_SERVER_ORIGIN`    | 用意したサーバー側 の API リクエストに用いるオリジン     | `"http://localhost:3000"` |
 
+注意:
+- `npm start` で本番環境を動かす場合、`BUCKET_NAME` と `REGION` は `.env` ファイルだけでなく実行環境側 (OS など) の環境変数設定が必要です (see issue #78)
+- `VITE_SERVER_ORIGIN` は末尾の `/` は入れないようにしてください。`npm run dev` の開発サーバでは問題無くとも `npm start` で本番環境を動かす場合などで 500 エラーになる場合があります。
+
 ## クライアント画面構成
 
 | 画面名               | 機能                                                                                                                   |
@@ -43,7 +63,23 @@
 
 ## ER 図
 
-![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/main/docs/pokemon.drawio.png)
+```mermaid
+erDiagram
+
+Trainer ||--o{ Pokemon : pokemons
+
+Trainer {
+  string name PK "トレーナー名"
+}
+
+Pokemon {
+  int id PK "手持ちポケモン識別子"
+  string nickname "ニックネーム"
+  int order "ポケモン図鑑番号"
+  string name "ポケモン名"
+  string sprites "スプライト（画像）"
+}
+```
 
 ## サーバー API と AWS S3 の対応関係
 
@@ -59,7 +95,10 @@
 
 ## S3 バケットに作成する S3 オブジェクトのサンプル
 
-トレーナー名が `レッド` の場合
+トレーナー情報 (トレーナーの名前や保有ポケモンのリスト) は AWS S3 のバケットの中に トレーナー名.json のような JSON ファイルとして保存します。
+S3 バケット内のファイルリスト = トレーナーリストであり、トレーナーの情報は全てトレーナー名毎の JSON ファイルに含めています。
+
+例えば、トレーナー名が `レッド` の場合は次のようになります:
 
 - `レッド.json`: S3 オブジェクトキー（ファイル名）
 - 次のコードブロック: S3 オブジェクト値（ファイル内容）
