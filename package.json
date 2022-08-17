@@ -1,21 +1,24 @@
 {
+  "devDependencies": {
+    "@aws-sdk/client-s3": "^3.145.0",
+    "animate.css": "^4.1.1",
+    "eslint": "^8.21.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-vue": "^9.3.0",
+    "express": "^4.18.1",
+    "http-proxy-middleware": "^2.0.6",
+    "npm-check-updates": "^16.0.5",
+    "nuxt3": "3.0.0-27414150.3589a2d",
+    "prettier": "^2.7.1"
+  },
+  "packageManager": "npm@8.11.0",
   "private": true,
   "scripts": {
-    "dev": "nuxi dev",
     "build": "nuxi build",
-    "start": "node .output/server/index.mjs",
+    "dev": "nuxi dev",
+    "format": "prettier --write .",
     "lint": "eslint .",
-    "format": "prettier --write ."
-  },
-  "devDependencies": {
-    "@aws-sdk/client-s3": "^3.51.0",
-    "eslint": "^8.9.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-vue": "^8.4.1",
-    "express": "^4.17.2",
-    "http-proxy-middleware": "^2.0.3",
-    "nuxt3": "latest",
-    "prettier": "^2.5.1",
-    "animate.css": "^4.1.1"
+    "start": "node .output/server/index.mjs",
+    "update": "npm-check-updates --deep --upgrade && npm dedupe"
   }
 }
