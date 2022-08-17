@@ -50,7 +50,23 @@
 
 ## ER 図
 
-![トレーナー{名前（主キー）、手持ちポケモン}<-一（必須）対多（任意）->ポケモン{手持ちポケモン識別子（主キー）、ニックネーム、ポケモン図鑑番号、名前、スプライト（画像）}](https://github.com/webdino/lyceum-pokemon/raw/main/docs/pokemon.drawio.png)
+```mermaid
+erDiagram
+
+Trainer ||--o{ Pokemon : pokemons
+
+Trainer {
+  string name PK "トレーナー名"
+}
+
+Pokemon {
+  int id PK "手持ちポケモン識別子"
+  string nickname "ニックネーム"
+  int order "ポケモン図鑑番号"
+  string name "ポケモン名"
+  string sprites "スプライト（画像）"
+}
+```
 
 ## サーバー API と AWS S3 の対応関係
 
