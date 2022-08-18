@@ -36,8 +36,8 @@ app.get("/trainers", async (_req, res, next) => {
 /** トレーナーの追加 */
 app.post("/trainer", async (req, res, next) => {
   try {
-    // TODO: トレーナー名が含まれていなければ400を返す
-    // TODO: すでにトレーナーが存在していれば409を返す
+    // TODO: リクエストボディにトレーナー名が含まれていなければ400を返す
+    // TODO: すでにトレーナー（S3 オブジェクト）が存在していれば409を返す
     const result = await upsertTrainer(req.body.name, req.body);
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {
