@@ -1,5 +1,7 @@
 # ヒント集
 
+---
+
 ## ヒント 01
 
 開発サーバーを立てるスクリプト `npm run dev` は差分ビルドをおこなうので `npm run build` は不要です
@@ -8,12 +10,16 @@
 
 `.env` を編集し環境変数の内容を変更した場合は Ctrl + C を入力して開発サーバーを停止・再起動してください（変更前の `.env` ファイルが読まれ続けるため）
 
+---
+
 ## ヒント 02
 
 @aws-sdk/client-s3 の使い方が載っているドキュメント
 
 - [S3 Client - AWS SDK for JavaScript v3](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/index.html)
 - [Amazon S3 バケットの作成と使用 - AWS SDK for JavaScript](https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html)
+
+---
 
 ## ヒント 03
 
@@ -40,6 +46,8 @@
        next(err);
 
 ```
+
+---
 
 ## ヒント 04
 
@@ -76,6 +84,8 @@
        </GamifyItem>
 ```
 
+---
+
 ## ヒント 05
 
 Nuxt における動的なルーティングの提供方法の和訳
@@ -94,7 +104,9 @@ Nuxt における動的なルーティングの提供方法の和訳
 > ---| users-[group]/
 > -----| [id].vue
 > ```
->
+
+---
+
 > 上記の例では、 `$route` オブジェクトから group / id にアクセスすることができます
 >
 > ```
@@ -112,9 +124,13 @@ Nuxt における動的なルーティングの提供方法の和訳
 
 https://v3.nuxtjs.org/docs/directory-structure/pages#dynamic-routes
 
+---
+
 ## ヒント 06
 
-クライアント側から用意したサーバー API を取得するコード（実際には使用していないコードなので注意）
+クライアント側から用意したサーバー API を取得するコード（実際には使用のコードなので注意）
+
+useFetch を使う場合
 
 ```js
 // オリジンを省略しないように記述する必要があります（Nuxtの挙動の都合）
@@ -129,7 +145,13 @@ const { data, refresh } = useFetch(`${VITE_SERVER_ORIGIN}/trainer/satoshi`, {
   },
   body: JSON.stringify(newTrainer),
 });
+```
 
+---
+
+$fetch を使う場合
+
+```js
 // 特定のケースでは動的にリクエスト先のURLを変更したい場合がありますが
 // useFetch ではキャッシュされた結果が返って変化しないようなので
 // useAsyncData を使う必要があります
@@ -151,6 +173,8 @@ const { data, refresh } = useAsyncData(
 ```
 
 参考: https://v3.nuxtjs.org/docs/usage/data-fetching
+
+---
 
 ## ヒント 07
 
@@ -190,6 +214,8 @@ const { data, refresh } = useAsyncData(
  </script>
 ```
 
+---
+
 ## ヒント 08
 
 クライアント側でトレーナー名を入力しているかバリデーション（検証）する差分
@@ -212,6 +238,8 @@ const { data, refresh } = useAsyncData(
  };
  </script>
 ```
+
+---
 
 ## ヒント 09
 
@@ -239,6 +267,8 @@ const { data, refresh } = useAsyncData(
  };
  </script>
 ```
+
+---
 
 ## ヒント 10
 
@@ -272,6 +302,8 @@ const { data, refresh } = useAsyncData(
  </template>
 
 ```
+
+---
 
 ## ヒント 11
 
