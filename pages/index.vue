@@ -1,12 +1,5 @@
-<script>
-export default {
-  async setup() {
-    const { data: trainers } = await useTrainers();
-    return {
-      trainers,
-    };
-  },
-};
+<script setup>
+const { data: trainers } = await useTrainers();
 </script>
 
 <template>

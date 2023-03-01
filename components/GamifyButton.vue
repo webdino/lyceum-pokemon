@@ -4,14 +4,6 @@
   </button>
 </template>
 
-<script>
-export default {
-  setup() {
-    return {};
-  },
-};
-</script>
-
 <style scoped>
 .gamify-button {
   border-radius: 0.5rem;

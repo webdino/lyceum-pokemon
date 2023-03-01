@@ -1,93 +1,70 @@
-<script>
+<script setup>
 import GamifyButton from "~/components/GamifyButton.vue";
 import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
 
-export default {
-  async setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const config = useRuntimeConfig();
-    const { data: trainer, refresh } = await useAsyncData(
-      `/trainer/${route.params.name}`,
-      () => $fetch(`${config.backendOrigin}/api/trainer/${route.params.name}`)
-    );
-    const onDelete = async () => {
-      const response = await fetch(
-        `${config.backendOrigin}/api/trainer/${route.params.name}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) return;
-      router.push("/");
-    };
-    const nickname = ref("");
-    const onNickname = async (pokemon) => {
-      const newTrainer = trainer.value;
-      const index = newTrainer.pokemons.findIndex(
-        ({ id }) => id === pokemon.id
-      );
-      newTrainer.pokemons[index].nickname = trimAvoidCharacters(nickname.value);
-      nickname.value = "";
-      const response = await fetch(
-        `${config.backendOrigin}/api/trainer/${route.params.name}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newTrainer),
-        }
-      );
-      if (!response.ok) return;
-      await refresh();
-      onCloseNickname();
-    };
-    const onRelease = async (pokemonId) => {
-      const response = await fetch(
-        `${config.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) return;
-      await refresh();
-      onCloseRelease();
-    };
-    const {
-      dialog: deleteDialog,
-      onOpen: onOpenDelete,
-      onClose: onCloseDelete,
-    } = useDialog();
-    const {
-      dialog: nicknameDialog,
-      onOpen: onOpenNickname,
-      onClose: onCloseNickname,
-    } = useDialog();
-    const {
-      dialog: releaseDialog,
-      onOpen: onOpenRelease,
-      onClose: onCloseRelease,
-    } = useDialog();
-    return {
-      trainer,
-      nickname,
-      onDelete,
-      onNickname,
-      onRelease,
-      deleteDialog,
-      onOpenDelete,
-      onCloseDelete,
-      nicknameDialog,
-      onOpenNickname,
-      onCloseNickname,
-      releaseDialog,
-      onOpenRelease,
-      onCloseRelease,
-    };
-  },
-  components: { GamifyButton },
+const route = useRoute();
+const router = useRouter();
+const config = useRuntimeConfig();
+const { data: trainer, refresh } = await useAsyncData(
+  `/trainer/${route.params.name}`,
+  () => $fetch(`${config.backendOrigin}/api/trainer/${route.params.name}`)
+);
+const onDelete = async () => {
+  const response = await fetch(
+    `${config.backendOrigin}/api/trainer/${route.params.name}`,
+    {
+      method: "DELETE",
+    }
+  );
+  if (!response.ok) return;
+  router.push("/");
 };
+const nickname = ref("");
+const onNickname = async (pokemon) => {
+  const newTrainer = trainer.value;
+  const index = newTrainer.pokemons.findIndex(({ id }) => id === pokemon.id);
+  newTrainer.pokemons[index].nickname = trimAvoidCharacters(nickname.value);
+  nickname.value = "";
+  const response = await fetch(
+    `${config.backendOrigin}/api/trainer/${route.params.name}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTrainer),
+    }
+  );
+  if (!response.ok) return;
+  await refresh();
+  onCloseNickname();
+};
+const onRelease = async (pokemonId) => {
+  const response = await fetch(
+    `${config.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
+    {
+      method: "DELETE",
+    }
+  );
+  if (!response.ok) return;
+  await refresh();
+  onCloseRelease();
+};
+const {
+  dialog: deleteDialog,
+  onOpen: onOpenDelete,
+  onClose: onCloseDelete,
+} = useDialog();
+const {
+  dialog: nicknameDialog,
+  onOpen: onOpenNickname,
+  onClose: onCloseNickname,
+} = useDialog();
+const {
+  dialog: releaseDialog,
+  onOpen: onOpenRelease,
+  onClose: onCloseRelease,
+} = useDialog();
 </script>
 
 <template>
