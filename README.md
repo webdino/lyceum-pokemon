@@ -48,17 +48,24 @@ npm run dev # 開発サーバーの起動
 
 ## 環境変数
 
-| 変数名                       | 説明                                                     | 初期値                    |
-| :--------------------------- | :------------------------------------------------------- | :------------------------ |
-| `AWS_ACCESS_KEY_ID`          | AWS 認証情報のアクセスキー ID                            | なし                      |
-| `AWS_SECRET_ACCESS_KEY`      | AWS 認証情報のシークレットアクセスキー                   | なし                      |
-| `REGION`                     | AWS のリージョン                                         | `"ap-northeast-1"`        |
-| `BUCKET_NAME`                | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`                      |
-| `FRONTEND_ORIGIN`            | Express から Nuxt への CORS 対応に用いるオリジン         | `"http://localhost:3000"` |
-| `BACKEND_PORT`               | Express が HTTP(S) リクエストを受け付けるポート番号      | `4000`                    |
-| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン    | `"http://localhost:4000"` |
-| `HOST` または `NITRO_HOST`   | `npm start` 時反映される Nuxt サーバーのホスト名         | `"0.0.0.0"`               |
-| `PORT` または `NITRO_PORT`   | `npm start` 時反映される Nuxt サーバーのポート番号       | `3000`                    |
+### フロントエンド (Nuxt)
+
+| 変数名                       | 説明                                                  | 初期値                    |
+| :--------------------------- | :---------------------------------------------------- | :------------------------ |
+| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン | `"http://localhost:4000"` |
+| `HOST` または `NITRO_HOST`   | `npm start` 時反映される Nuxt サーバーのホスト名      | `"0.0.0.0"`               |
+| `PORT` または `NITRO_PORT`   | `npm start` 時反映される Nuxt サーバーのポート番号    | `3000`                    |
+
+### バックエンド (Express)
+
+| 変数名                  | 説明                                                     | 初期値                    |
+| :---------------------- | :------------------------------------------------------- | :------------------------ |
+| `AWS_ACCESS_KEY_ID`     | AWS 認証情報のアクセスキー ID                            | なし                      |
+| `AWS_SECRET_ACCESS_KEY` | AWS 認証情報のシークレットアクセスキー                   | なし                      |
+| `REGION`                | AWS のリージョン                                         | `"ap-northeast-1"`        |
+| `BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`                      |
+| `FRONTEND_ORIGIN`       | Express から Nuxt への CORS 対応に用いるオリジン         | `"http://localhost:3000"` |
+| `BACKEND_PORT`          | Express が HTTP(S) リクエストを受け付けるポート番号      | `4000`                    |
 
 注意:
 
