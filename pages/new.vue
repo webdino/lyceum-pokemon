@@ -11,7 +11,7 @@ export default {
     );
     const valid = computed(() => safeTrainerName.value.length > 0);
     const onSubmit = async () => {
-      const response = await fetch(`${config.serverOrigin}/api/trainer`, {
+      const response = await fetch(`${config.backendOrigin}/api/trainer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

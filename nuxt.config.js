@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   css: ["animate.css"],
   runtimeConfig: {
     public: {
-      serverOrigin: "http://localhost:4000",
+      backendOrigin: "http://localhost:4000",
     },
   },
 });

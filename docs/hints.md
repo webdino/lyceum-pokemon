@@ -139,7 +139,7 @@ const config = useRuntimeConfig();
 // data: リアクティブなレスポンスボディ
 // refresh: 再読み込みする関数
 const { data, refresh } = useFetch(
-  `${config.serverOrigin}/api/trainer/satoshi`,
+  `${config.backendOrigin}/api/trainer/satoshi`,
   {
     method: "POST",
     headers: {
@@ -165,7 +165,7 @@ const { data, refresh } = useAsyncData(
   () =>
     $fetch(
       // $fetch は useFetch でも内部的に使われているハンドラー関数（ Fetch API の fetch とは同じ使い方にならないことに注意）
-      `${uonfig.serverOrigin}/api/trainer/satoshi`,
+      `${uonfig.backendOrigin}/api/trainer/satoshi`,
       {
         method: "POST",
         headers: {
@@ -197,7 +197,7 @@ uexport default {
 +    const config = useRuntimeConfig();
 +    const trainerName = ref("");
 +    const onSubmit = async () => {
-+      const response = await fetch(`${config.serverOrigin}/api/trainer`, {
++      const response = await fetch(`${config.backendOrigin}/api/trainer`, {
 +        method: "POST",
 +        headers: {
 +          "Content-Type": "application/json",
