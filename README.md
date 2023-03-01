@@ -39,17 +39,22 @@ npm run dev # 開発サーバーの起動
 
 ## 環境変数
 
-| 変数名                  | 説明                                                     | 初期値                    |
-| :---------------------- | :------------------------------------------------------- | :------------------------ |
-| `AWS_ACCESS_KEY_ID`     | AWS 認証情報のアクセスキー ID                            | なし                      |
-| `AWS_SECRET_ACCESS_KEY` | AWS 認証情報のシークレットアクセスキー                   | なし                      |
-| `REGION`                | AWS のリージョン                                         | `"ap-northeast-1"`        |
-| `BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`                      |
-| `VITE_SERVER_ORIGIN`    | 用意したサーバー側 の API リクエストに用いるオリジン     | `"http://localhost:3000"` |
+| 変数名                       | 説明                                                     | 初期値                    |
+| :--------------------------- | :------------------------------------------------------- | :------------------------ |
+| `AWS_ACCESS_KEY_ID`          | AWS 認証情報のアクセスキー ID                            | なし                      |
+| `AWS_SECRET_ACCESS_KEY`      | AWS 認証情報のシークレットアクセスキー                   | なし                      |
+| `REGION`                     | AWS のリージョン                                         | `"ap-northeast-1"`        |
+| `BUCKET_NAME`                | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`                      |
+| `FRONTEND_ORIGIN`            | Express から Nuxt への CORS 対応に用いるオリジン         | `"http://localhost:3000"` |
+| `BACKEND_PORT`               | Express が HTTP(S) リクエストを受け付けるポート番号      | `4000`                    |
+| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン    | `"http://localhost:4000"` |
+| `HOST` または `NITRO_HOST`   | `npm start` 時反映される Nuxt サーバーのホスト名         | `"0.0.0.0"`               |
+| `PORT` または `NITRO_PORT`   | `npm start` 時反映される Nuxt サーバーのポート番号       | `3000`                    |
 
 注意:
+
 - `npm start` で本番環境を動かす場合、`BUCKET_NAME` と `REGION` は `.env` ファイルだけでなく実行環境側 (OS など) の環境変数設定が必要です (see issue #78)
-- `VITE_SERVER_ORIGIN` は末尾の `/` は入れないようにしてください。`npm run dev` の開発サーバでは問題無くとも `npm start` で本番環境を動かす場合などで 500 エラーになる場合があります。
+- `NUXT_PUBLIC_BACKEND_ORIGIN` は末尾の `/` は入れないようにしてください。`npm run dev` の開発サーバでは問題無くとも `npm start` で本番環境を動かす場合などで 500 エラーになる場合があります。
 
 ## クライアント画面構成
 
@@ -306,12 +311,10 @@ heroku config:set AWS_ACCESS_KEY_ID=******** --app $APP_NAME
 heroku config:set AWS_SECRET_ACCESS_KEY=************ --app $APP_NAME
 heroku config:set BUCKET_NAME=******** --app $APP_NAME
 heroku config:set REGION=ap-northeast-1 --app $APP_NAME
-heroku config:set VITE_SERVER_ORIGIN=https://$APP_NAME.herokuapp.com --app $APP_NAME
+heroku config:set NUXT_PUBLIC_BACKEND_ORIGIN=https://$APP_NAME.herokuapp.com --app $APP_NAME
 ## デプロイする時はローカルホストではなく外部接続アドレスを使う
-heroku config:set NUXT_HOST=0.0.0.0 --app $APP_NAME
+heroku config:set HOST=0.0.0.0 --app $APP_NAME
 
 ## Heroku にプッシュしてデプロイ
 git push heroku main
 ```
-
-

@@ -1,17 +1,16 @@
 <script>
-import { VITE_SERVER_ORIGIN } from "~/utils/env";
-
 export default {
   async setup() {
     const route = useRoute();
     const router = useRouter();
+    const config = useRuntimeConfig();
     const page = ref(0);
     const limit = ref(20);
     const offset = computed(() => page.value * limit.value);
     const { data: pokemons, refresh } = await useAsyncData(
       "/pokeapi/pokemon",
       () =>
-        $fetch(`${VITE_SERVER_ORIGIN}/api/pokeapi/pokemon`, {
+        $fetch(`${config.backendOrigin}/api/pokeapi/pokemon`, {
           params: { offset: offset.value, limit: limit.value },
         })
     );
@@ -30,7 +29,7 @@ export default {
     };
     const onCatch = async (pokemon) => {
       const response = await fetch(
-        `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
+        `${config.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
         {
           method: "PUT",
         }

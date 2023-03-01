@@ -133,18 +133,21 @@ https://v3.nuxtjs.org/docs/directory-structure/pages#dynamic-routes
 useFetch を使う場合
 
 ```js
-// オリジンを省略しないように記述する必要があります（Nuxtの挙動の都合）
-import { VITE_SERVER_ORIGIN } from "~/utils/env";
+const config = useRuntimeConfig();
 
+// オリジンを省略しないように記述する必要があります（Nuxtの挙動の都合）
 // data: リアクティブなレスポンスボディ
 // refresh: 再読み込みする関数
-const { data, refresh } = useFetch(`${VITE_SERVER_ORIGIN}/trainer/satoshi`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(newTrainer),
-});
+const { data, refresh } = useFetch(
+  `${config.backendOrigin}/api/trainer/satoshi`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newTrainer),
+  }
+);
 ```
 
 ---
@@ -152,6 +155,8 @@ const { data, refresh } = useFetch(`${VITE_SERVER_ORIGIN}/trainer/satoshi`, {
 $fetch を使う場合
 
 ```js
+const config = useRuntimeConfig();
+
 // 特定のケースでは動的にリクエスト先のURLを変更したい場合がありますが
 // useFetch ではキャッシュされた結果が返って変化しないようなので
 // useAsyncData を使う必要があります
@@ -160,7 +165,7 @@ const { data, refresh } = useAsyncData(
   () =>
     $fetch(
       // $fetch は useFetch でも内部的に使われているハンドラー関数（ Fetch API の fetch とは同じ使い方にならないことに注意）
-      `${VITE_SERVER_ORIGIN}/trainer/satoshi`,
+      `${uonfig.backendOrigin}/api/trainer/satoshi`,
       {
         method: "POST",
         headers: {
@@ -185,15 +190,14 @@ const { data, refresh } = useAsyncData(
 +++ b/pages/new.vue
 @@ -1,7 +1,38 @@
  <script>
-+import { VITE_SERVER_ORIGIN } from "~/utils/env";
-+
- export default {
+uexport default {
    setup() {
 -    return {};
 +    const router = useRouter();
++    const config = useRuntimeConfig();
 +    const trainerName = ref("");
 +    const onSubmit = async () => {
-+      const response = await fetch(`${VITE_SERVER_ORIGIN}/api/trainer`, {
++      const response = await fetch(`${config.backendOrigin}/api/trainer`, {
 +        method: "POST",
 +        headers: {
 +          "Content-Type": "application/json",

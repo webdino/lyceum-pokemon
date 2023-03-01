@@ -1,19 +1,19 @@
 <script>
 import GamifyButton from "~/components/GamifyButton.vue";
-import { VITE_SERVER_ORIGIN } from "~/utils/env";
 import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
 
 export default {
   async setup() {
     const route = useRoute();
     const router = useRouter();
+    const config = useRuntimeConfig();
     const { data: trainer, refresh } = await useAsyncData(
       `/trainer/${route.params.name}`,
-      () => $fetch(`${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}`)
+      () => $fetch(`${config.backendOrigin}/api/trainer/${route.params.name}`)
     );
     const onDelete = async () => {
       const response = await fetch(
-        `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}`,
+        `${config.backendOrigin}/api/trainer/${route.params.name}`,
         {
           method: "DELETE",
         }
@@ -30,7 +30,7 @@ export default {
       newTrainer.pokemons[index].nickname = trimAvoidCharacters(nickname.value);
       nickname.value = "";
       const response = await fetch(
-        `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}`,
+        `${config.backendOrigin}/api/trainer/${route.params.name}`,
         {
           method: "POST",
           headers: {
@@ -45,7 +45,7 @@ export default {
     };
     const onRelease = async (pokemonId) => {
       const response = await fetch(
-        `${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
+        `${config.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
         {
           method: "DELETE",
         }
