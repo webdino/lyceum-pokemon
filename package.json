@@ -23,7 +23,7 @@
   "packageManager": "npm@8.11.0",
   "private": true,
   "scripts": {
-    "build": "run-p build:*",
+    "build": "dotenv -e .env -- run-p build:*",
     "build:express": "tsup express/index.js",
     "build:nuxt": "nuxi build",
     "dev": "dotenv -e .env -- run-p dev:*",
