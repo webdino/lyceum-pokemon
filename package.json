@@ -36,9 +36,7 @@
     "slide": "marp -s docs",
     "start": "run-p start:*",
     "start:express": "node dist/index.js",
-    "start:nuxt": "run-s start:nuxt:{wait,start}",
-    "start:nuxt:start": "node .output/server/index.mjs",
-    "start:nuxt:wait": "wait-on http://localhost:4000/api/",
+    "start:nuxt": "node .output/server/index.mjs",
     "update": "npm-check-updates --deep --upgrade && npm dedupe"
   }
 }
