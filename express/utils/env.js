@@ -1,5 +1,4 @@
-export const REGION = process.env.REGION ?? "ap-northeast-1";
-export const BUCKET_NAME = process.env.BUCKET_NAME ?? "";
-export const FRONTEND_ORIGIN =
-  process.env.FRONTEND_ORIGIN ?? "http://localhost:3000";
-export const BACKEND_PORT = Number(process.env.BACKEND_PORT ?? 4000);
+export const REGION = env.REGION;
+export const BUCKET_NAME = env.BUCKET_NAME;
+export const FRONTEND_ORIGIN = env.FRONTEND_ORIGIN;
+export const BACKEND_PORT = env.BACKEND_PORT;

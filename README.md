@@ -62,7 +62,6 @@ npm run dev # 開発サーバーの起動
 
 注意:
 
-- `npm start` で本番環境を動かす場合、`BUCKET_NAME` と `REGION` は `.env` ファイルだけでなく実行環境側 (OS など) の環境変数設定が必要です (see issue #78)
 - `NUXT_PUBLIC_BACKEND_ORIGIN` は末尾の `/` は入れないようにしてください。`npm run dev` の開発サーバでは問題無くとも `npm start` で本番環境を動かす場合などで 500 エラーになる場合があります。
 
 ## クライアント画面構成
@@ -318,8 +317,6 @@ heroku git:remote --app $APP_NAME
 ## サーバの環境変数を設定する
 heroku config:set AWS_ACCESS_KEY_ID=******** --app $APP_NAME
 heroku config:set AWS_SECRET_ACCESS_KEY=************ --app $APP_NAME
-heroku config:set BUCKET_NAME=******** --app $APP_NAME
-heroku config:set REGION=ap-northeast-1 --app $APP_NAME
 heroku config:set NUXT_PUBLIC_BACKEND_ORIGIN=https://$APP_NAME.herokuapp.com --app $APP_NAME
 ## デプロイする時はローカルホストではなく外部接続アドレスを使う
 heroku config:set HOST=0.0.0.0 --app $APP_NAME
