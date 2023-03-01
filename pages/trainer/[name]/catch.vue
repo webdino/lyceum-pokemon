@@ -3,10 +3,9 @@ const config = useRuntimeConfig();
 const page = ref(0);
 const limit = ref(20);
 const offset = computed(() => page.value * limit.value);
-const { data: pokemons, refresh } = await useAsyncData("/pokeapi/pokemon", () =>
-  $fetch(`${config.backendOrigin}/api/pokeapi/pokemon`, {
-    params: { offset: offset.value, limit: limit.value },
-  })
+const { data: pokemons, refresh } = await useFetch(
+  () =>
+    `${config.backendOrigin}/api/pokeapi/pokemon?offset=${offset.value}&limit=${limit.value}`
 );
 const hasPrev = computed(() => page.value > 0);
 const maxPage = computed(() => Math.floor(pokemons.value.count / limit.value));

@@ -128,52 +128,20 @@ https://v3.nuxtjs.org/docs/directory-structure/pages#dynamic-routes
 
 ## ヒント 06
 
-クライアント側から用意したサーバー API を取得するコード（実際には使用のコードなので注意）
+フロントエンド側から用意したサーバー API を取得するコードサンプル
 
 useFetch を使う場合
 
 ```js
 const config = useRuntimeConfig();
 
-// オリジンを省略しないように記述する必要があります（Nuxtの挙動の都合）
 // data: リアクティブなレスポンスボディ
 // refresh: 再読み込みする関数
+const { data, refresh } = useFetch(`${config.backendOrigin}/api/trainers`);
+
+// 動的な URL に対しては文字列を返す関数を引数に渡します
 const { data, refresh } = useFetch(
-  `${config.backendOrigin}/api/trainer/satoshi`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newTrainer),
-  }
-);
-```
-
----
-
-$fetch を使う場合
-
-```js
-const config = useRuntimeConfig();
-
-// 特定のケースでは動的にリクエスト先のURLを変更したい場合がありますが
-// useFetch ではキャッシュされた結果が返って変化しないようなので
-// useAsyncData を使う必要があります
-const { data, refresh } = useAsyncData(
-  "/trainer/satoshi", // アクセスしたいデータと対応する一意なキー
-  () =>
-    $fetch(
-      // $fetch は useFetch でも内部的に使われているハンドラー関数（ Fetch API の fetch とは同じ使い方にならないことに注意）
-      `${uonfig.backendOrigin}/api/trainer/satoshi`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTrainer),
-      }
-    )
+  () => `${config.backendOrigin}/api/trainer/${trainerName}`
 );
 ```
 
@@ -222,7 +190,7 @@ uexport default {
 
 ## ヒント 08
 
-クライアント側でトレーナー名を入力しているかバリデーション（検証）する差分
+フロントエンド側でトレーナー名を入力しているかバリデーション（検証）する差分
 
 ```diff
 --- a/pages/new.vue

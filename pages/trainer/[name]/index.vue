@@ -1,9 +1,8 @@
 <script setup>
 const route = useRoute();
 const config = useRuntimeConfig();
-const { data: trainer } = await useAsyncData(
-  `/trainer/${route.params.name}`,
-  () => $fetch(`${config.backendOrigin}/api/trainer/${route.params.name}`)
+const { data: trainer } = await useFetch(
+  () => `${config.backendOrigin}/api/trainer/${route.params.name}`
 );
 </script>
 
