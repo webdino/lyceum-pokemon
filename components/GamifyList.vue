@@ -1,16 +1,14 @@
-<script>
-export default {
-  props: {
-    border: {
-      default: true,
-      type: Boolean,
-    },
-    direction: {
-      default: "vertical",
-      type: String,
-    },
+<script setup>
+defineProps({
+  border: {
+    default: true,
+    type: Boolean,
   },
-};
+  direction: {
+    default: "vertical",
+    type: String,
+  },
+});
 </script>
 
 <template>

@@ -1,40 +1,25 @@
-<script>
+<script setup>
 import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
 
-export default {
-  setup() {
-    const router = useRouter();
-    const config = useRuntimeConfig();
-    const trainerName = ref("");
-    const safeTrainerName = computed(() =>
-      trimAvoidCharacters(trainerName.value)
-    );
-    const valid = computed(() => safeTrainerName.value.length > 0);
-    const onSubmit = async () => {
-      const response = await fetch(`${config.backendOrigin}/api/trainer`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: safeTrainerName.value,
-        }),
-      });
-      if (!response.ok) return;
-      router.push(`/trainer/${safeTrainerName.value}`);
-    };
-    const { dialog, onOpen, onClose } = useDialog();
-    return {
-      trainerName,
-      safeTrainerName,
-      valid,
-      onSubmit,
-      dialog,
-      onOpen,
-      onClose,
-    };
-  },
+const router = useRouter();
+const config = useRuntimeConfig();
+const trainerName = ref("");
+const safeTrainerName = computed(() => trimAvoidCharacters(trainerName.value));
+const valid = computed(() => safeTrainerName.value.length > 0);
+const onSubmit = async () => {
+  const response = await fetch(`${config.backendOrigin}/api/trainer`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: safeTrainerName.value,
+    }),
+  });
+  if (!response.ok) return;
+  router.push(`/trainer/${safeTrainerName.value}`);
 };
+const { dialog, onOpen, onClose } = useDialog();
 </script>
 
 <template>

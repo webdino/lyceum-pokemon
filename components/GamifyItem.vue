@@ -1,10 +1,5 @@
-<script>
-export default {
-  setup() {
-    const active = ref(false);
-    return { active };
-  },
-};
+<script setup>
+const active = ref(false);
 </script>
 <template>
   <li class="gamify-item">
