@@ -45,7 +45,7 @@ npm run dev # 開発サーバーの起動
 | `AWS_SECRET_ACCESS_KEY` | AWS 認証情報のシークレットアクセスキー                   | なし                      |
 | `REGION`                | AWS のリージョン                                         | `"ap-northeast-1"`        |
 | `BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`                      |
-| `VITE_SERVER_ORIGIN`    | 用意したサーバー側 の API リクエストに用いるオリジン     | `"http://localhost:3000"` |
+| `VITE_SERVER_ORIGIN`    | 用意したサーバー側 の API リクエストに用いるオリジン     | `"http://localhost:4000"` |
 
 注意:
 - `npm start` で本番環境を動かす場合、`BUCKET_NAME` と `REGION` は `.env` ファイルだけでなく実行環境側 (OS など) の環境変数設定が必要です (see issue #78)

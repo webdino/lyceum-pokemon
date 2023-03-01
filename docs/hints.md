@@ -160,7 +160,7 @@ const { data, refresh } = useAsyncData(
   () =>
     $fetch(
       // $fetch は useFetch でも内部的に使われているハンドラー関数（ Fetch API の fetch とは同じ使い方にならないことに注意）
-      `${VITE_SERVER_ORIGIN}/trainer/satoshi`,
+      `${VITE_SERVER_ORIGIN}/api/trainer/satoshi`,
       {
         method: "POST",
         headers: {

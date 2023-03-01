@@ -1,5 +1,6 @@
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
+import cors from "cors";
 import {
   findTrainers,
   findTrainer,
@@ -12,8 +13,9 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(
-  "/pokeapi",
+  "/api/pokeapi",
   createProxyMiddleware({
     target: "https://pokeapi.co",
     changeOrigin: true,
@@ -23,12 +25,14 @@ app.use(
   })
 );
 
-app.get("/", (_req, res) => {
+const router = express.Router();
+
+router.get("/", (_req, res) => {
   res.send("Hello World");
 });
 
 /** トレーナー名の一覧の取得 */
-app.get("/trainers", async (_req, res, next) => {
+router.get("/trainers", async (_req, res, next) => {
   try {
     const trainers = await findTrainers();
     const trainerNames = trainers.map(({ Key }) => Key.replace(/\.json$/, ""));
@@ -39,7 +43,7 @@ app.get("/trainers", async (_req, res, next) => {
 });
 
 /** トレーナーの追加 */
-app.post("/trainer", async (req, res, next) => {
+router.post("/trainer", async (req, res, next) => {
   try {
     if (!("name" in req.body && req.body.name.length > 0))
       return res.sendStatus(400);
@@ -54,7 +58,7 @@ app.post("/trainer", async (req, res, next) => {
 });
 
 /** トレーナーの取得 */
-app.get("/trainer/:trainerName", async (req, res, next) => {
+router.get("/trainer/:trainerName", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
     const trainer = await findTrainer(trainerName);
@@ -65,7 +69,7 @@ app.get("/trainer/:trainerName", async (req, res, next) => {
 });
 
 /** トレーナーの更新 */
-app.post("/trainer/:trainerName", async (req, res, next) => {
+router.post("/trainer/:trainerName", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
     const trainers = await findTrainers();
@@ -79,7 +83,7 @@ app.post("/trainer/:trainerName", async (req, res, next) => {
 });
 
 /** トレーナーの削除 */
-app.delete("/trainer/:trainerName", async (req, res, next) => {
+router.delete("/trainer/:trainerName", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
     const result = await deleteTrainer(trainerName);
@@ -90,7 +94,7 @@ app.delete("/trainer/:trainerName", async (req, res, next) => {
 });
 
 /** ポケモンの追加 */
-app.put(
+router.put(
   "/trainer/:trainerName/pokemon/:pokemonName",
   async (req, res, next) => {
     try {
@@ -118,7 +122,7 @@ app.put(
 );
 
 /** ポケモンの削除 */
-app.delete(
+router.delete(
   "/trainer/:trainerName/pokemon/:pokemonId",
   async (req, res, next) => {
     try {
@@ -136,4 +140,6 @@ app.delete(
   }
 );
 
-export default app;
+app.use("/api", router);
+
+app.listen(4000);
