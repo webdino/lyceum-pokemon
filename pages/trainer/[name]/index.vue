@@ -2,9 +2,8 @@
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
-const { data: trainer, refresh } = await useAsyncData(
-  `/trainer/${route.params.name}`,
-  () => $fetch(`${config.backendOrigin}/api/trainer/${route.params.name}`)
+const { data: trainer, refresh } = await useFetch(
+  () => `${config.backendOrigin}/api/trainer/${route.params.name}`
 );
 const onDelete = async () => {
   const response = await fetch(
