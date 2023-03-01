@@ -1,40 +1,23 @@
-<script>
-import { VITE_SERVER_ORIGIN } from "~/utils/env";
-import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
-
-export default {
-  setup() {
-    const router = useRouter();
-    const trainerName = ref("");
-    const safeTrainerName = computed(() =>
-      trimAvoidCharacters(trainerName.value)
-    );
-    const valid = computed(() => safeTrainerName.value.length > 0);
-    const onSubmit = async () => {
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/api/trainer`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: safeTrainerName.value,
-        }),
-      });
-      if (!response.ok) return;
-      router.push(`/trainer/${safeTrainerName.value}`);
-    };
-    const { dialog, onOpen, onClose } = useDialog();
-    return {
-      trainerName,
-      safeTrainerName,
-      valid,
-      onSubmit,
-      dialog,
-      onOpen,
-      onClose,
-    };
-  },
+<script setup>
+const router = useRouter();
+const config = useRuntimeConfig();
+const trainerName = ref("");
+const safeTrainerName = computed(() => trimAvoidCharacters(trainerName.value));
+const valid = computed(() => safeTrainerName.value.length > 0);
+const onSubmit = async () => {
+  const response = await fetch(`${config.backendOrigin}/api/trainer`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: safeTrainerName.value,
+    }),
+  });
+  if (!response.ok) return;
+  router.push(`/trainer/${safeTrainerName.value}`);
 };
+const { dialog, onOpen, onClose } = useDialog();
 </script>
 
 <template>
@@ -49,12 +32,12 @@ export default {
         >
         <input
           id="name"
-          @keydown.enter="valid && onOpen(true)"
           v-model="trainerName"
           aria-describedby="name-description"
+          @keydown.enter="valid && onOpen(true)"
         />
       </div>
-      <GamifyButton type="button" @click="onOpen(true)" :disabled="!valid"
+      <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)"
         >けってい</GamifyButton
       >
     </form>

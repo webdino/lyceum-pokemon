@@ -1,5 +1,7 @@
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
+import cors from "cors";
+import { FRONTEND_ORIGIN, BACKEND_PORT } from "./utils/env";
 import { findTrainers, findTrainer, upsertTrainer } from "./utils/trainer";
 import { findPokemon } from "./utils/pokemon";
 
@@ -7,8 +9,9 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: FRONTEND_ORIGIN }));
 app.use(
-  "/pokeapi",
+  "/api/pokeapi",
   createProxyMiddleware({
     target: "https://pokeapi.co",
     changeOrigin: true,
@@ -18,12 +21,14 @@ app.use(
   })
 );
 
-app.get("/", (_req, res) => {
+const router = express.Router();
+
+router.get("/", (_req, res) => {
   res.send("Hello World");
 });
 
 /** トレーナー名の一覧の取得 */
-app.get("/trainers", async (_req, res, next) => {
+router.get("/trainers", async (_req, res, next) => {
   try {
     const trainers = await findTrainers();
     const trainerNames = trainers.map(({ Key }) => Key.replace(/\.json$/, ""));
@@ -34,7 +39,7 @@ app.get("/trainers", async (_req, res, next) => {
 });
 
 /** トレーナーの追加 */
-app.post("/trainer", async (req, res, next) => {
+router.post("/trainer", async (req, res, next) => {
   try {
     // TODO: トレーナー名が含まれていなければ400を返す
     // TODO: すでにトレーナーが存在していれば409を返す
@@ -46,7 +51,7 @@ app.post("/trainer", async (req, res, next) => {
 });
 
 /** トレーナーの取得 */
-app.get("/trainer/:trainerName", async (req, res, next) => {
+router.get("/trainer/:trainerName", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
     const trainer = await findTrainer(trainerName);
@@ -57,7 +62,7 @@ app.get("/trainer/:trainerName", async (req, res, next) => {
 });
 
 /** トレーナーの更新 */
-app.post("/trainer/:trainerName", async (req, res, next) => {
+router.post("/trainer/:trainerName", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
     // TODO: トレーナーが存在していなければ404を返す
@@ -72,7 +77,7 @@ app.post("/trainer/:trainerName", async (req, res, next) => {
 // TODO: トレーナーを削除する API エンドポイントの実装
 
 /** ポケモンの追加 */
-app.put(
+router.put(
   "/trainer/:trainerName/pokemon/:pokemonName",
   async (req, res, next) => {
     try {
@@ -102,4 +107,6 @@ app.put(
 /** ポケモンの削除 */
 // TODO: ポケモンを削除する API エンドポイントの実装
 
-export default app;
+app.use("/api", router);
+
+app.listen(BACKEND_PORT);

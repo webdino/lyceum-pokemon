@@ -1,7 +1,7 @@
-import { useFetch } from "#app";
-import { VITE_SERVER_ORIGIN } from "~/utils/env";
+import { useFetch, useRuntimeConfig } from "#app";
 
 export default () => {
-  const response = useFetch(`${VITE_SERVER_ORIGIN}/api/trainers`);
+  const config = useRuntimeConfig();
+  const response = useFetch(`${config.backendOrigin}/api/trainers`);
   return response;
 };

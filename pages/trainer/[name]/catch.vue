@@ -1,41 +1,23 @@
-<script>
-import { VITE_SERVER_ORIGIN } from "~/utils/env";
-
-export default {
-  async setup() {
-    const page = ref(0);
-    const limit = ref(20);
-    const offset = computed(() => page.value * limit.value);
-    const { data: pokemons, refresh } = await useAsyncData(
-      "/pokeapi/pokemon",
-      () =>
-        $fetch(`${VITE_SERVER_ORIGIN}/api/pokeapi/pokemon`, {
-          params: { offset: offset.value, limit: limit.value },
-        })
-    );
-    const hasPrev = computed(() => page.value > 0);
-    const maxPage = computed(() =>
-      Math.floor(pokemons.value.count / limit.value)
-    );
-    const hasNext = computed(() => page.value < maxPage.value);
-    const onPrev = async () => {
-      page.value--;
-      await refresh();
-    };
-    const onNext = async () => {
-      page.value++;
-      await refresh();
-    };
-    return {
-      page,
-      maxPage,
-      pokemons,
-      hasPrev,
-      hasNext,
-      onPrev,
-      onNext,
-    };
-  },
+<script setup>
+const config = useRuntimeConfig();
+const page = ref(0);
+const limit = ref(20);
+const offset = computed(() => page.value * limit.value);
+const { data: pokemons, refresh } = await useAsyncData("/pokeapi/pokemon", () =>
+  $fetch(`${config.backendOrigin}/api/pokeapi/pokemon`, {
+    params: { offset: offset.value, limit: limit.value },
+  })
+);
+const hasPrev = computed(() => page.value > 0);
+const maxPage = computed(() => Math.floor(pokemons.value.count / limit.value));
+const hasNext = computed(() => page.value < maxPage.value);
+const onPrev = async () => {
+  page.value--;
+  await refresh();
+};
+const onNext = async () => {
+  page.value++;
+  await refresh();
 };
 </script>
 
@@ -51,10 +33,10 @@ export default {
     </GamifyList>
     <GamifyList direction="horizon">
       <GamifyItem>
-        <GamifyButton @click="onPrev" :disabled="!hasPrev">まえへ</GamifyButton>
+        <GamifyButton :disabled="!hasPrev" @click="onPrev">まえへ</GamifyButton>
       </GamifyItem>
       <GamifyItem>
-        <GamifyButton @click="onNext" :disabled="!hasNext">つぎへ</GamifyButton>
+        <GamifyButton :disabled="!hasNext" @click="onNext">つぎへ</GamifyButton>
       </GamifyItem>
     </GamifyList>
   </div>

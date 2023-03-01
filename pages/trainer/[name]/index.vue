@@ -1,20 +1,10 @@
-<script>
-import GamifyButton from "~/components/GamifyButton.vue";
-import { VITE_SERVER_ORIGIN } from "~/utils/env";
-
-export default {
-  async setup() {
-    const route = useRoute();
-    const { data: trainer } = await useAsyncData(
-      `/trainer/${route.params.name}`,
-      () => $fetch(`${VITE_SERVER_ORIGIN}/api/trainer/${route.params.name}`)
-    );
-    return {
-      trainer,
-    };
-  },
-  components: { GamifyButton },
-};
+<script setup>
+const route = useRoute();
+const config = useRuntimeConfig();
+const { data: trainer } = await useAsyncData(
+  `/trainer/${route.params.name}`,
+  () => $fetch(`${config.backendOrigin}/api/trainer/${route.params.name}`)
+);
 </script>
 
 <template>
