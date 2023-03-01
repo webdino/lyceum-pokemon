@@ -1,17 +1,17 @@
 <script>
-import { VITE_SERVER_ORIGIN } from "~/utils/env";
 import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
 
 export default {
   setup() {
     const router = useRouter();
+    const config = useRuntimeConfig();
     const trainerName = ref("");
     const safeTrainerName = computed(() =>
       trimAvoidCharacters(trainerName.value)
     );
     const valid = computed(() => safeTrainerName.value.length > 0);
     const onSubmit = async () => {
-      const response = await fetch(`${VITE_SERVER_ORIGIN}/api/trainer`, {
+      const response = await fetch(`${config.serverOrigin}/api/trainer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
