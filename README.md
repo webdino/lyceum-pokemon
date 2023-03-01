@@ -13,9 +13,18 @@
 
 ## 実行環境
 
-- Node 14 以降 (Node 16 以降を推奨)
+- Node Active LTS
 - 本リポジトリをクローンし、次の使い方に従って実行してください
-- 環境変数は実行環境 (OS など) の環境変数に設定するか [.env ファイルの説明](https://ja.vitejs.dev/guide/env-and-mode.html#env-files) に従って `.env` ファイルを新規作成して記述してください
+- 環境変数は実行環境 (ターミナルセッションなど) の環境変数に設定するか [.env ファイル](https://nuxt.com/docs/guide/directory-structure/env#env-file)を新規作成して記述してください
+
+### .env のサンプル
+
+```
+AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
+AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxx
+REGION="ap-northeast-1"
+BUCKET_NAME="lyceum-pokemon-trainers"
+```
 
 ## クイックスタート
 
