@@ -22,9 +22,9 @@ const onClose = () => {
   <div class="gamify-dialog">
     <div class="overlay" @click="onClose" />
     <div
+      :id="id"
       class="dialog"
       role="dialog"
-      :id="id"
       :aria-labelledby="`${id}-title`"
       aria-describedby="`${id}-description`"
     >

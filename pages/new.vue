@@ -1,6 +1,4 @@
 <script setup>
-import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
-
 const router = useRouter();
 const config = useRuntimeConfig();
 const trainerName = ref("");
@@ -34,12 +32,12 @@ const { dialog, onOpen, onClose } = useDialog();
         >
         <input
           id="name"
-          @keydown.enter="valid && onOpen(true)"
           v-model="trainerName"
           aria-describedby="name-description"
+          @keydown.enter="valid && onOpen(true)"
         />
       </div>
-      <GamifyButton type="button" @click="onOpen(true)" :disabled="!valid"
+      <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)"
         >けってい</GamifyButton
       >
     </form>

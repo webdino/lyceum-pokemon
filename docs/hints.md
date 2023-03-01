@@ -254,8 +254,6 @@ uexport default {
 +++ b/pages/new.vue
 @@ -1,7 +1,38 @@
  <script>
-+import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
-+
  export default {
    setup() {
 -    return {};

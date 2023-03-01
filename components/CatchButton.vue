@@ -1,3 +1,12 @@
+<script setup>
+defineProps({
+  to: {
+    type: String,
+    required: true,
+  },
+});
+</script>
+
 <template>
   <NuxtLink :to="to" class="catch-button">
     <div class="catch-button__content">
@@ -6,16 +15,6 @@
     </div>
   </NuxtLink>
 </template>
-
-<script>
-export default {
-  props: {
-    to: {
-      type: String,
-    },
-  },
-};
-</script>
 
 <style scoped>
 .catch-button {
