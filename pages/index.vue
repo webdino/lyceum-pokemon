@@ -1,10 +1,4 @@
-<script>
-export default {
-  async setup() {
-    return {};
-  },
-};
-</script>
+<script setup></script>
 
 <template>
   <div>

@@ -1,34 +1,30 @@
-<script>
-export default {
-  props: {
-    id: {
-      required: true,
-      type: String,
-    },
-    title: {
-      required: true,
-      type: String,
-    },
-    description: {
-      required: true,
-      type: String,
-    },
+<script setup>
+defineProps({
+  id: {
+    required: true,
+    type: String,
   },
-  setup(_props, context) {
-    const onClose = () => {
-      context.emit("close");
-    };
-    return { onClose };
+  title: {
+    required: true,
+    type: String,
   },
+  description: {
+    required: true,
+    type: String,
+  },
+});
+const emits = defineEmits(["close"]);
+const onClose = () => {
+  emits("close");
 };
 </script>
 <template>
   <div class="gamify-dialog">
     <div class="overlay" @click="onClose" />
     <div
+      :id="id"
       class="dialog"
       role="dialog"
-      :id="id"
       :aria-labelledby="`${id}-title`"
       aria-describedby="`${id}-description`"
     >
