@@ -1,6 +1,3 @@
-<script setup>
-const active = ref(false);
-</script>
 <template>
   <li class="gamify-item">
     <span class="selector" aria-hidden>▶</span>

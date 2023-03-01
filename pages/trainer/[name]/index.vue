@@ -1,7 +1,4 @@
 <script setup>
-import GamifyButton from "~/components/GamifyButton.vue";
-import trimAvoidCharacters from "~/utils/trimAvoidCharacters";
-
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
@@ -120,8 +117,8 @@ const {
         <label for="name">ニックネーム</label>
         <input
           id="name"
-          @keydown.enter="onNickname(nicknameDialog)"
           v-model="nickname"
+          @keydown.enter="onNickname(nicknameDialog)"
         />
       </div>
       <GamifyList :border="false" direction="horizon">

@@ -63,10 +63,10 @@ const { dialog, onOpen, onClose } = useDialog();
     </GamifyDialog>
     <GamifyList direction="horizon">
       <GamifyItem>
-        <GamifyButton @click="onPrev" :disabled="!hasPrev">まえへ</GamifyButton>
+        <GamifyButton :disabled="!hasPrev" @click="onPrev">まえへ</GamifyButton>
       </GamifyItem>
       <GamifyItem>
-        <GamifyButton @click="onNext" :disabled="!hasNext">つぎへ</GamifyButton>
+        <GamifyButton :disabled="!hasNext" @click="onNext">つぎへ</GamifyButton>
       </GamifyItem>
     </GamifyList>
   </div>
