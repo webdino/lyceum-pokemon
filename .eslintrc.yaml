@@ -15,5 +15,10 @@ overrides:
     globals:
       ref: true
   - files: "server/utils/*.js"
+    # TODO: Auto Imports が考慮されるようになったら取り除いて
     globals:
       useRuntimeConfig: true
+  - files: "server/api/*.js"
+    # TODO: Auto Imports が考慮されるようになったら取り除いて
+    globals:
+      fromNodeMiddleware: true
