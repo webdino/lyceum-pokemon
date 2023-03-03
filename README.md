@@ -22,8 +22,8 @@
 ```
 AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
 AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxx
-REGION="ap-northeast-1"
-BUCKET_NAME="lyceum-pokemon-trainers"
+NUXT_REGION="ap-northeast-1"
+NUXT_BUCKET_NAME="lyceum-pokemon-trainers"
 ```
 
 ## クイックスタート
