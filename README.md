@@ -41,6 +41,7 @@ npm run dev # 開発サーバーの起動
 
 - `npm install`: npm パッケージのインストール
 - `npm run dev`: 開発サーバーの起動
+- `npm run dev:express`: Express の単独起動
 - `npm run build`: アプリケーションのプロダクションビルドを .output ディレクトリに生成する
 - `npm start`: プロダクションビルドを使ったローカルサーバーの起動 (事前にビルドしておくこと)
 - `npm run lint`: コードリント
@@ -57,6 +58,13 @@ npm run dev # 開発サーバーの起動
 | `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン    | `"http://localhost:4000"` |
 | `HOST` または `NITRO_HOST`   | `npm start` 時反映される Nuxt サーバーのホスト名         | `"0.0.0.0"`               |
 | `PORT` または `NITRO_PORT`   | `npm start` 時反映される Nuxt サーバーのポート番号       | `3000`                    |
+
+### Express を単独起動する場合
+
+| 変数名            | 説明                                                | 初期値 |
+| :---------------- | :-------------------------------------------------- | :----- |
+| `FRONTEND_ORIGIN` | Express から Nuxt への CORS 対応に用いるオリジン    | なし   |
+| `BACKEND_PORT`    | Express が HTTP(S) リクエストを受け付けるポート番号 | なし   |
 
 注意:
 
