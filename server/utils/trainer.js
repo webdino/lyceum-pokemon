@@ -5,7 +5,8 @@ import {
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import s3Client from "./s3Client";
-import { BUCKET_NAME } from "./env";
+
+const config = useRuntimeConfig();
 
 const streamToString = (stream) =>
   new Promise((resolve, reject) => {
@@ -18,7 +19,7 @@ const streamToString = (stream) =>
 /** トレーナーの一覧の取得 */
 export const findTrainers = async () => {
   const objects = await s3Client.send(
-    new ListObjectsCommand({ Bucket: BUCKET_NAME })
+    new ListObjectsCommand({ Bucket: config.bucketName })
   );
   return objects.Contents ?? [];
 };
@@ -27,7 +28,7 @@ export const findTrainers = async () => {
 export const findTrainer = async (name) => {
   const object = await s3Client.send(
     new GetObjectCommand({
-      Bucket: BUCKET_NAME,
+      Bucket: config.bucketName,
       Key: `${name}.json`,
     })
   );
@@ -39,7 +40,7 @@ export const findTrainer = async (name) => {
 export const upsertTrainer = async (name, trainer) => {
   const result = await s3Client.send(
     new PutObjectCommand({
-      Bucket: BUCKET_NAME,
+      Bucket: config.bucketName,
       Key: `${name}.json`,
       Body: JSON.stringify({ name: "", pokemons: [], ...trainer }),
     })
@@ -51,7 +52,7 @@ export const upsertTrainer = async (name, trainer) => {
 export const deleteTrainer = async (name) => {
   const result = await s3Client.send(
     new DeleteObjectCommand({
-      Bucket: BUCKET_NAME,
+      Bucket: config.bucketName,
       Key: `${name}.json`,
     })
   );
