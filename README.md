@@ -17,23 +17,36 @@
 - 本リポジトリをクローンし、次の使い方に従って実行してください
 - 環境変数は実行環境 (ターミナルセッションなど) の環境変数に設定するか [.env ファイル](https://nuxt.com/docs/guide/directory-structure/env#env-file)を新規作成して記述してください
 
-### .env のサンプル
+## 動作方法
 
-```
-AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxx
-NUXT_REGION="ap-northeast-1"
-NUXT_BUCKET_NAME="lyceum-pokemon-trainers"
-```
+### 開発時 Nuxt のみ起動
 
-## クイックスタート
-
-以下のコマンドを実行すると、開発サーバーが起動して開発中のアプリケーションをブラウザで確認することができます。
-
-```shell
+```bash
 npm install # npm パッケージのインストール（初回のみ必須）
+cat << EOL > .env # .env ファイルの作成（ターミナルに Bash 以外のシェルを使用している場合は適宜読み替えてください）
+AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
+AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NUXT_BUCKET_NAME=<作成した S3 バケット名>
+EOL
 npm run dev # 開発サーバーの起動
 ```
+
+### 開発時 Nuxt と Express 起動
+
+```bash
+npm install # npm パッケージのインストール（初回のみ必須）
+cat << EOL > .env # .env ファイルの作成（ターミナルに Bash 以外のシェルを使用している場合は適宜読み替えてください）
+AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
+AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NUXT_BUCKET_NAME=<作成した S3 バケット名>
+NUXT_PUBLIC_BACKEND_ORIGIN=http://localhost:4000
+EOL
+npm run dev:express # 開発サーバーの起動
+```
+
+### App Runner へデプロイ
+
+TBD
 
 ## npm スクリプト
 
@@ -49,26 +62,39 @@ npm run dev # 開発サーバーの起動
 
 ## 環境変数
 
-| 変数名                       | 説明                                                     | 初期値                    |
-| :--------------------------- | :------------------------------------------------------- | :------------------------ |
-| `AWS_ACCESS_KEY_ID`          | AWS 認証情報のアクセスキー ID                            | なし                      |
-| `AWS_SECRET_ACCESS_KEY`      | AWS 認証情報のシークレットアクセスキー                   | なし                      |
-| `NUXT_REGION`                | AWS のリージョン                                         | `"ap-northeast-1"`        |
-| `NUXT_BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット | `""`                      |
-| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン    | `"http://localhost:4000"` |
-| `HOST` または `NITRO_HOST`   | `npm start` 時反映される Nuxt サーバーのホスト名         | `"0.0.0.0"`               |
-| `PORT` または `NITRO_PORT`   | `npm start` 時反映される Nuxt サーバーのポート番号       | `3000`                    |
+| 変数名                       | 説明                                                                            | 初期値                    |
+| :--------------------------- | :------------------------------------------------------------------------------ | :------------------------ |
+| `AWS_ACCESS_KEY_ID`          | AWS 認証情報のアクセスキー ID                                                   | なし                      |
+| `AWS_SECRET_ACCESS_KEY`      | AWS 認証情報のシークレットアクセスキー                                          | なし                      |
+| `NUXT_REGION`                | AWS のリージョン                                                                | `"ap-northeast-1"`        |
+| `NUXT_BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット                        | `""`                      |
+| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン[^オリジン以外禁止]        | `"http://localhost:3000"` |
+| `HOST` または `NITRO_HOST`   | `npm start` 時反映される Nuxt サーバーのホスト名                                | `"0.0.0.0"`               |
+| `PORT` または `NITRO_PORT`   | `npm start` 時反映される Nuxt サーバーのポート番号                              | `3000`                    |
+| `FRONTEND_ORIGIN`            | Express サーバが CORS を許可するアクセス元オリジン。Nuxt 側のオリジンを設定する | `"http://localhost:3000"` |
+| `BACKEND_PORT`               | Express が HTTP(S) リクエストを受け付けるポート番号                             | `4000`                    |
 
-### Express を単独起動する場合
+[^オリジン以外禁止]: `NUXT_PUBLIC_BACKEND_ORIGIN` は末尾の `/` は入れないようにしてください。`npm run dev` の開発サーバでは問題無くとも `npm start` で本番環境を動かす場合などで 500 エラーになる場合があります。
 
-| 変数名            | 説明                                                | 初期値 |
-| :---------------- | :-------------------------------------------------- | :----- |
-| `FRONTEND_ORIGIN` | Express から Nuxt への CORS 対応に用いるオリジン    | なし   |
-| `BACKEND_PORT`    | Express が HTTP(S) リクエストを受け付けるポート番号 | なし   |
+### それぞれのケースで注意を払うべき環境変数の対応表
 
-注意:
+初期値がなくチェックがあるものについては、必ず自身で値を設定する必要があります。初期値があるものであっても、チェックがあるものについては自身で値を設定する必要がある場合があります。
 
-- `NUXT_PUBLIC_BACKEND_ORIGIN` は末尾の `/` は入れないようにしてください。`npm run dev` の開発サーバでは問題無くとも `npm start` で本番環境を動かす場合などで 500 エラーになる場合があります。
+| 変数名                       | 開発時 Nuxt のみ起動     | 開発時 Nuxt と Express 起動 | App Runner へデプロイ    |
+| :--------------------------- | :----------------------- | :-------------------------- | :----------------------- |
+| `AWS_ACCESS_KEY_ID`          | [x][^AWS クレデンシャル] | [x][^AWS クレデンシャル]    | [ ][^AWS クレデンシャル] |
+| `AWS_SECRET_ACCESS_KEY`      | [x][^AWS クレデンシャル] | [x][^AWS クレデンシャル]    | [ ][^AWS クレデンシャル] |
+| `NUXT_REGION`                | [ ][^他のリージョン]     | [ ][^他のリージョン]        | [ ][^他のリージョン]     |
+| `NUXT_BUCKET_NAME`           | [x]                      | [x]                         | [x]                      |
+| `NUXT_PUBLIC_BACKEND_ORIGIN` | [ ]                      | [x]                         | [ ]                      |
+| `HOST` または `NITRO_HOST`   | [ ]                      | [ ]                         | [x]                      |
+| `PORT` または `NITRO_PORT`   | [ ]                      | [ ]                         | [x]                      |
+| `FRONTEND_ORIGIN`            | [ ]                      | [x]                         | [ ]                      |
+| `BACKEND_PORT`               | [ ]                      | [x]                         | [ ]                      |
+
+[^AWS クレデンシャル]: AWS SDK により認証情報が提供されている場合不要です。 https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
+
+[^他のリージョン]: `"ap-northeast-1"` 以外のリージョンを使用している場合は設定必須です。
 
 ## クライアント画面構成
 

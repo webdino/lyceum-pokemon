@@ -22,11 +22,12 @@
   "scripts": {
     "build": "nuxi build",
     "dev": "nuxi dev",
-    "dev:express": "tsup express.js --onSuccess=\"dotenv -e .env -- node .tsup-output/express.js\"",
+    "dev:express": "tsup express.js --onSuccess=\"run-p dev start:express\"",
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "slide": "marp -s docs",
     "start": "node .output/server/index.mjs",
+    "start:express": "dotenv -e .env -- node .tsup-output/express.js",
     "update": "npm-check-updates --deep --upgrade && npm dedupe"
   }
 }
