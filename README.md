@@ -54,7 +54,7 @@ TBD
 
 - `npm install`: npm パッケージのインストール
 - `npm run dev`: 開発サーバーの起動
-- `npm run dev:express`: Express の単独起動
+- `npm run dev:express`: 開発サーバーの起動 (別プロセスでの Express サーバー起動を含む)
 - `npm run build`: アプリケーションのプロダクションビルドを .output ディレクトリに生成する
 - `npm start`: プロダクションビルドを使ったローカルサーバーの起動 (事前にビルドしておくこと)
 - `npm run lint`: コードリント
