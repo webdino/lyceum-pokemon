@@ -82,8 +82,8 @@ TBD
 
 | 変数名                       | 開発時 Nuxt のみ起動     | 開発時 Nuxt と Express 起動 | App Runner へデプロイ    |
 | :--------------------------- | :----------------------- | :-------------------------- | :----------------------- |
-| `AWS_ACCESS_KEY_ID`          | [x][^AWS クレデンシャル] | [x][^AWS クレデンシャル]    | [ ][^AWS クレデンシャル] |
-| `AWS_SECRET_ACCESS_KEY`      | [x][^AWS クレデンシャル] | [x][^AWS クレデンシャル]    | [ ][^AWS クレデンシャル] |
+| `AWS_ACCESS_KEY_ID`          | [x][^AWS_クレデンシャル] | [x][^AWS_クレデンシャル]    | [ ][^AWS_クレデンシャル] |
+| `AWS_SECRET_ACCESS_KEY`      | [x][^AWS_クレデンシャル] | [x][^AWS_クレデンシャル]    | [ ][^AWS_クレデンシャル] |
 | `NUXT_REGION`                | [ ][^他のリージョン]     | [ ][^他のリージョン]        | [ ][^他のリージョン]     |
 | `NUXT_BUCKET_NAME`           | [x]                      | [x]                         | [x]                      |
 | `NUXT_PUBLIC_BACKEND_ORIGIN` | [ ]                      | [x]                         | [ ]                      |
@@ -92,8 +92,7 @@ TBD
 | `FRONTEND_ORIGIN`            | [ ]                      | [x]                         | [ ]                      |
 | `BACKEND_PORT`               | [ ]                      | [x]                         | [ ]                      |
 
-[^AWS クレデンシャル]: AWS SDK により認証情報が提供されている場合不要です。 https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
-
+[^AWS_クレデンシャル]: AWS SDK により認証情報が提供されている場合不要です。 https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
 [^他のリージョン]: `"ap-northeast-1"` 以外のリージョンを使用している場合は設定必須です。
 
 ## クライアント画面構成
