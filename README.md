@@ -85,7 +85,7 @@ TBD
 | `AWS_ACCESS_KEY_ID` [^AWS_クレデンシャル]     | :heavy_check_mark:   | :heavy_check_mark:          |                       |
 | `AWS_SECRET_ACCESS_KEY` [^AWS_クレデンシャル] | :heavy_check_mark:   | :heavy_check_mark:          |                       |
 | `NUXT_REGION` [^他のリージョン]               |                      |                             |                       |
-| `NUXT_BUCKET_NAME`                            | :heavy_check_mark:   | :heavy_check_mark:          | :heavy_check_mark:    |
+| `NUXT_BUCKET_NAME` [^AWS_S3_バケット名]       | :heavy_check_mark:   | :heavy_check_mark:          | :heavy_check_mark:    |
 | `NUXT_PUBLIC_BACKEND_ORIGIN`                  |                      | :heavy_check_mark:          | :heavy_check_mark:    |
 | `HOST` または `NITRO_HOST`                    |                      |                             | :heavy_check_mark:    |
 | `PORT` または `NITRO_PORT`                    |                      |                             | :heavy_check_mark:    |
@@ -94,6 +94,7 @@ TBD
 
 [^AWS_クレデンシャル]: AWS SDK により認証情報が提供されている場合不要です。 https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
 [^他のリージョン]: `"ap-northeast-1"` 以外のリージョンを使用している場合は設定必須です。
+[^AWS_S3_バケット名]: AWS S3 バケット名はいずれの場合も設定必須です。`npm run build; npm start` でローカル起動する場合には特に OS 環境変数への設定が必須 (他と異なり `.env` ファイルが読まれない) ことに注意してください。
 
 ## クライアント画面構成
 
