@@ -80,21 +80,17 @@ TBD
 
 初期値がなくチェックがあるものについては、必ず自身で値を設定する必要があります。初期値があるものであっても、チェックがあるものについては自身で値を設定する必要がある場合があります。
 
-<!-- prettier-ignore-start -->
-
-| 変数名                       | 開発時 Nuxt のみ起動                     | 開発時 Nuxt と Express 起動              | App Runner へデプロイ |
-| :--------------------------- | :--------------------------------------- | :--------------------------------------- | :-------------------- |
-| `AWS_ACCESS_KEY_ID`          | :heavy_check_mark: [^AWS_クレデンシャル] | :heavy_check_mark: [^AWS_クレデンシャル] | [^AWS_クレデンシャル] |
-| `AWS_SECRET_ACCESS_KEY`      | :heavy_check_mark: [^AWS_クレデンシャル] | :heavy_check_mark: [^AWS_クレデンシャル] | [^AWS_クレデンシャル] |
-| `NUXT_REGION`                | [^他のリージョン]                        | [^他のリージョン]                        | [^他のリージョン]     |
-| `NUXT_BUCKET_NAME`           | :heavy_check_mark:                       | :heavy_check_mark:                       | :heavy_check_mark:    |
-| `NUXT_PUBLIC_BACKEND_ORIGIN` |                                          | :heavy_check_mark:                       |                       |
-| `HOST` または `NITRO_HOST`   |                                          |                                          | :heavy_check_mark:    |
-| `PORT` または `NITRO_PORT`   |                                          |                                          | :heavy_check_mark:    |
-| `FRONTEND_ORIGIN`            |                                          | :heavy_check_mark:                       |                       |
-| `BACKEND_PORT`               |                                          | :heavy_check_mark:                       |                       |
-
-<!-- prettier-ignore-end -->
+| 変数名                                        | 開発時 Nuxt のみ起動 | 開発時 Nuxt と Express 起動 | App Runner へデプロイ |
+| :-------------------------------------------- | :------------------- | :-------------------------- | :-------------------- |
+| `AWS_ACCESS_KEY_ID` [^AWS_クレデンシャル]     | :heavy_check_mark:   | :heavy_check_mark:          |                       |
+| `AWS_SECRET_ACCESS_KEY` [^AWS_クレデンシャル] | :heavy_check_mark:   | :heavy_check_mark:          |                       |
+| `NUXT_REGION` [^他のリージョン]               |                      |                             |                       |
+| `NUXT_BUCKET_NAME`                            | :heavy_check_mark:   | :heavy_check_mark:          | :heavy_check_mark:    |
+| `NUXT_PUBLIC_BACKEND_ORIGIN`                  |                      | :heavy_check_mark:          | :heavy_check_mark:    |
+| `HOST` または `NITRO_HOST`                    |                      |                             | :heavy_check_mark:    |
+| `PORT` または `NITRO_PORT`                    |                      |                             | :heavy_check_mark:    |
+| `FRONTEND_ORIGIN`                             |                      | :heavy_check_mark:          |                       |
+| `BACKEND_PORT`                                |                      | :heavy_check_mark:          |                       |
 
 [^AWS_クレデンシャル]: AWS SDK により認証情報が提供されている場合不要です。 https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
 [^他のリージョン]: `"ap-northeast-1"` 以外のリージョンを使用している場合は設定必須です。
