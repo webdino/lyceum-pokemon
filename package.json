@@ -11,32 +11,23 @@
     "dotenv-cli": "^7.0.0",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.6.0",
-    "http-proxy-middleware": "^2.0.6",
-    "node-fetch": "^3.3.0",
     "npm-check-updates": "^16.7.10",
     "npm-run-all": "^4.1.5",
     "nuxt": "^3.2.3",
     "prettier": "^2.8.4",
-    "tsup": "^6.6.3",
-    "wait-on": "^7.0.1"
+    "tsup": "^6.6.3"
   },
   "packageManager": "npm@8.11.0",
   "private": true,
   "scripts": {
-    "build": "dotenv -e .env -- run-p build:*",
-    "build:express": "tsup express/index.js",
-    "build:nuxt": "nuxi build",
-    "dev": "dotenv -e .env -- run-p dev:*",
-    "dev:express": "tsup express/index.js --watch express/ --onSuccess \"node dist/index.js\"",
-    "dev:nuxt": "run-s dev:nuxt:{wait,dev}",
-    "dev:nuxt:dev": "nuxi dev",
-    "dev:nuxt:wait": "wait-on http://localhost:4000/api/",
+    "build": "nuxi build",
+    "dev": "nuxi dev",
+    "dev:express": "tsup express.js --onSuccess=\"run-p dev start:express\"",
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "slide": "marp -s docs",
-    "start": "run-p start:*",
-    "start:express": "node dist/index.js",
-    "start:nuxt": "node .output/server/index.mjs",
+    "start": "node .output/server/index.mjs",
+    "start:express": "dotenv -e .env -- node .tsup-output/express.js",
     "update": "npm-check-updates --deep --upgrade && npm dedupe"
   }
 }

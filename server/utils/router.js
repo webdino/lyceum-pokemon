@@ -1,29 +1,10 @@
-import express from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
-import cors from "cors";
-import { FRONTEND_ORIGIN, BACKEND_PORT } from "./utils/env";
-import { findTrainers, upsertTrainer } from "./utils/trainer";
-import { findPokemon } from "./utils/pokemon";
+import { Router } from "express";
+import { findTrainers, upsertTrainer } from "~/server/utils/trainer";
+import { findPokemon } from "~/server/utils/pokemon";
 
-const app = express();
+const router = Router();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: FRONTEND_ORIGIN }));
-app.use(
-  "/api/pokeapi",
-  createProxyMiddleware({
-    target: "https://pokeapi.co",
-    changeOrigin: true,
-    pathRewrite: {
-      "^/api/pokeapi": "/api/v2",
-    },
-  })
-);
-
-const router = express.Router();
-
-router.get("/", (_req, res) => {
+router.get("/hello", (_req, res) => {
   res.send("Hello World");
 });
 
@@ -87,6 +68,4 @@ router.put(
 /** ポケモンの削除 */
 // TODO: ポケモンを削除する API エンドポイントの実装
 
-app.use("/api", router);
-
-app.listen(BACKEND_PORT);
+export default router;
