@@ -5,7 +5,7 @@ const limit = ref(20);
 const offset = computed(() => page.value * limit.value);
 const { data: pokemons, refresh } = await useFetch(
   () =>
-    `${config.backendOrigin}/api/pokeapi/pokemon?offset=${offset.value}&limit=${limit.value}`
+    `https://pokeapi.co/api/v2/pokemon?offset=${offset.value}&limit=${limit.value}`
 );
 const hasPrev = computed(() => page.value > 0);
 const maxPage = computed(() => Math.floor(pokemons.value.count / limit.value));

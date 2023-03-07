@@ -14,6 +14,11 @@ overrides:
     # TODO: Auto Imports が考慮されるようになったら取り除いて
     globals:
       ref: true
-  - files: "express/utils/env.js"
+  - files: "server/utils/*.js"
+    # TODO: Auto Imports が考慮されるようになったら取り除いて
     globals:
-      env: true
+      useRuntimeConfig: true
+  - files: "server/api/*.js"
+    # TODO: Auto Imports が考慮されるようになったら取り除いて
+    globals:
+      fromNodeMiddleware: true
