@@ -3,7 +3,10 @@ const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
 const { data: trainer, refresh } = await useFetch(
-  () => `${config.backendOrigin}/api/trainer/${route.params.name}`
+  () => `${config.backendOrigin}/api/trainer/${route.params.name}`,
+  {
+    default: () => [],
+  }
 );
 const onDelete = async () => {
   const response = await fetch(
