@@ -1,10 +1,13 @@
-<script setup></script>
+<script setup>
+  const {data: trainers} = await useTrainers();
+  console.log(trainers);
+</script>
 
 <template>
   <div>
     <h1>ポケットモンスター</h1>
     <GamifyList>
-      <GamifyItem>
+      <GamifyItem v-show="trainers">
         <NuxtLink to="/trainer">つづきからはじめる</NuxtLink>
       </GamifyItem>
       <GamifyItem>
