@@ -176,18 +176,6 @@ S3 バケット内のファイルリスト = トレーナーリストであり�
 
 ## API エンドポイント
 
-### `/api/pokeapi`
-
-https://pokeapi.co/api/v2/ へのプロキシー
-
-#### パラメーター
-
-なし
-
-#### レスポンス
-
-https://pokeapi.co/docs/v2 に準じる
-
 ### GET `/api/trainers`
 
 トレーナー名の一覧の取得
