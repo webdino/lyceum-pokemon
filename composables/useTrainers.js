@@ -2,8 +2,10 @@ import { useFetch, useRuntimeConfig } from "#app";
 
 export default () => {
   const config = useRuntimeConfig();
-  const response = useFetch(`${config.public.backendOrigin}/api/trainers`, {
+  const response = useFetch("/api/trainers", {
     default: () => [],
+    server: false,
+    baseURL: config.public.backendOrigin,
   });
   return response;
 };

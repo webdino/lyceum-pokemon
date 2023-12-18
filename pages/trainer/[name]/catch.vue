@@ -24,13 +24,14 @@ const onNext = async () => {
   await refresh();
 };
 const onCatch = async (pokemon) => {
-  const response = await fetch(
-    `${config.public.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
+  const response = await $fetch(
+    `/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
     {
+      baseURL: config.public.backendOrigin,
       method: "PUT",
     },
-  );
-  if (!response.ok) return;
+  ).catch((e) => e);
+  if (response instanceof Error) return;
   router.push(`/trainer/${route.params.name}`);
 };
 const { dialog, onOpen, onClose } = useDialog();
