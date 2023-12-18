@@ -133,11 +133,13 @@ const config = useRuntimeConfig();
 
 // data: リアクティブなレスポンスボディ
 // refresh: 再読み込みする関数
-const { data, refresh } = useFetch(`${config.backendOrigin}/api/trainers`);
+const { data, refresh } = useFetch(
+  `${config.public.backendOrigin}/api/trainers`
+);
 
 // 動的な URL に対しては文字列を返す関数を引数に渡します
 const { data, refresh } = useFetch(
-  () => `${config.backendOrigin}/api/trainer/${trainerName}`
+  () => `${config.public.backendOrigin}/api/trainer/${trainerName}`
 );
 ```
 
@@ -159,7 +161,7 @@ const { data, refresh } = useFetch(
 +const config = useRuntimeConfig();
 +const trainerName = ref("");
 +const onSubmit = async () => {
-+  const response = await fetch(`${config.backendOrigin}/api/trainer`, {
++  const response = await fetch(`${config.public.backendOrigin}/api/trainer`, {
 +    method: "POST",
 +    headers: {
 +      "Content-Type": "application/json",

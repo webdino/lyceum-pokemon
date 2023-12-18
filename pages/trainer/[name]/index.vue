@@ -3,14 +3,14 @@ const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
 const { data: trainer, refresh } = await useFetch(
-  () => `${config.backendOrigin}/api/trainer/${route.params.name}`,
+  () => `${config.public.backendOrigin}/api/trainer/${route.params.name}`,
   {
     default: () => [],
   }
 );
 const onDelete = async () => {
   const response = await fetch(
-    `${config.backendOrigin}/api/trainer/${route.params.name}`,
+    `${config.public.backendOrigin}/api/trainer/${route.params.name}`,
     {
       method: "DELETE",
     }
@@ -25,7 +25,7 @@ const onNickname = async (pokemon) => {
   newTrainer.pokemons[index].nickname = trimAvoidCharacters(nickname.value);
   nickname.value = "";
   const response = await fetch(
-    `${config.backendOrigin}/api/trainer/${route.params.name}`,
+    `${config.public.backendOrigin}/api/trainer/${route.params.name}`,
     {
       method: "POST",
       headers: {
@@ -40,7 +40,7 @@ const onNickname = async (pokemon) => {
 };
 const onRelease = async (pokemonId) => {
   const response = await fetch(
-    `${config.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
+    `${config.public.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
     {
       method: "DELETE",
     }

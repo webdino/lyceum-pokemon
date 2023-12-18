@@ -25,7 +25,7 @@ const onNext = async () => {
 };
 const onCatch = async (pokemon) => {
   const response = await fetch(
-    `${config.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
+    `${config.public.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
     {
       method: "PUT",
     }

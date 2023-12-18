@@ -5,7 +5,7 @@ const trainerName = ref("");
 const safeTrainerName = computed(() => trimAvoidCharacters(trainerName.value));
 const valid = computed(() => safeTrainerName.value.length > 0);
 const onSubmit = async () => {
-  const response = await fetch(`${config.backendOrigin}/api/trainer`, {
+  const response = await fetch(`${config.public.backendOrigin}/api/trainer`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
