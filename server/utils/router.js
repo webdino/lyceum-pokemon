@@ -100,7 +100,7 @@ router.put(
     } catch (err) {
       next(err);
     }
-  }
+  },
 );
 
 /** ポケモンの削除 */
@@ -111,7 +111,7 @@ router.delete(
       const { trainerName, pokemonId } = req.params;
       const trainer = await findTrainer(trainerName);
       const index = trainer.pokemons.findIndex(
-        (pokemon) => String(pokemon.id) === pokemonId
+        (pokemon) => String(pokemon.id) === pokemonId,
       );
       trainer.pokemons.splice(index, 1);
       const result = await upsertTrainer(trainerName, trainer);
@@ -119,7 +119,7 @@ router.delete(
     } catch (err) {
       next(err);
     }
-  }
+  },
 );
 
 export default router;
