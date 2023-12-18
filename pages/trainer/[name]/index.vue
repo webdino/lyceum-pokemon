@@ -75,7 +75,7 @@ const {
       >マサラタウンにかえる</GamifyButton
     >
     <h2>てもちポケモン</h2>
-    <CatchButton :to="`/trainer/${trainer.name}/catch`"
+    <CatchButton :to="`/trainer/${route.params.name}/catch`"
       >ポケモンをつかまえる</CatchButton
     >
     <GamifyList>
