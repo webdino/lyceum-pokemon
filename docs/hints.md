@@ -133,14 +133,16 @@ const config = useRuntimeConfig();
 
 // data: リアクティブなレスポンスボディ
 // refresh: 再読み込みする関数
-const { data, refresh } = useFetch(
-  `${config.public.backendOrigin}/api/trainers`,
-);
+const { data, refresh } = useFetch("$/api/trainers", {
+  server: false, // ブラウサ側でのみデータ取得する（単純な実装にしておく目的）
+  baseURL: config.public.backendOrigin, // `npm run dev:express` しないなら省略可
+});
 
 // 動的な URL に対しては文字列を返す関数を引数に渡します
-const { data, refresh } = useFetch(
-  () => `${config.public.backendOrigin}/api/trainer/${trainerName}`,
-);
+const { data, refresh } = useFetch(() => `/api/trainer/${trainerName}`, {
+  server: false, // ブラウサ側でのみデータ取得する（単純な実装にしておく目的）
+  baseURL: config.public.backendOrigin, // `npm run dev:express` しないなら省略可
+});
 ```
 
 参考: https://nuxt.com/docs/getting-started/data-fetching
@@ -161,7 +163,8 @@ const { data, refresh } = useFetch(
 +const config = useRuntimeConfig();
 +const trainerName = ref("");
 +const onSubmit = async () => {
-+  const response = await fetch(`${config.public.backendOrigin}/api/trainer`, {
++  const response = await $fetch("/api/trainer", {
++    baseURL: config.public.backendOrigin, // `npm run dev:express` しないなら省略可
 +    method: "POST",
 +    headers: {
 +      "Content-Type": "application/json",
@@ -169,8 +172,8 @@ const { data, refresh } = useFetch(
 +    body: JSON.stringify({
 +      name: trainerName.value,
 +    }),
-+  });
-+  if (!response.ok) return;
++  }).catch((e) => e); // 正常でないレスポンスステータスやネットワークエラーはエラーが投げられるので取得結果に含める https://github.com/unjs/ofetch#%EF%B8%8F-handling-errors
++  if (response instanceof Error) return; // 取得結果がエラークラスインスタンスなら後続の処理をスキップする
 +  router.push(`/trainer/${trainerName.value}`);
 +};
 +</script>

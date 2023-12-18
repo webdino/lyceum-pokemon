@@ -3,19 +3,18 @@ const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
 const { data: trainer, refresh } = await useFetch(
-  () => `${config.public.backendOrigin}/api/trainer/${route.params.name}`,
+  () => `/api/trainer/${route.params.name}`,
   {
     default: () => [],
+    baseUrl: config.public.backendOrigin,
   },
 );
 const onDelete = async () => {
-  const response = await fetch(
-    `${config.public.backendOrigin}/api/trainer/${route.params.name}`,
-    {
-      method: "DELETE",
-    },
-  );
-  if (!response.ok) return;
+  const response = await $fetch(`/api/trainer/${route.params.name}`, {
+    baseURL: config.public.backendOrigin,
+    method: "DELETE",
+  }).catch((e) => e);
+  if (response instanceof Error) return;
   router.push("/");
 };
 const nickname = ref("");
@@ -24,28 +23,27 @@ const onNickname = async (pokemon) => {
   const index = newTrainer.pokemons.findIndex(({ id }) => id === pokemon.id);
   newTrainer.pokemons[index].nickname = trimAvoidCharacters(nickname.value);
   nickname.value = "";
-  const response = await fetch(
-    `${config.public.backendOrigin}/api/trainer/${route.params.name}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTrainer),
+  const response = await $fetch(`/api/trainer/${route.params.name}`, {
+    baseURL: config.public.backendOrigin,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
-  if (!response.ok) return;
+    body: JSON.stringify(newTrainer),
+  }).catch((e) => e);
+  if (response instanceof Error) return;
   await refresh();
   onCloseNickname();
 };
 const onRelease = async (pokemonId) => {
   const response = await fetch(
-    `${config.public.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
+    `/api/trainer/${route.params.name}/pokemon/${pokemonId}`,
     {
+      baseURL: config.public.backendOrigin,
       method: "DELETE",
     },
-  );
-  if (!response.ok) return;
+  ).catch((e) => e);
+  if (response instanceof Error) return;
   await refresh();
   onCloseRelease();
 };
@@ -77,7 +75,7 @@ const {
       >マサラタウンにかえる</GamifyButton
     >
     <h2>てもちポケモン</h2>
-    <CatchButton :to="`/trainer/${trainer.name}/catch`"
+    <CatchButton :to="`/trainer/${route.params.name}/catch`"
       >ポケモンをつかまえる</CatchButton
     >
     <GamifyList>

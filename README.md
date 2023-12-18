@@ -68,7 +68,7 @@ TBD
 | `AWS_SECRET_ACCESS_KEY`      | AWS 認証情報のシークレットアクセスキー                                          | なし                      |
 | `NUXT_REGION`                | AWS のリージョン                                                                | `"ap-northeast-1"`        |
 | `NUXT_BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット                        | `""`                      |
-| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン[^オリジン以外禁止]        | `"http://localhost:3000"` |
+| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン[^オリジン以外禁止]        | なし                      |
 | `HOST` または `NITRO_HOST`   | `npm start` 時反映される Nuxt サーバーのホスト名                                | `"0.0.0.0"`               |
 | `PORT` または `NITRO_PORT`   | `npm start` 時反映される Nuxt サーバーのポート番号                              | `3000`                    |
 | `FRONTEND_ORIGIN`            | Express サーバが CORS を許可するアクセス元オリジン。Nuxt 側のオリジンを設定する | `"http://localhost:3000"` |
@@ -86,7 +86,7 @@ TBD
 | `AWS_SECRET_ACCESS_KEY` [^AWS_クレデンシャル] | :heavy_check_mark:   | :heavy_check_mark:          |                       |
 | `NUXT_REGION` [^他のリージョン]               |                      |                             |                       |
 | `NUXT_BUCKET_NAME` [^AWS_S3_バケット名]       | :heavy_check_mark:   | :heavy_check_mark:          | :heavy_check_mark:    |
-| `NUXT_PUBLIC_BACKEND_ORIGIN`                  |                      | :heavy_check_mark:          | :heavy_check_mark:    |
+| `NUXT_PUBLIC_BACKEND_ORIGIN`                  |                      | :heavy_check_mark:          |                       |
 | `HOST` または `NITRO_HOST`                    |                      |                             | :heavy_check_mark:    |
 | `PORT` または `NITRO_PORT`                    |                      |                             | :heavy_check_mark:    |
 | `FRONTEND_ORIGIN`                             |                      | :heavy_check_mark:          |                       |
