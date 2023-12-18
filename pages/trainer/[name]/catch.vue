@@ -10,7 +10,7 @@ const { data: pokemons, refresh } = await useFetch(
     `https://pokeapi.co/api/v2/pokemon?offset=${offset.value}&limit=${limit.value}`,
   {
     default: () => [],
-  }
+  },
 );
 const hasPrev = computed(() => page.value > 0);
 const maxPage = computed(() => Math.floor(pokemons.value.count / limit.value));
@@ -25,10 +25,10 @@ const onNext = async () => {
 };
 const onCatch = async (pokemon) => {
   const response = await fetch(
-    `${config.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
+    `${config.public.backendOrigin}/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
     {
       method: "PUT",
-    }
+    },
   );
   if (!response.ok) return;
   router.push(`/trainer/${route.params.name}`);

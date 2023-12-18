@@ -3,7 +3,7 @@ import app from "~/server/utils/app";
 import router from "~/server/utils/router";
 
 app.use(
-  cors({ origin: process.env.FRONTEND_ORIGIN ?? "http://localhost:3000" })
+  cors({ origin: process.env.FRONTEND_ORIGIN ?? "http://localhost:3000" }),
 );
 app.use("/api", router);
 

@@ -63,7 +63,7 @@
 +<script setup>
 +const { data: trainers } = await useTrainers();
 +</script>
- 
+
  <template>
    <div>
      <h1>ポケットモンスター</h1>
@@ -133,11 +133,13 @@ const config = useRuntimeConfig();
 
 // data: リアクティブなレスポンスボディ
 // refresh: 再読み込みする関数
-const { data, refresh } = useFetch(`${config.backendOrigin}/api/trainers`);
+const { data, refresh } = useFetch(
+  `${config.public.backendOrigin}/api/trainers`,
+);
 
 // 動的な URL に対しては文字列を返す関数を引数に渡します
 const { data, refresh } = useFetch(
-  () => `${config.backendOrigin}/api/trainer/${trainerName}`
+  () => `${config.public.backendOrigin}/api/trainer/${trainerName}`,
 );
 ```
 
@@ -159,7 +161,7 @@ const { data, refresh } = useFetch(
 +const config = useRuntimeConfig();
 +const trainerName = ref("");
 +const onSubmit = async () => {
-+  const response = await fetch(`${config.backendOrigin}/api/trainer`, {
++  const response = await fetch(`${config.public.backendOrigin}/api/trainer`, {
 +    method: "POST",
 +    headers: {
 +      "Content-Type": "application/json",
@@ -172,7 +174,7 @@ const { data, refresh } = useFetch(
 +  router.push(`/trainer/${trainerName.value}`);
 +};
 +</script>
- 
+
  <template>
    <div>
 ```
@@ -192,7 +194,7 @@ const { data, refresh } = useFetch(
 +const trainerName = ref("");
 +const valid = computed(() => trainerName.value.length > 0);
 +</script>
- 
+
  <template>
    <div>
 ```
@@ -205,7 +207,7 @@ const { data, refresh } = useFetch(
 
 trimAvoidCharacters という関数がどこかに定義済みなので使用可能です。
 
-```diff
+````diff
 --- a/pages/new.vue
 +++ b/pages/new.vue
 @@ -1,4 +1,7 @@
@@ -214,7 +216,7 @@ trimAvoidCharacters という関数がどこかに定義済みなので使用可
 +const trainerName = ref("");
 +const safeTranerName = computed(() => trimAvoidCharacters(trainerName.value));
 +</script>
- 
+
  <template>
    <div>
 ---
@@ -249,9 +251,9 @@ trimAvoidCharacters という関数がどこかに定義済みなので使用可
 +    </form>
    </div>
  </template>
- 
 
-```
+
+````
 
 ---
 
@@ -268,7 +270,7 @@ trimAvoidCharacters という関数がどこかに定義済みなので使用可
 +const trainerName = ref("");
 +const { dialog, onOpen, onClose } = useDialog();
 +</script>
- 
+
  <template>
    <div>
      <h1>あたらしくはじめる</h1>
@@ -292,5 +294,5 @@ trimAvoidCharacters という関数がどこかに定義済みなので使用可
 +    </GamifyDialog>
    </div>
  </template>
- 
+
 ```
