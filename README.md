@@ -46,7 +46,69 @@ npm run dev:express # 開発サーバーの起動
 
 ### App Runner へデプロイ
 
-TBD
+<details>
+
+#### 準備: ロールの作成
+
+https://us-east-1.console.aws.amazon.com/iamv2/home#/roles より「ロールを作成」をクリック
+
+![](./docs/create-new-role.png)
+
+カスタム信頼ポリシーを選択し、以下のカスタム信頼ポリシーを作成
+
+参考: [アプリケーションランナー IAM ロール](https://docs.aws.amazon.com/ja_jp/apprunner/latest/dg/security_iam_service-with-iam.html#security_iam_service-with-iam-roles)
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Statement1",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "tasks.apprunner.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+許可ポリシーから AmazonS3FullAccess を指定
+
+![](./docs/add-access-policy.png)
+
+ロール名を入力して作成
+
+![](./docs/type-policy-name.png)
+
+#### App Runner サービスの作成
+
+https://us-east-1.console.aws.amazon.com/apprunner/home#/services からサービスの作成をクリック
+
+![](./docs/create-app-runner-sevice.png)
+
+リポジトリタイプは「ソースコードリポジトリ」を指定、必要に応じてAWS Connector for GitHubアプリをインストールし、webdino/lyceum-pokemonをフォークしたリポジトリを指定
+
+![](./docs/connect-github-repository.png)
+
+下記の通り設定（ランタイムは適宜最新の Nodejs ランタイムを選択します）
+
+![](./docs/setup-build.png)
+
+サービス設定は下記のとおり設定
+
+このとき、環境変数 NUXT_BUCKET_NAME は作成した S3 バケット名にしてください
+
+![](./docs/setup-service.png)
+
+準備で作成したIAMロールをインスタンスロールとして指定
+
+ここでは、IAMロールを apprunner-have-s3fullaccess としています
+
+![](./docs/setup-security.png)
+
+</details>
 
 ## npm スクリプト
 
