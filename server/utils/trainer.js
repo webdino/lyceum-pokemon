@@ -18,7 +18,7 @@ const streamToString = (stream) =>
 /** トレーナーの一覧の取得 */
 export const findTrainers = async () => {
   const objects = await s3Client.send(
-    new ListObjectsCommand({ Bucket: config.bucketName })
+    new ListObjectsCommand({ Bucket: config.bucketName }),
   );
   return objects.Contents ?? [];
 };
@@ -29,7 +29,7 @@ export const findTrainer = async (name) => {
     new GetObjectCommand({
       Bucket: config.bucketName,
       Key: `${name}.json`,
-    })
+    }),
   );
   const trainer = JSON.parse(await streamToString(object.Body));
   return trainer;
@@ -42,7 +42,7 @@ export const upsertTrainer = async (name, trainer) => {
       Bucket: config.bucketName,
       Key: `${name}.json`,
       Body: JSON.stringify({ name: "", pokemons: [], ...trainer }),
-    })
+    }),
   );
   return result;
 };

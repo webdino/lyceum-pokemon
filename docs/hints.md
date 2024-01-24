@@ -10,6 +10,10 @@
 
 `.env` を編集し環境変数の内容を変更した場合は Ctrl + C を入力して開発サーバーを停止・再起動してください（変更前の `.env` ファイルが読まれ続けるため）
 
+環境変数の値は useRuntimeConfig() に定義し参照する方針を採用したので、それに倣ってください
+
+参考: https://nuxt.com/docs/api/composables/use-runtime-config#useruntimeconfig
+
 ---
 
 ## ヒント 02
@@ -26,9 +30,9 @@
 削除系 API エンドポイントを利用しないかぎりポケモンは保持する差分
 
 ```diff
---- a/express/index.js
-+++ b/express/index.js
-@@ -69,9 +77,21 @@ app.put(
+--- a/server/utils/router.js
++++ b/server/utils/router.js
+@@ -55,9 +55,12 @@ router.put(
    async (req, res, next) => {
      try {
        const { trainerName, pokemonName } = req.params;
@@ -38,13 +42,11 @@
 -      const result = await upsertTrainer(trainerName, { pokemons: [pokemon] });
 +      trainer.pokemons.push({
 +        id: new Date().getTime(), // 何か衝突しない値の生成方法であればなんでもいいです
-+        ...pokemon,
 +      });
 +      const result = await upsertTrainer(trainerName, trainer);
        res.status(result["$metadata"].httpStatusCode).send(result);
      } catch (err) {
        next(err);
-
 ```
 
 ---
@@ -56,24 +58,18 @@
 ```diff
 --- a/pages/index.vue
 +++ b/pages/index.vue
-@@ -1,7 +1,10 @@
- <script>
- export default {
-   async setup() {
--    return {};
-+    const { data: trainers } = await useTrainers();
-+    return {
-+      trainers,
-+    };
-   },
- };
- </script>
-@@ -10,9 +13,12 @@ export default {
+@@ -1,12 +1,17 @@
+-<script setup></script>
++<script setup>
++const { data: trainers } = await useTrainers();
++</script>
+
+ <template>
    <div>
      <h1>ポケットモンスター</h1>
      <GamifyList>
 -      <GamifyItem>
-+      <GamifyItem v-if="trainers.length > 0">
++      <GamifyItem v-if="trainers.length">
          <NuxtLink to="/trainer">つづきからはじめる</NuxtLink>
        </GamifyItem>
 +      <GamifyItem v-else>
@@ -122,7 +118,7 @@ Nuxt における動的なルーティングの提供方法の和訳
 > admins 123
 > ```
 
-https://v3.nuxtjs.org/docs/directory-structure/pages#dynamic-routes
+https://nuxt.com/docs/guide/directory-structure/pages#dynamic-routes
 
 ---
 
@@ -137,15 +133,19 @@ const config = useRuntimeConfig();
 
 // data: リアクティブなレスポンスボディ
 // refresh: 再読み込みする関数
-const { data, refresh } = useFetch(`${config.backendOrigin}/api/trainers`);
+const { data, refresh } = useFetch("$/api/trainers", {
+  server: false, // ブラウサ側でのみデータ取得する（単純な実装にしておく目的）
+  baseURL: config.public.backendOrigin, // `npm run dev:express` しないなら省略可
+});
 
 // 動的な URL に対しては文字列を返す関数を引数に渡します
-const { data, refresh } = useFetch(
-  () => `${config.backendOrigin}/api/trainer/${trainerName}`
-);
+const { data, refresh } = useFetch(() => `/api/trainer/${trainerName}`, {
+  server: false, // ブラウサ側でのみデータ取得する（単純な実装にしておく目的）
+  baseURL: config.public.backendOrigin, // `npm run dev:express` しないなら省略可
+});
 ```
 
-参考: https://v3.nuxtjs.org/docs/usage/data-fetching
+参考: https://nuxt.com/docs/getting-started/data-fetching
 
 ---
 
@@ -156,34 +156,30 @@ const { data, refresh } = useFetch(
 ```diff
 --- a/pages/new.vue
 +++ b/pages/new.vue
-@@ -1,7 +1,38 @@
- <script>
-uexport default {
-   setup() {
--    return {};
-+    const router = useRouter();
-+    const config = useRuntimeConfig();
-+    const trainerName = ref("");
-+    const onSubmit = async () => {
-+      const response = await fetch(`${config.backendOrigin}/api/trainer`, {
-+        method: "POST",
-+        headers: {
-+          "Content-Type": "application/json",
-+        },
-+        body: JSON.stringify({
-+          name: trainerName.value,
-+        }),
-+      });
-+      if (!response.ok) return;
-+      router.push(`/trainer/${trainerName.value}`);
-+    };
-+    return {
-+      trainerName,
-+      onSubmit,
-+    };
-   },
- };
- </script>
+@@ -1,4 +1,21 @@
+-<script setup></script>
++<script setup>
++const router = useRouter();
++const config = useRuntimeConfig();
++const trainerName = ref("");
++const onSubmit = async () => {
++  const response = await $fetch("/api/trainer", {
++    baseURL: config.public.backendOrigin, // `npm run dev:express` しないなら省略可
++    method: "POST",
++    headers: {
++      "Content-Type": "application/json",
++    },
++    body: JSON.stringify({
++      name: trainerName.value,
++    }),
++  }).catch((e) => e); // 正常でないレスポンスステータスやネットワークエラーはエラーが投げられるので取得結果に含める https://github.com/unjs/ofetch#%EF%B8%8F-handling-errors
++  if (response instanceof Error) return; // 取得結果がエラークラスインスタンスなら後続の処理をスキップする
++  router.push(`/trainer/${trainerName.value}`);
++};
++</script>
+
+ <template>
+   <div>
 ```
 
 ---
@@ -195,20 +191,15 @@ uexport default {
 ```diff
 --- a/pages/new.vue
 +++ b/pages/new.vue
-@@ -1,7 +1,38 @@
- <script>
- export default {
-   setup() {
--    return {};
-+    const trainerName = ref("");
-+    const valid = computed(() => trainerName.value.length > 0);
-+    return {
-+      trainerName,
-+      valid,
-+    };
-   },
- };
- </script>
+@@ -1,4 +1,7 @@
+-<script setup></script>
++<script setup>
++const trainerName = ref("");
++const valid = computed(() => trainerName.value.length > 0);
++</script>
+
+ <template>
+   <div>
 ```
 
 ---
@@ -217,27 +208,20 @@ uexport default {
 
 トレーナー名から S3 オブジェクトキーとしての使用を避けたい文字を取り除く差分
 
-```diff
+trimAvoidCharacters という関数がどこかに定義済みなので使用可能です。
+
+````diff
 --- a/pages/new.vue
 +++ b/pages/new.vue
-@@ -1,7 +1,38 @@
- <script>
- export default {
-   setup() {
--    return {};
-+    const trainerName = ref("");
-+    const safeTrainerName = computed(() =>
-+      trimAvoidCharacters(trainerName.value)
-+    );
-+    return {
-+      trainerName,
-+      safeTrainerName,
-+    };
-   },
- };
- </script>
-```
+@@ -1,4 +1,7 @@
+-<script setup></script>
++<script setup>
++const trainerName = ref("");
++const safeTranerName = computed(() => trimAvoidCharacters(trainerName.value));
++</script>
 
+ <template>
+   <div>
 ---
 
 ## ヒント 10
@@ -247,7 +231,7 @@ uexport default {
 ```diff
 --- a/pages/new.vue
 +++ b/pages/new.vue
-@@ -9,7 +40,40 @@ export default {
+@@ -3,7 +3,21 @@
  <template>
    <div>
      <h1>あたらしくはじめる</h1>
@@ -261,17 +245,18 @@ uexport default {
 +        >
 +        <input
 +          id="name"
-+          @keydown.enter="onSubmit"
 +          v-model="trainerName"
-+          aria-describedby="name-description"
++          aria-decribedby="name-description"
++          @keydown.enter="onSubmit"
 +        />
++        <GamifyButton type="button" @click="onSubmit">けってい</GamifyButton>
 +      </div>
-+      <GamifyButton type="button" @click="onSubmit">けってい</GamifyButton>
 +    </form>
    </div>
  </template>
 
-```
+
+````
 
 ---
 
@@ -282,23 +267,13 @@ uexport default {
 ```diff
 --- a/pages/new.vue
 +++ b/pages/new.vue
-@@ -1,7 +1,38 @@
- <script>
- export default {
-   setup() {
--    return {};
-+    const trainerName = ref("");
-+    const { dialog, onOpen, onClose } = useDialog();
-+    return {
-+      trainerName,
-+      dialog,
-+      onOpen,
-+      onClose,
-+    };
-   },
- };
- </script>
- @ -9,7 +40,40 @@ export default {
+@@ -1,9 +1,29 @@
+-<script setup></script>
++<script setup>
++const trainerName = ref("");
++const { dialog, onOpen, onClose } = useDialog();
++</script>
+
  <template>
    <div>
      <h1>あたらしくはじめる</h1>

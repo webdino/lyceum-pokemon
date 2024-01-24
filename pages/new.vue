@@ -5,7 +5,8 @@ const trainerName = ref("");
 const safeTrainerName = computed(() => trimAvoidCharacters(trainerName.value));
 const valid = computed(() => safeTrainerName.value.length > 0);
 const onSubmit = async () => {
-  const response = await fetch(`${config.backendOrigin}/api/trainer`, {
+  const response = await $fetch("/api/trainer", {
+    baseURL: config.public.backendOrigin,
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,8 +14,8 @@ const onSubmit = async () => {
     body: JSON.stringify({
       name: safeTrainerName.value,
     }),
-  });
-  if (!response.ok) return;
+  }).catch((e) => e);
+  if (response instanceof Error) return;
   router.push(`/trainer/${safeTrainerName.value}`);
 };
 const { dialog, onOpen, onClose } = useDialog();

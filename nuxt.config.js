@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     region: "ap-northeast-1",
     bucketName: "",
     public: {
-      backendOrigin: "http://localhost:3000",
+      backendOrigin: undefined,
     },
   },
 });

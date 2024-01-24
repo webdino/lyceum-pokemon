@@ -2,7 +2,11 @@
 const route = useRoute();
 const config = useRuntimeConfig();
 const { data: trainer } = await useFetch(
-  () => `${config.backendOrigin}/api/trainer/${route.params.name}`
+  () => `/api/trainer/${route.params.name}`,
+  {
+    default: () => [],
+    baseUrl: config.public.backendOrigin,
+  },
 );
 </script>
 

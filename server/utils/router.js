@@ -62,32 +62,31 @@ router.post("/trainer/:trainerName", async (req, res, next) => {
 // TODO: トレーナーを削除する API エンドポイントの実装
 
 /** ポケモンの追加 */
-router.put(
-  "/trainer/:trainerName/pokemon/:pokemonName",
-  async (req, res, next) => {
-    try {
-      const { trainerName, pokemonName } = req.params;
-      const trainer = await findTrainer(trainerName);
-      const pokemon = await findPokemon(pokemonName);
-      const {
-        order,
-        name,
-        sprites: { front_default },
-      } = pokemon;
-      trainer.pokemons.push({
-        id: (trainer.pokemons[trainer.pokemons.length - 1]?.id ?? 0) + 1,
-        nickname: "",
-        order,
-        name,
-        sprites: { front_default },
-      });
-      const result = await upsertTrainer(trainerName, trainer);
-      res.status(result["$metadata"].httpStatusCode).send(result);
-    } catch (err) {
-      next(err);
-    }
+router.post("/trainer/:trainerName/pokemon", async (req, res, next) => {
+  try {
+    const { trainerName } = req.params;
+    const trainer = await findTrainer(trainerName);
+    if (!("name" in req.body && req.body.name.length > 0))
+      return res.sendStatus(400);
+    const pokemon = await findPokemon(req.body.name);
+    const {
+      order,
+      name,
+      sprites: { front_default },
+    } = pokemon;
+    trainer.pokemons.push({
+      id: (trainer.pokemons[trainer.pokemons.length - 1]?.id ?? 0) + 1,
+      nickname: "",
+      order,
+      name,
+      sprites: { front_default },
+    });
+    const result = await upsertTrainer(trainerName, trainer);
+    res.status(result["$metadata"].httpStatusCode).send(result);
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 /** ポケモンの削除 */
 // TODO: ポケモンを削除する API エンドポイントの実装
