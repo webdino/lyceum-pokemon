@@ -24,13 +24,13 @@ const onNext = async () => {
   await refresh();
 };
 const onCatch = async (pokemon) => {
-  const response = await $fetch(
-    `/api/trainer/${route.params.name}/pokemon/${pokemon.name}`,
-    {
-      baseURL: config.public.backendOrigin,
-      method: "PUT",
+  const response = await $fetch(`/api/trainer/${route.params.name}/pokemon`, {
+    baseURL: config.public.backendOrigin,
+    method: "POST",
+    body: {
+      name: pokemon.name,
     },
-  ).catch((e) => e);
+  }).catch((e) => e);
   if (response instanceof Error) return;
   router.push(`/trainer/${route.params.name}`);
 };
