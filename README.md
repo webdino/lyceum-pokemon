@@ -280,14 +280,17 @@ S3 バケット内のファイルリスト = トレーナーリストであり�
 
 [DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/deleteobjectcommandoutput.html)
 
-### PUT `/api/trainer/:trainerName/pokemon/:pokemonName`
+### POST `/api/trainer/:trainerName/pokemon`
 
 ポケモンの追加
 
 #### パラメーター
 
 - `trainerName`: トレーナー名
-- `pokemonName`: ポケモン名
+
+#### リクエストボディ
+
+- `name`: ポケモン名（必須）
 
 #### レスポンス
 
