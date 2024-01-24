@@ -92,15 +92,19 @@ https://us-east-1.console.aws.amazon.com/apprunner/home#/services からサー�
 
 ![](./docs/connect-github-repository.png)
 
-下記の通り設定
+下記の通り設定（ランタイムは適宜最新の Nodejs ランタイムを選択します）
 
 ![](./docs/setup-build.png)
 
-環境変数を設定
+サービス設定は下記のとおり設定
+
+このとき、環境変数 NUXT_BUCKET_NAME は作成した S3 バケット名にしてください
 
 ![](./docs/setup-service.png)
 
 準備で作成したIAMロールをインスタンスロールとして指定
+
+ここでは、IAMロールを apprunner-have-s3fullaccess としています
 
 ![](./docs/setup-security.png)
 
