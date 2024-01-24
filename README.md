@@ -68,7 +68,7 @@ TBD
 | `AWS_SECRET_ACCESS_KEY`      | AWS 認証情報のシークレットアクセスキー                                          | なし                      |
 | `NUXT_REGION`                | AWS のリージョン                                                                | `"ap-northeast-1"`        |
 | `NUXT_BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット                        | `""`                      |
-| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン[^オリジン以外禁止]        | `"http://localhost:3000"` |
+| `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン[^オリジン以外禁止]        | なし                      |
 | `HOST` または `NITRO_HOST`   | `npm start` 時反映される Nuxt サーバーのホスト名                                | `"0.0.0.0"`               |
 | `PORT` または `NITRO_PORT`   | `npm start` 時反映される Nuxt サーバーのポート番号                              | `3000`                    |
 | `FRONTEND_ORIGIN`            | Express サーバが CORS を許可するアクセス元オリジン。Nuxt 側のオリジンを設定する | `"http://localhost:3000"` |
@@ -80,24 +80,21 @@ TBD
 
 初期値がなくチェックがあるものについては、必ず自身で値を設定する必要があります。初期値があるものであっても、チェックがあるものについては自身で値を設定する必要がある場合があります。
 
-<!-- prettier-ignore-start -->
-
-| 変数名                       | 開発時 Nuxt のみ起動                     | 開発時 Nuxt と Express 起動              | App Runner へデプロイ |
-| :--------------------------- | :--------------------------------------- | :--------------------------------------- | :-------------------- |
-| `AWS_ACCESS_KEY_ID`          | :heavy_check_mark: [^AWS_クレデンシャル] | :heavy_check_mark: [^AWS_クレデンシャル] | [^AWS_クレデンシャル] |
-| `AWS_SECRET_ACCESS_KEY`      | :heavy_check_mark: [^AWS_クレデンシャル] | :heavy_check_mark: [^AWS_クレデンシャル] | [^AWS_クレデンシャル] |
-| `NUXT_REGION`                | [^他のリージョン]                        | [^他のリージョン]                        | [^他のリージョン]     |
-| `NUXT_BUCKET_NAME`           | :heavy_check_mark:                       | :heavy_check_mark:                       | :heavy_check_mark:    |
-| `NUXT_PUBLIC_BACKEND_ORIGIN` |                                          | :heavy_check_mark:                       |                       |
-| `HOST` または `NITRO_HOST`   |                                          |                                          | :heavy_check_mark:    |
-| `PORT` または `NITRO_PORT`   |                                          |                                          | :heavy_check_mark:    |
-| `FRONTEND_ORIGIN`            |                                          | :heavy_check_mark:                       |                       |
-| `BACKEND_PORT`               |                                          | :heavy_check_mark:                       |                       |
-
-<!-- prettier-ignore-end -->
+| 変数名                                        | 開発時 Nuxt のみ起動 | 開発時 Nuxt と Express 起動 | App Runner へデプロイ |
+| :-------------------------------------------- | :------------------- | :-------------------------- | :-------------------- |
+| `AWS_ACCESS_KEY_ID` [^AWS_クレデンシャル]     | :heavy_check_mark:   | :heavy_check_mark:          |                       |
+| `AWS_SECRET_ACCESS_KEY` [^AWS_クレデンシャル] | :heavy_check_mark:   | :heavy_check_mark:          |                       |
+| `NUXT_REGION` [^他のリージョン]               |                      |                             |                       |
+| `NUXT_BUCKET_NAME` [^AWS_S3_バケット名]       | :heavy_check_mark:   | :heavy_check_mark:          | :heavy_check_mark:    |
+| `NUXT_PUBLIC_BACKEND_ORIGIN`                  |                      | :heavy_check_mark:          |                       |
+| `HOST` または `NITRO_HOST`                    |                      |                             | :heavy_check_mark:    |
+| `PORT` または `NITRO_PORT`                    |                      |                             | :heavy_check_mark:    |
+| `FRONTEND_ORIGIN`                             |                      | :heavy_check_mark:          |                       |
+| `BACKEND_PORT`                                |                      | :heavy_check_mark:          |                       |
 
 [^AWS_クレデンシャル]: AWS SDK により認証情報が提供されている場合不要です。 https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
 [^他のリージョン]: `"ap-northeast-1"` 以外のリージョンを使用している場合は設定必須です。
+[^AWS_S3_バケット名]: AWS S3 バケット名はいずれの場合も設定必須です。`npm run build; npm start` でローカル起動する場合には特に OS 環境変数への設定が必須 (他と異なり `.env` ファイルが読まれない) ことに注意してください。
 
 ## クライアント画面構成
 
@@ -178,18 +175,6 @@ S3 バケット内のファイルリスト = トレーナーリストであり�
 ```
 
 ## API エンドポイント
-
-### `/api/pokeapi`
-
-https://pokeapi.co/api/v2/ へのプロキシー
-
-#### パラメーター
-
-なし
-
-#### レスポンス
-
-https://pokeapi.co/docs/v2 に準じる
 
 ### GET `/api/trainers`
 
@@ -295,14 +280,17 @@ https://pokeapi.co/docs/v2 に準じる
 
 [DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/deleteobjectcommandoutput.html)
 
-### PUT `/api/trainer/:trainerName/pokemon/:pokemonName`
+### POST `/api/trainer/:trainerName/pokemon`
 
 ポケモンの追加
 
 #### パラメーター
 
 - `trainerName`: トレーナー名
-- `pokemonName`: ポケモン名
+
+#### リクエストボディ
+
+- `name`: ポケモン名（必須）
 
 #### レスポンス
 
