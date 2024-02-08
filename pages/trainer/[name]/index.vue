@@ -6,6 +6,7 @@ const { data: trainer, refresh } = await useFetch(
   () => `/api/trainer/${route.params.name}`,
   {
     default: () => [],
+    server: false,
     baseUrl: config.public.backendOrigin,
   },
 );
