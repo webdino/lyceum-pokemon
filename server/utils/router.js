@@ -1,19 +1,15 @@
 import { Router } from "express";
-import { findTrainers, upsertTrainer } from "~/server/utils/trainer";
+import { findTrainer, findTrainers, upsertTrainer } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
 
 const router = Router();
-
-router.get("/hello", (_req, res) => {
-  res.send("Hello World");
-});
 
 /** トレーナー名の一覧の取得 */
 router.get("/trainers", async (_req, res, next) => {
   try {
     const trainers = await findTrainers();
-    // TODO: 期待するレスポンスボディに変更する
-    res.send(trainers);
+    const trainerNames = trainers.map(({ Key }) => Key.replace(/\.json$/, ""));
+    res.send(trainerNames);
   } catch (err) {
     next(err);
   }
@@ -32,7 +28,15 @@ router.post("/trainer", async (req, res, next) => {
 });
 
 /** トレーナーの取得 */
-// TODO: トレーナーを取得する API エンドポイントの実装
+router.get("/trainer/:trainerName", async (req, res, next) => {
+  try {
+    const { trainerName } = req.params;
+    const trainer = await findTrainer(trainerName);
+    res.send(trainer);
+  } catch (err) {
+    next(err);
+  }
+});
 
 /** トレーナーの更新 */
 router.post("/trainer/:trainerName", async (req, res, next) => {
@@ -53,9 +57,26 @@ router.post("/trainer/:trainerName", async (req, res, next) => {
 router.post("/trainer/:trainerName/pokemon", async (req, res, next) => {
   try {
     const { trainerName } = req.params;
-    // TODO: リクエストボディにポケモン名が含まれていなければ400を返す
+    // リクエストボディにポケモン名が含まれていなければ400を返す
+    if (!("name" in req.body)) {
+      res.sendStatus(400);
+    }
+
+    // 削除系 API エンドポイントを利用しないかぎりポケモンは保持する
+    const trainer = await findTrainer(trainerName);
     const pokemon = await findPokemon(req.body.name);
-    // TODO: 削除系 API エンドポイントを利用しないかぎりポケモンは保持する
+    const {
+      order,
+      name,
+      sprites: { front_default },
+    } = pokemon;
+    trainer.pokemons.push({
+      id: (trainer.pokemons[trainer.pokemons.length - 1]?.id ?? 0) + 1,
+      nickname: "",
+      order,
+      name,
+      sprites: { front_default },
+    });
     const result = await upsertTrainer(trainerName, { pokemons: [pokemon] });
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {
