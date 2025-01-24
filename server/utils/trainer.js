@@ -1,12 +1,13 @@
 import {
-  ListObjectsCommand,
-  GetObjectCommand,
-  PutObjectCommand,
   DeleteObjectCommand,
+  GetObjectCommand,
+  ListObjectsCommand,
+  PutObjectCommand,
+  S3Client,
 } from "@aws-sdk/client-s3";
-import s3Client from "./s3Client";
 
 const config = useRuntimeConfig();
+const s3Client = new S3Client({ region: config.region });
 
 const streamToString = (stream) =>
   new Promise((resolve, reject) => {
