@@ -8,14 +8,6 @@ import s3Client from "./s3Client";
 
 const config = useRuntimeConfig();
 
-const streamToString = (stream) =>
-  new Promise((resolve, reject) => {
-    const chunks = [];
-    stream.on("data", (chunk) => chunks.push(chunk));
-    stream.on("error", reject);
-    stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
-  });
-
 /** トレーナーの一覧の取得 */
 export const findTrainers = async () => {
   const objects = await s3Client.send(
@@ -32,7 +24,7 @@ export const findTrainer = async (name) => {
       Key: `${name}.json`,
     }),
   );
-  const trainer = JSON.parse(await streamToString(object.Body));
+  const trainer = JSON.parse(await object.Body.transformToString());
   return trainer;
 };
 
