@@ -7,6 +7,7 @@ const { data: pokemons, refresh } = await useFetch(
     `https://pokeapi.co/api/v2/pokemon?offset=${offset.value}&limit=${limit.value}`,
   {
     default: () => [],
+    server: false,
   },
 );
 const hasPrev = computed(() => page.value > 0);
