@@ -13,7 +13,7 @@
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "npm-check-updates": "^17.1.14",
-    "npm-run-all": "^4.1.5",
+    "npm-run-all2": "^7.0.2",
     "nuxt": "^3.15.3",
     "ofetch": "^1.4.1",
     "prettier": "^3.4.2",
@@ -26,9 +26,11 @@
     "node": "^20 || ^22"
   },
   "scripts": {
+    "prepare": "nuxi prepare",
     "build": "nuxi build",
+    "build:express": "tsup express.js",
     "dev": "nuxi dev",
-    "dev:express": "tsup express.js --onSuccess=\"run-p dev start:express\"",
+    "dev:express": "npm-run-all prepare build:express --parallel dev start:express",
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "slide": "marp -s docs",
