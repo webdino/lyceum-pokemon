@@ -10,6 +10,7 @@
 
 - [AWS のセキュリティ認証情報](https://console.aws.amazon.com/iam/home#/security_credentials) にてアクセスキー ID とシークレットアクセスキーを生成してください
 - [AWS S3](https://s3.console.aws.amazon.com/s3/buckets) にて空のバケットを作成してください (設定は全てデフォルトで大丈夫です)
+- [Set and view configuration settings using commands](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods) を参考に生成したアクセスキー ID とシークレットアクセスキーを AWS CLI プロファイルに設定してください
 
 ## 実行環境
 
@@ -17,30 +18,24 @@
 - 本リポジトリをクローンし、次の使い方に従って実行してください
 - 環境変数は実行環境 (ターミナルセッションなど) の環境変数に設定するか [.env ファイル](https://nuxt.com/docs/guide/directory-structure/env#env-file)を新規作成して記述してください
 
-## 動作方法
+## アプリの起動（初回）
 
 ### 開発時 Nuxt のみ起動
 
 ```bash
-npm install # npm パッケージのインストール（初回のみ必須）
-cat << EOL > .env # .env ファイルの作成（ターミナルに Bash 以外のシェルを使用している場合は適宜読み替えてください）
-AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-NUXT_BUCKET_NAME=<作成した S3 バケット名>
-EOL
+aws configure # AWS CLI プロファイルの設定
+npm install # npm パッケージのインストール
+echo "NUXT_BUCKET_NAME=<作成した S3 バケット名>" >> .env # 環境変数 NUXT_BUCKET_NAME の設定
 npm run dev # 開発サーバーの起動
 ```
 
 ### 開発時 Nuxt と Express 起動
 
 ```bash
-npm install # npm パッケージのインストール（初回のみ必須）
-cat << EOL > .env # .env ファイルの作成（ターミナルに Bash 以外のシェルを使用している場合は適宜読み替えてください）
-AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-NUXT_BUCKET_NAME=<作成した S3 バケット名>
-NUXT_PUBLIC_BACKEND_ORIGIN=http://localhost:4000
-EOL
+aws configure # AWS CLI プロファイルの設定
+npm install # npm パッケージのインストール
+echo "NUXT_BUCKET_NAME=<作成した S3 バケット名>" >> .env # 環境変数 NUXT_BUCKET_NAME の設定
+echo "NUXT_PUBLIC_BACKEND_ORIGIN=http://localhost:4000" >> .env # 環境変数 NUXT_PUBLIC_BACKEND_ORIGIN の設定
 npm run dev:express # 開発サーバーの起動
 ```
 
@@ -126,8 +121,6 @@ https://us-east-1.console.aws.amazon.com/apprunner/home#/services からサー�
 
 | 変数名                       | 説明                                                                            | 初期値                    |
 | :--------------------------- | :------------------------------------------------------------------------------ | :------------------------ |
-| `AWS_ACCESS_KEY_ID`          | AWS 認証情報のアクセスキー ID                                                   | なし                      |
-| `AWS_SECRET_ACCESS_KEY`      | AWS 認証情報のシークレットアクセスキー                                          | なし                      |
 | `NUXT_REGION`                | AWS のリージョン                                                                | `"ap-northeast-1"`        |
 | `NUXT_BUCKET_NAME`           | 本アプリケーションのデータ永続化に用いる AWS S3 バケット                        | `""`                      |
 | `NUXT_PUBLIC_BACKEND_ORIGIN` | Nuxt から Express への API リクエストに用いるオリジン[^オリジン以外禁止]        | なし                      |
@@ -142,19 +135,15 @@ https://us-east-1.console.aws.amazon.com/apprunner/home#/services からサー�
 
 初期値がなくチェックがあるものについては、必ず自身で値を設定する必要があります。初期値があるものであっても、チェックがあるものについては自身で値を設定する必要がある場合があります。
 
-| 変数名                                        | 開発時 Nuxt のみ起動 | 開発時 Nuxt と Express 起動 | App Runner へデプロイ |
-| :-------------------------------------------- | :------------------- | :-------------------------- | :-------------------- |
-| `AWS_ACCESS_KEY_ID` [^AWS_クレデンシャル]     | :heavy_check_mark:   | :heavy_check_mark:          |                       |
-| `AWS_SECRET_ACCESS_KEY` [^AWS_クレデンシャル] | :heavy_check_mark:   | :heavy_check_mark:          |                       |
-| `NUXT_REGION` [^他のリージョン]               |                      |                             |                       |
-| `NUXT_BUCKET_NAME` [^AWS_S3_バケット名]       | :heavy_check_mark:   | :heavy_check_mark:          | :heavy_check_mark:    |
-| `NUXT_PUBLIC_BACKEND_ORIGIN`                  |                      | :heavy_check_mark:          |                       |
-| `HOST` または `NITRO_HOST`                    |                      |                             | :heavy_check_mark:    |
-| `PORT` または `NITRO_PORT`                    |                      |                             | :heavy_check_mark:    |
-| `FRONTEND_ORIGIN`                             |                      | :heavy_check_mark:          |                       |
-| `BACKEND_PORT`                                |                      | :heavy_check_mark:          |                       |
-
-[^AWS_クレデンシャル]: AWS SDK により認証情報が提供されている場合不要です。 https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
+| 変数名                                  | 開発時 Nuxt のみ起動 | 開発時 Nuxt と Express 起動 | App Runner へデプロイ |
+| :-------------------------------------- | :------------------- | :-------------------------- | :-------------------- |
+| `NUXT_REGION` [^他のリージョン]         |                      |                             |                       |
+| `NUXT_BUCKET_NAME` [^AWS_S3_バケット名] | :heavy_check_mark:   | :heavy_check_mark:          | :heavy_check_mark:    |
+| `NUXT_PUBLIC_BACKEND_ORIGIN`            |                      | :heavy_check_mark:          |                       |
+| `HOST` または `NITRO_HOST`              |                      |                             | :heavy_check_mark:    |
+| `PORT` または `NITRO_PORT`              |                      |                             | :heavy_check_mark:    |
+| `FRONTEND_ORIGIN`                       |                      | :heavy_check_mark:          |                       |
+| `BACKEND_PORT`                          |                      | :heavy_check_mark:          |                       |
 
 [^他のリージョン]: `"ap-northeast-1"` 以外のリージョンを使用している場合は設定必須です。
 
@@ -277,7 +266,7 @@ S3 バケット内のファイルリスト = トレーナーリストであり�
 
 ##### 200
 
-[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/putobjectcommandoutput.html)
+[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-s3/Interface/PutObjectCommandOutput/)
 
 ##### 400
 
@@ -324,7 +313,7 @@ S3 バケット内のファイルリスト = トレーナーリストであり�
 
 ##### 200
 
-[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/putobjectcommandoutput.html)
+[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-s3/Interface/PutObjectCommandOutput/)
 
 ##### 404
 
@@ -342,7 +331,7 @@ S3 バケット内のファイルリスト = トレーナーリストであり�
 
 ##### 204
 
-[DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/deleteobjectcommandoutput.html)
+[DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-s3/Interface/DeleteObjectCommandOutput/)
 
 ### POST `/api/trainer/:trainerName/pokemon`
 
@@ -360,7 +349,7 @@ S3 バケット内のファイルリスト = トレーナーリストであり�
 
 ##### 200
 
-[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/putobjectcommandoutput.html)
+[PutObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-s3/Interface/PutObjectCommandOutput/)
 
 ### DELETE `/api/trainer/:trainerName/pokemon/:pokemonId`
 
@@ -375,4 +364,4 @@ S3 バケット内のファイルリスト = トレーナーリストであり�
 
 ##### 200
 
-[DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/deleteobjectcommandoutput.html)
+[DeleteObjectCommandOutput](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-s3/Interface/DeleteObjectCommandOutput/)

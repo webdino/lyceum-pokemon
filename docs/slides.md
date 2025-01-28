@@ -13,9 +13,6 @@
 
 - [AWS JS SDK をつかった AWS S3 のハンズオン #10](https://github.com/webdino/lyceum-pokemon/issues/10)
   - 今回の API エンドポイントの実装においてかなり実際的なコードの断片を得た
-  - 参考にしたドキュメント
-    - [Amazon S3 バケットの作成と使用 - AWS SDK for JavaScript](https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html) シナリオとともに今回必要な S3 関連の実装の 8 割くらいはここに分かりやすく記載されていた
-    - [S3 Client - AWS SDK for JavaScript v3](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/index.html) 必要なコマンドがどれかは勘で探していた
 
 ---
 
