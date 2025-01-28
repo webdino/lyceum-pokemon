@@ -4,6 +4,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.498.0",
+    "@aws-sdk/node-http-handler": "^3.374.0",
     "@marp-team/marp-cli": "^3.4.0",
     "@nuxt/eslint-config": "^0.2.0",
     "animate.css": "^4.1.1",
