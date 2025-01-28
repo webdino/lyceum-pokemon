@@ -28,7 +28,7 @@
   "scripts": {
     "prepare": "nuxi prepare",
     "build": "nuxi build",
-    "build:express": "tsup express.js {1}",
+    "build:express": "tsup express.js",
     "dev": "nuxi dev",
     "dev:express": "npm-run-all prepare build:express --parallel dev start:express",
     "format": "prettier --write .",
