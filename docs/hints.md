@@ -20,8 +20,8 @@
 
 @aws-sdk/client-s3 の使い方が載っているドキュメント
 
-- [S3 Client - AWS SDK for JavaScript v3](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/index.html)
-- [Amazon S3 バケットの作成と使用 - AWS SDK for JavaScript](https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/s3-example-creating-buckets.html)
+- [S3 Client - AWS SDK for JavaScript v3](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/)
+- [Amazon S3 examples using SDK for JavaScript (v3) - AWS SDK for JavaScript](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/javascript_s3_code_examples.html)
 
 ---
 
@@ -32,21 +32,29 @@
 ```diff
 --- a/server/utils/router.js
 +++ b/server/utils/router.js
-@@ -55,9 +55,12 @@ router.put(
-   async (req, res, next) => {
-     try {
-       const { trainerName, pokemonName } = req.params;
-+      const trainer = await findTrainer(trainerName); // 先にトレーナーを取得する処理を実装する必要があります
-       const pokemon = await findPokemon(pokemonName);
--      // TODO: 削除系 API エンドポイントを利用しないかぎりポケモンは保持する
--      const result = await upsertTrainer(trainerName, { pokemons: [pokemon] });
-+      trainer.pokemons.push({
-+        id: new Date().getTime(), // 何か衝突しない値の生成方法であればなんでもいいです
-+      });
-+      const result = await upsertTrainer(trainerName, trainer);
-       res.status(result["$metadata"].httpStatusCode).send(result);
-     } catch (err) {
-       next(err);
+@@ -53,10 +65,23 @@ router.post("/trainer/:trainerName", async (req, res, next) => {
+ router.post("/trainer/:trainerName/pokemon", async (req, res, next) => {
+   try {
+     const { trainerName } = req.params;
+-    // TODO: リクエストボディにポケモン名が含まれていなければ400を返す
++    const trainer = await findTrainer(trainerName); // 先にトレーナーを取得する処理を実装する必要があります
++    if (!("name" in req.body && req.body.name.length > 0))
++      return res.sendStatus(400);
+     const pokemon = await findPokemon(req.body.name);
+-    // TODO: 削除系 API エンドポイントを利用しないかぎりポケモンは保持する
+-    const result = await upsertTrainer(trainerName, { pokemons: [pokemon] });
++    const {
++      order,
++      name,
++      sprites: { front_default },
++    } = pokemon;
++    trainer.pokemons.push({
++      id: new Date().getTime(), // 何か衝突しない値の生成方法であればなんでもいいです
++    });
++    const result = await upsertTrainer(trainerName, trainer);
+     res.status(result["$metadata"].httpStatusCode).send(result);
+   } catch (err) {
+     next(err);
 ```
 
 ---
@@ -69,7 +77,7 @@
      <h1>ポケットモンスター</h1>
      <GamifyList>
 -      <GamifyItem>
-+      <GamifyItem v-if="trainers.length">
++      <GamifyItem v-if="trainers.length > 0">
          <NuxtLink to="/trainer">つづきからはじめる</NuxtLink>
        </GamifyItem>
 +      <GamifyItem v-else>
@@ -156,7 +164,7 @@ const { data, refresh } = useFetch(() => `/api/trainer/${trainerName}`, {
 ```diff
 --- a/pages/new.vue
 +++ b/pages/new.vue
-@@ -1,4 +1,21 @@
+@@ -1,4 +1,22 @@
 -<script setup></script>
 +<script setup>
 +const router = useRouter();

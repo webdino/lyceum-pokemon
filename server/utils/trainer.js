@@ -1,15 +1,19 @@
-import { ListObjectsCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import s3Client from "./s3Client";
+import {
+  ListObjectsCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { NodeHttpHandler } from "@aws-sdk/node-http-handler";
+import { ProxyAgent } from "proxy-agent";
 
 const config = useRuntimeConfig();
 
-const streamToString = (stream) =>
-  new Promise((resolve, reject) => {
-    const chunks = [];
-    stream.on("data", (chunk) => chunks.push(chunk));
-    stream.on("error", reject);
-    stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
-  });
+const agent = new ProxyAgent();
+
+const s3Client = new S3Client({
+  region: config.region,
+  requestHandler: new NodeHttpHandler({ httpAgent: agent, httpsAgent: agent }),
+});
 
 /** トレーナーの一覧の取得 */
 export const findTrainers = async () => {
