@@ -18,23 +18,24 @@
 - 本リポジトリをクローンし、次の使い方に従って実行してください
 - 環境変数は実行環境 (ターミナルセッションなど) の環境変数に設定するか [.env ファイル](https://nuxt.com/docs/guide/directory-structure/env#env-file)を新規作成して記述してください
 
-## 動作方法
+## アプリの起動（初回）
 
 ### 開発時 Nuxt のみ起動
 
 ```bash
-aws configure # AWS CLI プロファイルの設定（初回のみ必須）
-npm install # npm パッケージのインストール（初回のみ必須）
-echo "NUXT_BUCKET_NAME=<作成した S3 バケット名>" > .env # PowerShel の場合: "NUXT_BUCKET_NAME=<作成した S3 バケット名>" > .env
+aws configure # AWS CLI プロファイルの設定
+npm install # npm パッケージのインストール
+echo "NUXT_BUCKET_NAME=<作成した S3 バケット名>" >> .env # 環境変数 NUXT_BUCKET_NAME の設定
 npm run dev # 開発サーバーの起動
 ```
 
 ### 開発時 Nuxt と Express 起動
 
 ```bash
-aws configure # AWS CLI プロファイルの設定（初回のみ必須）
-npm install # npm パッケージのインストール（初回のみ必須）
-echo "NUXT_BUCKET_NAME=<作成した S3 バケット名>" > .env # PowerShel の場合: "NUXT_BUCKET_NAME=<作成した S3 バケット名>" > .env
+aws configure # AWS CLI プロファイルの設定
+npm install # npm パッケージのインストール
+echo "NUXT_BUCKET_NAME=<作成した S3 バケット名>" >> .env # 環境変数 NUXT_BUCKET_NAME の設定
+echo "NUXT_PUBLIC_BACKEND_ORIGIN=http://localhost:4000" >> .env # 環境変数 NUXT_PUBLIC_BACKEND_ORIGIN の設定
 npm run dev:express # 開発サーバーの起動
 ```
 
