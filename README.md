@@ -24,8 +24,6 @@
 ```bash
 npm install # npm パッケージのインストール（初回のみ必須）
 cat << EOL > .env # .env ファイルの作成（ターミナルに Bash 以外のシェルを使用している場合は適宜読み替えてください）
-AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NUXT_BUCKET_NAME=<作成した S3 バケット名>
 EOL
 npm run dev # 開発サーバーの起動
@@ -36,8 +34,6 @@ npm run dev # 開発サーバーの起動
 ```bash
 npm install # npm パッケージのインストール（初回のみ必須）
 cat << EOL > .env # .env ファイルの作成（ターミナルに Bash 以外のシェルを使用している場合は適宜読み替えてください）
-AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NUXT_BUCKET_NAME=<作成した S3 バケット名>
 NUXT_PUBLIC_BACKEND_ORIGIN=http://localhost:4000
 EOL
@@ -154,7 +150,7 @@ https://us-east-1.console.aws.amazon.com/apprunner/home#/services からサー�
 | `FRONTEND_ORIGIN`                             |                      | :heavy_check_mark:          |                       |
 | `BACKEND_PORT`                                |                      | :heavy_check_mark:          |                       |
 
-[^AWS_クレデンシャル]: AWS SDK により認証情報が提供されている場合不要です。 https://docs.aws.amazon.com/ja_jp/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
+[^AWS_クレデンシャル]: AWS JS SDK の動作には AWS 認証情報が必要ですが、シークレットアクセスキーの環境変数への設定に限らず[様々な方法が用意されています](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html)。ローカル開発時には予め `aws configure` コマンドで設定、保存しておくことで環境変数の設定は不要です。AWS 上にデプロイする際にはロール設定などが推奨されますが、AWS 外のサーバへのデプロイ時にはこれらの環境変数を (各サービスのシークレット管理機能を用いて) 設定してください。**.env ファイルへの直接記載は非推奨です**
 
 [^他のリージョン]: `"ap-northeast-1"` 以外のリージョンを使用している場合は設定必須です。
 
