@@ -99,7 +99,7 @@ https://us-east-1.console.aws.amazon.com/apprunner/home#/services からサー�
 
 準備で作成したIAMロールをインスタンスロールとして指定
 
-ここでは、IAMロールを apprunner-have-s3fullaccess としています
+ここでは、IAMロールを lyceum-pokemon-app-runner としています
 
 ![](./docs/setup-security.png)
 
