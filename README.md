@@ -14,7 +14,7 @@
 
 ## 実行環境
 
-- Node Active LTS
+- Node v18 / v20 / v22
 - 本リポジトリをクローンし、次の使い方に従って実行してください
 - 環境変数は実行環境 (ターミナルセッションなど) の環境変数に設定するか [.env ファイル](https://nuxt.com/docs/guide/directory-structure/env#env-file)を新規作成して記述してください
 
