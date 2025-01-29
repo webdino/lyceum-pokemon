@@ -26,11 +26,11 @@
     "node": "^18 || ^20 || ^22"
   },
   "scripts": {
-    "prepare": "nuxi prepare",
     "build": "nuxi build",
     "build:express": "tsup express.js",
+    "build:prepare": "nuxi prepare",
     "dev": "nuxi dev",
-    "dev:express": "npm-run-all prepare build:express --parallel dev start:express",
+    "dev:express": "npm-run-all build:{prepare,express} --parallel dev start:express",
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "slide": "marp -s docs",
