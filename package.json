@@ -18,7 +18,8 @@
     "ofetch": "^1.4.1",
     "prettier": "^3.4.2",
     "proxy-agent": "^6.5.0",
-    "tsup": "^8.3.6"
+    "tsup": "^8.3.6",
+    "undici": "^6.21.1"
   },
   "packageManager": "npm@11.0.0",
   "private": true,
