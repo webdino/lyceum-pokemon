@@ -2,6 +2,12 @@
 
 ---
 
+- ポケモンアプリは2022年8月頃作られました
+- [GitHub リポジトリ](https://github.com/webdino/lyceum-pokemon) にほぼ全ての歴史（コミットログ、課題、コメントなど）が残っています
+- 当時の様子を振り返っていきましょう
+
+---
+
 - [chore: 周辺ツール(eslint, prettier)のセットアップ #2](https://github.com/webdino/lyceum-pokemon/pull/2)
   - あまり時間をかけなかった（伏線）
 - [サーバーサイドの実装に必要な準備 #3](https://github.com/webdino/lyceum-pokemon/issues/3)
@@ -68,7 +74,7 @@
 
 ---
 
-以降はアプリのレビューを通してゴソッとタスクが立ってゴソッとタスクが消える（はず）をやっている
+以降は[アプリの改善のための課題、フィードバックの課題](https://github.com/webdino/lyceum-pokemon/issues?q=is%3Aissue%20is%3Aclosed%20created%3A%3C2022-08-31%20created%3A%3E2022-04-01%20%20%20)を解消している
 
 ---
 
@@ -114,13 +120,11 @@
 
 ---
 
-# その後（1 年後）
+# その後（3 年後）
 
 ---
 
-- [20 件ほど PR があった](https://github.com/webdino/lyceum-pokemon/pulls?q=is%3Apr+is%3Aclosed+created%3A%3E2022-04-01+) (2023 年 3 月時点)
+- [36 件ほど PR があった](https://github.com/webdino/lyceum-pokemon/pulls?q=is%3Apr+is%3Aclosed+created%3A%3E2022-08-31+) (2025 年 2 月時点)
 - 2022 年 11 月に[Nuxt 3 安定版リリース](https://nuxt.com/blog/v3)
   - 破壊的変更への対応、非推奨機能の利用停止など
-- ドキュメントの更新
-  - Heroku のサポート、サポート廃止、ER 図の差し替え
 - 「完成」した後も、**動作可能**な状態や**メンテナンスしやすい**状態を維持しつづけるためのコストがかかる
